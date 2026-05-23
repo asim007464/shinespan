@@ -1,114 +1,147 @@
 import { ScrollReveal } from "@/components/animations/ScrollReveal";
-import { Button } from "@/components/ui/Button";
+import { ContactCta } from "@/components/home/ContactCta";
 import { Container } from "@/components/ui/Container";
-import { COMPANY, IMAGES } from "@/utils/constants";
-import type { Metadata } from "next";
+import { COMPANY, IMAGES, SERVICES_LIST } from "@/utils/constants";
+import { buildPageMetadata } from "@/lib/seo";
 import Image from "next/image";
-import Link from "next/link";
-import { FiCheck, FiHeart, FiShield } from "react-icons/fi";
+import { FiBookmark, FiClipboard, FiSmile } from "react-icons/fi";
 
-export const metadata: Metadata = {
-  title: "About Us",
-  description: `Learn about ${COMPANY.name} — mission, team, and why UK clients trust our premium cleaning.`,
-};
+export const metadata = buildPageMetadata({
+  title: "About Us — Trusted Cleaning Services UK",
+  description: `About ${COMPANY.name} — professional cleaners for homes, offices, rentals and commercial spaces across the UK.`,
+  path: "/about",
+});
 
-const stats = [
-  { label: "Years polished", value: "12+" },
-  { label: "Happy homes & desks", value: "4.8k+" },
-  { label: "Cities covered", value: "UK-wide" },
-];
+const processCards = [
+  {
+    icon: FiClipboard,
+    title: "Get a price",
+    text: "Looking for affordable, professional cleaning in the UK?",
+    highlight: "Request a quick quote today — no hidden fees.",
+  },
+  {
+    icon: FiBookmark,
+    title: "Book it",
+    text: "Simple booking. Fast scheduling.",
+    highlight: "Choose your service and date — we'll handle the rest.",
+  },
+  {
+    icon: FiSmile,
+    title: "Breathe & relax",
+    text: "Enjoy your clean home or office.",
+    highlight: "We do the hard work so you don't have to.",
+  },
+] as const;
 
-const trust = [
-  "Transparent pricing with written scopes",
-  "Named supervisors for commercial contracts",
-  "Eco-forward products available on request",
-];
+const highlightStats = [
+  { value: "98%", label: "Satisfied clients" },
+  { value: "750+", label: "Expert cleaners" },
+  { value: "120+", label: "Active clients" },
+  { value: "12+", label: "Years of service" },
+] as const;
 
 export default function AboutPage() {
+  const serviceCount = SERVICES_LIST.length;
+
   return (
     <>
-      <section className="relative min-h-[420px] overflow-hidden">
-        <Image
-          src={IMAGES.aboutHero}
-          alt=""
-          fill
-          className="object-cover"
-          priority
-          sizes="100vw"
-        />
-        <div className="absolute inset-0 bg-gradient-to-r from-ss-blue-950/95 via-ss-blue-900/75 to-ss-blue-700/35" />
-        <Container className="relative flex min-h-[420px] flex-col justify-center py-20">
-          <p className="text-xs font-semibold uppercase tracking-[0.3em] text-ss-blue-200">About</p>
-          <h1 className="mt-4 max-w-3xl font-display text-4xl text-white md:text-6xl">
-            Elevating everyday spaces into calm, curated environments.
-          </h1>
-          <p className="mt-6 max-w-2xl text-lg text-white/85">{COMPANY.tagline}</p>
+      {/* Hero */}
+      <section className="page-section relative overflow-hidden pt-16 sm:pt-20">
+        <div className="pointer-events-none absolute inset-0 opacity-30" aria-hidden>
+          <Image
+            src={IMAGES.aboutHero}
+            alt=""
+            fill
+            className="object-cover"
+            priority
+            sizes="100vw"
+          />
+          <div className="absolute inset-0 bg-gradient-to-b from-ss-blue-950/90 via-ss-blue-950/70 to-[#070d18]" />
+        </div>
+        <Container className="relative pb-12 text-center sm:pb-16">
+          <ScrollReveal>
+            <h1 className="font-display text-4xl text-white md:text-6xl">About Us</h1>
+            <p className="mx-auto mt-4 max-w-2xl text-lg text-slate-400">
+              Trusted cleaning services across the UK
+            </p>
+          </ScrollReveal>
         </Container>
       </section>
 
-      <section className="py-20">
+      {/* Image + story */}
+      <section className="page-section pb-16 sm:pb-20">
         <Container>
-          <div className="grid gap-14 lg:grid-cols-2 lg:items-center">
-            <ScrollReveal>
-              <h2 className="font-display text-3xl text-white md:text-5xl">Who we are</h2>
-              <p className="mt-6 text-slate-400">
-                {COMPANY.name} pairs meticulous technique with hospitality-minded service. Our crews
-                arrive uniformed, equipped, and briefed — whether refreshing a Chelsea pied-à-terre or
-                maintaining a Birmingham HQ.
-              </p>
-              <p className="mt-4 text-slate-400">
-                We scale thoughtfully: same leadership team from quote to completion, so nothing gets
-                lost between departments.
-              </p>
+          <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
+            <ScrollReveal className="relative">
+              <div className="relative aspect-[4/3] overflow-hidden rounded-2xl border border-white/10 shadow-2xl shadow-black/30">
+                <Image
+                  src={IMAGES.trusted}
+                  alt="Professional cleaner at work in the UK"
+                  fill
+                  className="object-cover"
+                  sizes="(max-width:1024px) 100vw, 50vw"
+                />
+              </div>
+              <div className="absolute -left-2 top-6 rounded-2xl border border-slate-200/90 bg-white px-7 py-5 shadow-[0_12px_40px_-8px_rgba(0,0,0,0.45)] sm:left-4">
+                <p className="font-display text-4xl font-bold leading-none text-ss-blue-600">
+                  {serviceCount}+
+                </p>
+                <p className="mt-2 text-sm font-semibold text-slate-700">Services we provide</p>
+              </div>
             </ScrollReveal>
+
             <ScrollReveal delay={0.06}>
-              <div className="rounded-[2rem] border border-white/10 bg-ss-blue-900/50 p-10 shadow-2xl shadow-black/30 backdrop-blur-sm">
-                <h3 className="font-display text-2xl text-white">Mission &amp; vision</h3>
-                <div className="mt-6 space-y-4 text-sm leading-relaxed text-slate-400">
-                  <p>
-                    <strong className="text-white">Mission:</strong> Deliver dependable, premium cleaning
-                    that respects your time, privacy, and surfaces.
-                  </p>
-                  <p>
-                    <strong className="text-white">Vision:</strong> Become the UK&apos;s most trusted name
-                    for calm, photo-ready spaces — residential and commercial.
-                  </p>
-                </div>
+              <div className="space-y-5 text-base leading-relaxed text-slate-400">
+                <p>
+                  At <strong className="text-white">{COMPANY.name}</strong>, we&apos;re on a mission to
+                  make homes, rentals, and workspaces across the UK shine. Whether you&apos;re a
+                  homeowner, landlord, tenant, or business owner — we offer flexible, high-quality
+                  cleaning tailored to your schedule and space.
+                </p>
+                <p>
+                  We believe a clean environment leads to better living and working. That&apos;s why
+                  every clean we deliver is handled with care, attention to detail, and a commitment to
+                  your satisfaction. From regular housekeeping and end-of-tenancy cleaning to Airbnb
+                  turnovers and commercial maintenance — {COMPANY.shortName} is the name people trust for
+                  dependable service.
+                </p>
               </div>
             </ScrollReveal>
           </div>
         </Container>
       </section>
 
-      <section className="border-y border-white/10 bg-ss-blue-950/50 py-20 backdrop-blur">
+      {/* Smarter way — 3 steps */}
+      <section className="page-section border-y border-white/[0.06] bg-white/[0.02] py-16 sm:py-20">
         <Container>
-          <ScrollReveal className="mb-12 max-w-2xl">
-            <h2 className="font-display text-3xl text-white md:text-5xl">The team behind the shine</h2>
-            <p className="mt-4 text-slate-400">
-              Operations leaders, trainers, and field supervisors — aligned on one standard.
-            </p>
-          </ScrollReveal>
-          <div className="grid gap-8 md:grid-cols-3">
-            {[
-              { name: "Harriet Cole", role: "Founder & Lead Operations", img: IMAGES.team1 },
-              { name: "Marcus Adeyemi", role: "Commercial Accounts Director", img: IMAGES.team2 },
-              { name: "Daniel Hughes", role: "Training & Quality Lead", img: IMAGES.team3 },
-            ].map((person, i) => (
-              <ScrollReveal key={person.name} delay={i * 0.06}>
-                <article className="overflow-hidden rounded-3xl border border-white/10 bg-ss-blue-900/45 shadow-xl shadow-black/25">
-                  <div className="relative aspect-[4/5]">
-                    <Image
-                      src={person.img}
-                      alt={person.name}
-                      fill
-                      className="object-cover"
-                      sizes="(max-width:768px) 100vw, 33vw"
-                    />
+          <div className="grid gap-10 lg:grid-cols-2 lg:items-start lg:gap-16">
+            <ScrollReveal>
+              <p className="text-sm font-semibold text-ss-blue-400">Get a quote fast</p>
+              <h2 className="mt-2 font-display text-3xl text-white md:text-4xl">
+                The smarter way to find reliable cleaning services
+              </h2>
+            </ScrollReveal>
+            <ScrollReveal delay={0.05}>
+              <p className="text-base leading-relaxed text-slate-400">
+                We provide flexible, high-quality cleaning services across homes, offices, rentals,
+                and short-let properties. From one-time deep cleans to ongoing service plans, our
+                team handles it all — so you can focus on what matters.
+              </p>
+            </ScrollReveal>
+          </div>
+
+          <div className="mt-12 grid gap-6 md:grid-cols-3">
+            {processCards.map((card, i) => (
+              <ScrollReveal key={card.title} delay={i * 0.06}>
+                <article className="relative h-full rounded-3xl border border-white/10 bg-ss-blue-900/40 p-8 pt-10 shadow-lg shadow-black/20">
+                  <div className="absolute -top-5 left-8 flex h-12 w-12 items-center justify-center rounded-full bg-ss-blue-600 text-white shadow-lg shadow-ss-blue-600/30">
+                    <card.icon className="h-6 w-6" aria-hidden />
                   </div>
-                  <div className="p-6">
-                    <h3 className="font-display text-xl text-white">{person.name}</h3>
-                    <p className="mt-1 text-sm text-slate-400">{person.role}</p>
-                  </div>
+                  <h3 className="mt-4 font-display text-xl text-white">{card.title}</h3>
+                  <p className="mt-3 text-sm leading-relaxed text-slate-400">
+                    {card.text}{" "}
+                    <span className="font-medium text-slate-200">{card.highlight}</span>
+                  </p>
                 </article>
               </ScrollReveal>
             ))}
@@ -116,80 +149,33 @@ export default function AboutPage() {
         </Container>
       </section>
 
-      <section className="py-20">
+      {/* Stats + satisfaction headline */}
+      <section className="page-section py-20 sm:py-28">
         <Container>
-          <div className="grid gap-12 lg:grid-cols-2">
-            <ScrollReveal>
-              <h2 className="font-display text-3xl text-white md:text-5xl">Why clients trust us</h2>
-              <ul className="mt-8 space-y-4">
-                {trust.map((t) => (
-                  <li
-                    key={t}
-                    className="flex items-start gap-3 rounded-2xl border border-white/10 bg-ss-blue-900/45 px-5 py-4 backdrop-blur-sm"
-                  >
-                    <FiCheck className="mt-1 h-5 w-5 shrink-0 text-emerald-400" />
-                    <span className="text-slate-200">{t}</span>
-                  </li>
-                ))}
-              </ul>
-            </ScrollReveal>
-            <ScrollReveal delay={0.06}>
-              <div className="grid gap-6 sm:grid-cols-3 lg:grid-cols-1 xl:grid-cols-3">
-                {stats.map((s) => (
-                  <div
-                    key={s.label}
-                    className="rounded-3xl bg-gradient-to-br from-ss-blue-800 to-ss-blue-600 p-8 text-center text-white shadow-xl"
-                  >
-                    <p className="font-display text-4xl">{s.value}</p>
-                    <p className="mt-2 text-xs uppercase tracking-widest text-ss-blue-100">{s.label}</p>
-                  </div>
-                ))}
-              </div>
-              <div className="mt-10 flex flex-wrap gap-4">
-                <span className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/10 px-4 py-2 text-xs font-semibold text-slate-200">
-                  <FiShield className="text-ss-blue-400" /> Fully insured
-                </span>
-                <span className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/10 px-4 py-2 text-xs font-semibold text-slate-200">
-                  <FiHeart className="text-rose-400" /> People-first culture
-                </span>
-              </div>
-            </ScrollReveal>
+          <ScrollReveal className="mx-auto max-w-3xl text-center">
+            <p className="text-sm font-semibold text-ss-blue-400">About us</p>
+            <h2 className="mt-3 font-display text-3xl leading-tight text-white md:text-5xl">
+              Get satisfied with the services we provide A to Z in cleaning
+            </h2>
+            <p className="mt-6 text-base leading-relaxed text-slate-400">
+              We&apos;re here to make your space spotless and your life easier. With fast bookings,
+              flexible packages, and a team you can trust — {COMPANY.name} is your cleaning partner
+              across the UK.
+            </p>
+          </ScrollReveal>
+
+          <div className="mt-14 grid grid-cols-2 gap-8 lg:grid-cols-4">
+            {highlightStats.map((stat, i) => (
+              <ScrollReveal key={stat.label} delay={i * 0.05} className="text-center">
+                <p className="font-display text-4xl text-ss-blue-400 md:text-5xl">{stat.value}</p>
+                <p className="mt-2 text-sm text-slate-500">{stat.label}</p>
+              </ScrollReveal>
+            ))}
           </div>
         </Container>
       </section>
 
-      <section className="pb-24">
-        <Container>
-          <ScrollReveal className="relative min-h-[280px] overflow-hidden rounded-[2rem] border border-white/10 shadow-2xl shadow-black/40 sm:min-h-[320px]">
-            <Image
-              src={IMAGES.ctaBanner}
-              alt=""
-              fill
-              className="object-cover"
-              sizes="100vw"
-            />
-            <div className="relative z-10 flex min-h-[280px] flex-col justify-center bg-gradient-to-r from-ss-blue-950/95 to-ss-blue-800/70 px-8 py-14 sm:min-h-[320px] sm:px-14">
-              <h2 className="font-display text-3xl text-white md:text-4xl">
-                Experience the Shine &amp; Span standard
-              </h2>
-              <p className="mt-3 max-w-xl text-white/85">
-                Book online or speak with our coordinators — same-day callbacks during office hours.
-              </p>
-              <div className="mt-8 flex flex-wrap gap-4">
-                <Button href="/booking" variant="primary" className="!bg-white !text-ss-blue-900">
-                  Book now
-                </Button>
-                <Link
-                  href={`mailto:${COMPANY.email}`}
-                  className="inline-flex items-center justify-center rounded-2xl border border-white/35 px-8 py-3 text-sm font-semibold text-white backdrop-blur hover:bg-white/10"
-                >
-                  Email us
-                </Link>
-              </div>
-            </div>
-          </ScrollReveal>
-        </Container>
-      </section>
+      <ContactCta />
     </>
   );
 }

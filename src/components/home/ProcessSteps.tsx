@@ -12,7 +12,7 @@ const steps = [
 
 export function ProcessSteps() {
   return (
-    <section className="py-20 sm:py-28">
+    <section className="page-section py-20 sm:py-28">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <ScrollReveal className="mb-12 max-w-3xl">
           <p className="text-xs font-semibold uppercase tracking-[0.25em] text-ss-blue-400">Our process</p>

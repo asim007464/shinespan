@@ -25,10 +25,7 @@ const points = [
 
 export function WhyChooseUs() {
   return (
-    <section className="relative overflow-hidden py-20 sm:py-28">
-      <div className="pointer-events-none absolute -left-40 top-20 h-96 w-96 rounded-full bg-ss-blue-500/10 blur-3xl" />
-      <div className="pointer-events-none absolute -right-40 bottom-0 h-96 w-96 rounded-full bg-ss-blue-600/10 blur-3xl" />
-
+    <section className="page-section relative py-20 sm:py-28">
       <div className="relative mx-auto grid max-w-7xl gap-12 px-4 lg:grid-cols-2 lg:items-center lg:px-8">
         <ScrollReveal className="relative aspect-[4/5] overflow-hidden rounded-[2rem] shadow-2xl shadow-black/40 lg:aspect-square">
           <Image

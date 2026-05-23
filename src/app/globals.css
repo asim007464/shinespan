@@ -11,11 +11,11 @@
   --ss-blue-400: #60a5fa;
   --ss-surface: #0f172a;
   --ss-surface-dark: #0b1220;
-  /* Secondary copy on dark backgrounds */
   --ss-muted: #94a3b8;
   --ss-ring: rgba(37, 99, 235, 0.35);
   --ss-panel: rgba(15, 23, 42, 0.72);
   --ss-panel-border: rgba(255, 255, 255, 0.1);
+  --ss-bg-base: #070d18;
 }
 
 @theme inline {
@@ -35,7 +35,6 @@ html {
   scroll-behavior: smooth;
 }
 
-/* Native selects, date/time pickers, and scrollbars follow dark UI (fixes white dropdown lists with light text). */
 html.dark {
   color-scheme: dark;
 }
@@ -46,10 +45,139 @@ html.dark select option {
 }
 
 body {
-  background: linear-gradient(180deg, #070d18 0%, #0f172a 42%, #0b1220 100%);
+  background: var(--ss-bg-base);
   color: #e2e8f0;
+  line-height: 1.6;
+  letter-spacing: -0.01em;
+}
+
+/* Continuous animated radial orbs — no per-section background seams */
+.ambient-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+  background: var(--ss-bg-base);
+}
+
+.ambient-orb {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+  will-change: transform;
+}
+
+.ambient-orb-a {
+  width: min(58vmax, 680px);
+  height: min(58vmax, 680px);
+  background: radial-gradient(
+    circle closest-side,
+    rgba(37, 99, 235, 0.26) 0%,
+    rgba(37, 99, 235, 0.08) 45%,
+    transparent 72%
+  );
+  top: -12%;
+  left: -14%;
+  filter: blur(40px);
+  animation: ambient-float-a 32s ease-in-out infinite;
+}
+
+.ambient-orb-b {
+  width: min(52vmax, 620px);
+  height: min(52vmax, 620px);
+  background: radial-gradient(
+    circle closest-side,
+    rgba(30, 64, 175, 0.3) 0%,
+    rgba(30, 64, 175, 0.1) 50%,
+    transparent 75%
+  );
+  top: 38%;
+  right: -16%;
+  filter: blur(44px);
+  animation: ambient-float-b 38s ease-in-out infinite;
+}
+
+.ambient-orb-c {
+  width: min(48vmax, 540px);
+  height: min(48vmax, 540px);
+  background: radial-gradient(
+    circle closest-side,
+    rgba(59, 130, 246, 0.18) 0%,
+    rgba(59, 130, 246, 0.06) 55%,
+    transparent 78%
+  );
+  bottom: -8%;
+  left: 22%;
+  filter: blur(48px);
+  animation: ambient-float-c 28s ease-in-out infinite;
+}
+
+@keyframes ambient-float-a {
+  0%,
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
+  33% {
+    transform: translate(10vw, 14vh) scale(1.06);
+  }
+  66% {
+    transform: translate(4vw, 6vh) scale(0.96);
+  }
+}
+
+@keyframes ambient-float-b {
+  0%,
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
+  40% {
+    transform: translate(-12vw, 10vh) scale(1.04);
+  }
+  70% {
+    transform: translate(-6vw, 16vh) scale(0.98);
+  }
+}
+
+@keyframes ambient-float-c {
+  0%,
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
+  50% {
+    transform: translate(14vw, -12vh) scale(1.08);
+  }
+}
+
+/* Home / page sections — transparent so backdrop reads as one surface */
+.page-section {
+  position: relative;
+}
+
+.service-card {
+  transition:
+    border-color 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+.service-card:hover {
+  border-color: rgba(255, 255, 255, 0.12);
+  box-shadow: 0 12px 40px -16px rgba(0, 0, 0, 0.5);
+}
+
+h1,
+h2,
+h3 {
+  text-wrap: balance;
 }
 
 ::selection {
   background: rgba(37, 99, 235, 0.35);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ambient-orb-a,
+  .ambient-orb-b,
+  .ambient-orb-c {
+    animation: none;
+  }
 }

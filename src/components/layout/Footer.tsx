@@ -1,49 +1,44 @@
 "use client";
 
-import { COMPANY, NAV_LINKS, SOCIAL_LINKS } from "@/utils/constants";
+import {
+  COMPANY,
+  FOOTER_QUICK_LINKS,
+  SERVICES_LIST,
+  SOCIAL_LINKS,
+} from "@/utils/constants";
 import Link from "next/link";
-import { FaFacebookF, FaInstagram, FaLinkedinIn } from "react-icons/fa";
+import { FaFacebookF, FaInstagram, FaLinkedinIn, FaXTwitter } from "react-icons/fa6";
 import { FiMail, FiPhone } from "react-icons/fi";
-import { useState } from "react";
 
 const iconMap = {
   facebook: FaFacebookF,
   instagram: FaInstagram,
+  twitter: FaXTwitter,
   linkedin: FaLinkedinIn,
 } as const;
 
 export function Footer() {
-  const [email, setEmail] = useState("");
-  const [sent, setSent] = useState(false);
-
-  function handleNewsletter(e: React.FormEvent) {
-    e.preventDefault();
-    setSent(true);
-    setEmail("");
-    setTimeout(() => setSent(false), 4000);
-  }
-
   return (
-    <footer className="mt-auto border-t border-white/10 bg-ss-blue-950/90 backdrop-blur">
-      <div className="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8">
-        <div className="grid gap-12 md:grid-cols-2 lg:grid-cols-4">
-          <div>
+    <footer className="relative z-0 mt-auto border-t border-white/[0.06] bg-transparent">
+      <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
+        <div className="grid gap-12 sm:grid-cols-2 lg:grid-cols-12">
+          <div className="lg:col-span-4">
             <div className="flex items-center gap-2">
               <span className="flex h-10 w-10 items-center justify-center rounded-2xl bg-gradient-to-br from-ss-blue-700 to-ss-blue-500 text-lg font-bold text-white">
                 S
               </span>
               <span className="font-display text-xl font-semibold text-white">{COMPANY.shortName}</span>
             </div>
-            <p className="mt-4 text-sm leading-relaxed text-slate-400">
-              Premium residential and commercial cleaning across the UK — insured teams, eco-smart
-              products, and sparkling results.
+            <p className="mt-4 max-w-sm text-sm leading-relaxed text-slate-400">
+              Premium cleaning services UK — insured professional cleaners for homes, offices, and
+              short-let properties.
             </p>
-            <div className="mt-6 flex gap-3">
+            <div className="mt-6 flex flex-wrap gap-2.5">
               {SOCIAL_LINKS.map((s) => {
                 const Icon = iconMap[s.icon];
                 return (
                   <a
-                    key={s.href}
+                    key={s.label}
                     href={s.href}
                     target="_blank"
                     rel="noopener noreferrer"
@@ -57,10 +52,12 @@ export function Footer() {
             </div>
           </div>
 
-          <div>
-            <h3 className="font-display text-lg text-white">Explore</h3>
-            <ul className="mt-4 space-y-2">
-              {NAV_LINKS.map((l) => (
+          <div className="lg:col-span-2">
+            <h3 className="text-xs font-semibold uppercase tracking-[0.2em] text-ss-blue-400">
+              Quick links
+            </h3>
+            <ul className="mt-4 space-y-2.5">
+              {FOOTER_QUICK_LINKS.map((l) => (
                 <li key={l.href}>
                   <Link
                     href={l.href}
@@ -70,56 +67,65 @@ export function Footer() {
                   </Link>
                 </li>
               ))}
-              <li>
-                <Link href="/signup" className="text-sm text-slate-400 transition hover:text-white">
-                  Sign up
-                </Link>
-              </li>
             </ul>
           </div>
 
-          <div>
-            <h3 className="font-display text-lg text-white">Contact</h3>
-            <ul className="mt-4 space-y-3 text-sm text-slate-400">
-              <li className="flex items-start gap-2">
-                <FiPhone className="mt-0.5 h-4 w-4 shrink-0 text-ss-blue-400" />
-                <a href={COMPANY.phoneHref} className="hover:text-white">
+          <div className="lg:col-span-3">
+            <h3 className="text-xs font-semibold uppercase tracking-[0.2em] text-ss-blue-400">
+              Services
+            </h3>
+            <ul className="mt-4 grid gap-2.5 sm:grid-cols-2 lg:grid-cols-1">
+              {SERVICES_LIST.map((s) => (
+                <li key={s.slug}>
+                  <Link
+                    href={`/booking?service=${encodeURIComponent(s.title)}`}
+                    className="text-sm text-slate-400 transition hover:text-white"
+                  >
+                    {s.title}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <div className="lg:col-span-3">
+            <h3 className="text-xs font-semibold uppercase tracking-[0.2em] text-ss-blue-400">
+              Contact
+            </h3>
+            <ul className="mt-4 space-y-4 text-sm">
+              <li>
+                <p className="text-xs font-medium uppercase tracking-wider text-slate-500">Phone</p>
+                <a
+                  href={COMPANY.phoneHref}
+                  className="mt-1 inline-flex items-center gap-2 font-medium text-slate-200 hover:text-white"
+                >
+                  <FiPhone className="h-4 w-4 text-ss-blue-400" />
                   {COMPANY.phone}
                 </a>
               </li>
-              <li className="flex items-start gap-2">
-                <FiMail className="mt-0.5 h-4 w-4 shrink-0 text-ss-blue-400" />
-                <a href={`mailto:${COMPANY.email}`} className="break-all hover:text-white">
+              <li>
+                <p className="text-xs font-medium uppercase tracking-wider text-slate-500">Email</p>
+                <a
+                  href={COMPANY.emailHref}
+                  className="mt-1 inline-flex items-center gap-2 break-all font-medium text-slate-200 hover:text-white"
+                >
+                  <FiMail className="h-4 w-4 shrink-0 text-ss-blue-400" />
                   {COMPANY.email}
                 </a>
               </li>
-              <li>{COMPANY.hours}</li>
+              <li className="text-slate-400">{COMPANY.hours}</li>
+              <li className="text-slate-400">{COMPANY.addressLine}</li>
             </ul>
-          </div>
-
-          <div>
-            <h3 className="font-display text-lg text-white">Newsletter</h3>
-            <p className="mt-3 text-sm text-slate-400">Seasonal offers & cleaning tips — no spam.</p>
-            <form onSubmit={handleNewsletter} className="mt-4 flex flex-col gap-2">
-              <input
-                type="email"
-                required
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                placeholder="you@example.com"
-                className="rounded-xl border border-white/15 bg-ss-blue-900/80 px-4 py-3 text-sm text-white outline-none ring-ss-blue-500/30 placeholder:text-slate-500 focus:ring-2"
-              />
-              <button
-                type="submit"
-                className="rounded-xl bg-gradient-to-r from-ss-blue-700 to-ss-blue-500 px-4 py-3 text-sm font-semibold text-white shadow-lg shadow-ss-blue-600/25 transition hover:brightness-105"
-              >
-                {sent ? "Thank you!" : "Subscribe"}
-              </button>
-            </form>
+            <Link
+              href="/booking"
+              className="mt-6 inline-flex rounded-2xl bg-gradient-to-r from-ss-blue-700 to-ss-blue-500 px-6 py-3 text-sm font-semibold text-white shadow-lg transition hover:brightness-105"
+            >
+              Book Now
+            </Link>
           </div>
         </div>
 
-        <div className="mt-12 flex flex-col items-center justify-between gap-4 border-t border-white/10 pt-8 text-center text-xs text-slate-500 sm:flex-row sm:text-left">
+        <div className="mt-14 flex flex-col items-center justify-between gap-4 border-t border-white/10 pt-8 text-center text-xs text-slate-500 sm:flex-row sm:text-left">
           <p>
             © {new Date().getFullYear()} {COMPANY.name}. All rights reserved. {COMPANY.region}.
           </p>

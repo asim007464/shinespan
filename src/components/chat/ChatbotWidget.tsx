@@ -1,17 +1,19 @@
 "use client";
 
+import { getAssistantReply } from "@/lib/chatAssistant";
 import { useLocalStorage } from "@/hooks/useLocalStorage";
 import type { ChatInquiryPayload } from "@/services/types";
 import axios from "axios";
 import { AnimatePresence, motion } from "framer-motion";
+import Link from "next/link";
 import { useEffect, useId, useRef, useState } from "react";
 import { FiMessageCircle, FiSend, FiX } from "react-icons/fi";
 
 const QUICK = [
-  "Regular house clean",
-  "End of tenancy",
-  "Airbnb turnover",
-  "Office cleaning",
+  "List services",
+  "Help me choose",
+  "Deep cleaning details",
+  "Book a clean",
 ];
 
 export function ChatbotWidget() {
@@ -20,7 +22,10 @@ export function ChatbotWidget() {
   const [open, setOpen] = useState(false);
   const [input, setInput] = useState("");
   const [messages, setMessages] = useState<{ role: "user" | "assistant"; text: string }[]>([
-    { role: "assistant", text: "Hi — I can capture your cleaning needs for our team." },
+    {
+      role: "assistant",
+      text: "Hi — I'm your Shine Assistant. I can search our cleaning services, explain what's included, and help you pick the right bookable service.",
+    },
   ]);
   const { value: inquiries, setValue: setInquiries, hydrated } = useLocalStorage<
     ChatInquiryPayload[]
@@ -28,7 +33,6 @@ export function ChatbotWidget() {
 
   const [meta, setMeta] = useState({
     cleaningType: "",
-    budget: "",
     date: "",
     location: "",
   });
@@ -43,7 +47,6 @@ export function ChatbotWidget() {
     const payload: ChatInquiryPayload = {
       id: sessionId,
       cleaningType: meta.cleaningType || undefined,
-      budget: meta.budget || undefined,
       date: meta.date || undefined,
       location: meta.location || undefined,
       messages: nextMessages.map((m) => ({
@@ -65,31 +68,30 @@ export function ChatbotWidget() {
     if (!t) return;
     const userMsg = { role: "user" as const, text: t };
     const lower = t.toLowerCase();
-    let reply =
-      "Thanks — noted. Would you like to book online or receive a call back?";
-    if (lower.includes("budget")) {
-      setMeta((m) => ({ ...m, budget: t }));
-      reply = "Budget captured. Preferred date or postcode next?";
-    } else if (lower.includes("202") || lower.includes("mon") || lower.includes("tue")) {
+
+    if (
+      lower.includes("clean") ||
+      lower.includes("tenancy") ||
+      lower.includes("airbnb") ||
+      lower.includes("office") ||
+      lower.includes("house") ||
+      lower.includes("deep") ||
+      lower.includes("carpet")
+    ) {
+      setMeta((m) => ({ ...m, cleaningType: t }));
+    }
+    if (lower.includes("202") || lower.includes("mon") || lower.includes("tue")) {
       setMeta((m) => ({ ...m, date: t }));
-      reply = "Date noted. Where should we send the crew?";
-    } else if (
+    }
+    if (
       lower.match(/\b([a-z]{1,2}\d[\da-z]?\s*\d[a-z]{2})\b/i) ||
       lower.includes("london") ||
       lower.includes("manchester")
     ) {
       setMeta((m) => ({ ...m, location: t }));
-      reply = "Location saved — tap Book Now anytime to finalise.";
-    } else if (
-      lower.includes("clean") ||
-      lower.includes("tenancy") ||
-      lower.includes("airbnb") ||
-      lower.includes("office")
-    ) {
-      setMeta((m) => ({ ...m, cleaningType: t }));
-      reply = "Cleaning type noted. Share budget range or ideal date?";
     }
 
+    const { text: reply } = getAssistantReply(t, meta.cleaningType);
     const next = [...messages, userMsg, { role: "assistant" as const, text: reply }];
     setMessages(next);
     setInput("");
@@ -103,7 +105,7 @@ export function ChatbotWidget() {
       <button
         type="button"
         onClick={() => setOpen(true)}
-        aria-label="Open chat"
+        aria-label="Open cleaning assistant chat"
         className="fixed bottom-5 right-5 z-50 flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-ss-blue-700 to-ss-blue-500 text-white shadow-2xl shadow-ss-blue-700/40 transition hover:brightness-110 sm:bottom-6 sm:right-6"
       >
         <FiMessageCircle className="h-7 w-7" />
@@ -124,7 +126,7 @@ export function ChatbotWidget() {
                 <p className="text-[11px] text-slate-400">
                   {hydrated && (inquiries?.length ?? 0) > 0
                     ? `${inquiries?.length ?? 0} saved inquiries`
-                    : "We reply during business hours"}
+                    : "Search services · booking help"}
                 </p>
               </div>
               <button
@@ -144,7 +146,7 @@ export function ChatbotWidget() {
                   className={`flex ${m.role === "user" ? "justify-end" : "justify-start"}`}
                 >
                   <div
-                    className={`max-w-[85%] rounded-2xl px-4 py-3 text-sm leading-relaxed ${
+                    className={`max-w-[85%] whitespace-pre-line rounded-2xl px-4 py-3 text-sm leading-relaxed ${
                       m.role === "user"
                         ? "bg-gradient-to-r from-ss-blue-700 to-ss-blue-500 text-white"
                         : "border border-white/10 bg-ss-blue-900/80 text-slate-100"
@@ -166,6 +168,13 @@ export function ChatbotWidget() {
                   </button>
                 ))}
               </div>
+              <Link
+                href="/booking"
+                onClick={() => setOpen(false)}
+                className="mt-2 inline-flex w-full items-center justify-center rounded-2xl bg-white/10 py-2.5 text-xs font-semibold text-white ring-1 ring-white/15 hover:bg-white/15"
+              >
+                Book Now
+              </Link>
             </div>
 
             <form
@@ -179,7 +188,7 @@ export function ChatbotWidget() {
                 <input
                   value={input}
                   onChange={(e) => setInput(e.target.value)}
-                  placeholder="Ask about cleaning type, budget, date, location…"
+                  placeholder="Search services or ask for help…"
                   className="flex-1 rounded-2xl border border-white/15 bg-ss-blue-950/90 px-4 py-3 text-sm text-white outline-none placeholder:text-slate-500 focus:ring-2 focus:ring-ss-blue-500/50"
                 />
                 <button

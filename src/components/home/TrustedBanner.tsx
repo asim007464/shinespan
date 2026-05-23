@@ -9,8 +9,7 @@ const badges = ["Checkatrade-style vetting", "Eco-conscious supplies", "Same-wee
 
 export function TrustedBanner() {
   return (
-    <section className="relative border-y border-white/10 bg-ss-blue-950/60 py-14 backdrop-blur">
-      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_20%_50%,rgba(37,99,235,0.12),transparent_55%)]" />
+    <section className="page-section relative py-14 sm:py-16">
       <div className="relative mx-auto flex max-w-7xl flex-col items-center gap-10 px-4 sm:flex-row sm:px-6 lg:px-8">
         <ScrollReveal className="relative h-48 w-full max-w-md overflow-hidden rounded-3xl shadow-xl shadow-black/30 sm:h-56">
           <Image

@@ -54,7 +54,7 @@ export function Navbar() {
 
         <div className="flex items-center gap-2">
           <Button href="/booking" className="hidden !py-2.5 sm:inline-flex">
-            Book now
+            Book Now
           </Button>
           <button
             type="button"
@@ -94,7 +94,7 @@ export function Navbar() {
                 Login
               </Link>
               <Button href="/booking" className="w-full justify-center">
-                Book now
+                Book Now
               </Button>
             </div>
           </motion.div>

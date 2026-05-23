@@ -1,4 +1,5 @@
 import { ClientShell } from "@/components/layout/ClientShell";
+import { LocalBusinessJsonLd } from "@/components/seo/LocalBusinessJsonLd";
 import { COMPANY } from "@/utils/constants";
 import type { Metadata } from "next";
 import { DM_Serif_Display, Plus_Jakarta_Sans } from "next/font/google";
@@ -19,24 +20,27 @@ const dmSerif = DM_Serif_Display({
 export const metadata: Metadata = {
   metadataBase: new URL("https://shinespan.co.uk"),
   title: {
-    default: `${COMPANY.shortName} | Premium Cleaning Services UK`,
+    default: `${COMPANY.shortName} | Cleaning Services UK — Professional Cleaners`,
     template: `%s | ${COMPANY.shortName}`,
   },
-  description: `${COMPANY.tagline} Insured teams for homes, offices, Airbnb & commercial spaces across the UK.`,
+  description: `${COMPANY.tagline} Home cleaning services, office cleaning, and deep cleaning services with insured professional cleaners across the UK.`,
   keywords: [
     "cleaning services UK",
-    "house cleaning",
+    "home cleaning services",
     "office cleaning",
-    "Airbnb cleaning",
+    "deep cleaning services",
+    "professional cleaners",
     "end of tenancy cleaning",
-    "deep cleaning",
+    "Airbnb cleaning",
   ],
   openGraph: {
-    title: `${COMPANY.shortName} | Premium Cleaning Services UK`,
+    title: `${COMPANY.shortName} | Cleaning Services UK`,
     description: COMPANY.tagline,
     locale: "en_GB",
     type: "website",
+    siteName: COMPANY.shortName,
   },
+  robots: { index: true, follow: true },
 };
 
 export default function RootLayout({
@@ -49,6 +53,7 @@ export default function RootLayout({
       <body
         className={`${plusJakarta.variable} ${dmSerif.variable} flex min-h-full flex-col font-sans antialiased`}
       >
+        <LocalBusinessJsonLd />
         <ClientShell>{children}</ClientShell>
       </body>
     </html>

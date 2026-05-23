@@ -10,7 +10,7 @@ export function FaqSection() {
   const [open, setOpen] = useState<number | null>(0);
 
   return (
-    <section className="pb-24 pt-8">
+    <section className="page-section pb-24 pt-8">
       <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
         <ScrollReveal className="mb-10 text-center">
           <p className="text-xs font-semibold uppercase tracking-[0.25em] text-ss-blue-400">FAQ</p>

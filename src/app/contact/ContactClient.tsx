@@ -3,14 +3,17 @@
 import { ScrollReveal } from "@/components/animations/ScrollReveal";
 import { Container } from "@/components/ui/Container";
 import { COMPANY, SOCIAL_LINKS } from "@/utils/constants";
+import { getContactFormMailto } from "@/utils/mailto";
 import { isValidEmail } from "@/utils/validation";
 import { useState } from "react";
 import { FaFacebookF, FaInstagram, FaLinkedinIn } from "react-icons/fa";
+import { FaXTwitter } from "react-icons/fa6";
 import { FiClock, FiMail, FiMapPin, FiPhone } from "react-icons/fi";
 
 const iconMap = {
   facebook: FaFacebookF,
   instagram: FaInstagram,
+  twitter: FaXTwitter,
   linkedin: FaLinkedinIn,
 } as const;
 
@@ -29,6 +32,7 @@ export function ContactClient() {
       setStatus("error");
       return;
     }
+    window.location.href = getContactFormMailto(name, email, message);
     setStatus("sent");
     setName("");
     setEmail("");
@@ -37,14 +41,24 @@ export function ContactClient() {
   }
 
   return (
-    <section className="pb-24 pt-16 sm:pt-20">
+    <section className="page-section pb-24 pt-16 sm:pt-20">
       <Container>
         <ScrollReveal className="mb-12 max-w-3xl">
           <p className="text-xs font-semibold uppercase tracking-[0.25em] text-ss-blue-400">Contact</p>
           <h1 className="mt-3 font-display text-4xl text-white md:text-6xl">Let&apos;s talk cleans</h1>
           <p className="mt-4 text-slate-400">
-            Coordinators reply same day during business hours — urgent turnovers flagged in your
-            message.
+            Coordinators reply same day during business hours. Call{" "}
+            <a href={COMPANY.phoneHref} className="font-medium text-ss-blue-400 hover:text-ss-blue-300">
+              {COMPANY.phone}
+            </a>{" "}
+            or email{" "}
+            <a
+              href={COMPANY.emailHref}
+              className="font-medium text-ss-blue-400 hover:text-ss-blue-300"
+            >
+              {COMPANY.email}
+            </a>
+            .
           </p>
         </ScrollReveal>
 
@@ -67,7 +81,7 @@ export function ContactClient() {
                   <div>
                     <p className="font-semibold text-white">Email</p>
                     <a
-                      href={`mailto:${COMPANY.email}`}
+                      href={COMPANY.emailHref}
                       className="break-all text-slate-400 hover:text-white"
                     >
                       {COMPANY.email}
@@ -160,7 +174,7 @@ export function ContactClient() {
                 Send message
               </button>
               <p className="mt-4 text-center text-xs text-slate-500">
-                Prefer WhatsApp or a call? Use the number above — we&apos;re happy to help.
+                Send opens your email app to {COMPANY.email} — add any details and press Send.
               </p>
             </form>
           </ScrollReveal>

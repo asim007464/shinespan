@@ -24,14 +24,11 @@ export function bookingFieldErrors(data: {
   phone: string;
   address: string;
   service: string;
-  propertyType: string;
-  rooms: string;
   datetime: string;
+  message?: string;
 }): Record<string, string> {
   const errors: Record<string, string> = {};
   if (!data.service?.trim()) errors.service = "Choose a service";
-  if (!data.propertyType?.trim()) errors.propertyType = "Select property type";
-  if (!data.rooms?.trim()) errors.rooms = "Enter number of rooms";
   if (!data.datetime?.trim()) errors.datetime = "Pick date and time";
   if (!data.address?.trim()) errors.address = "Address is required";
   if (!data.name?.trim()) errors.name = "Name is required";

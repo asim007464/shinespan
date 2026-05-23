@@ -1,10 +1,8 @@
 export type BookingPayload = {
   service: string;
-  propertyType: string;
-  rooms: string;
   scheduledAt: string;
   address: string;
-  instructions: string;
+  message: string;
   customerName: string;
   customerEmail: string;
   customerPhone: string;
@@ -27,4 +25,13 @@ export type ChatInquiryPayload = {
   location?: string;
   messages: { role: "user" | "assistant"; text: string; at: string }[];
   createdAt: string;
+};
+
+export type Review = {
+  id: string;
+  customerName: string;
+  rating: number;
+  comment: string;
+  date: string;
+  published?: boolean;
 };
