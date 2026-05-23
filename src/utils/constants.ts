@@ -45,22 +45,14 @@ export const IMAGES = {
   heroSecondary:
     "https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=1200&q=85",
   trusted: "https://images.unsplash.com/photo-1628177142898-93e36e4e3a50?auto=format&fit=crop&w=1600&q=80",
-  serviceHouse:
-    "https://images.unsplash.com/photo-1584622781865-329ad147bb76?auto=format&fit=crop&w=1200&q=80",
-  serviceDeep:
-    "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?auto=format&fit=crop&w=1200&q=80",
-  serviceOffice:
-    "https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=1200&q=80",
-  serviceAirbnb:
-    "https://images.unsplash.com/photo-1596394516093-6629db9ada28?auto=format&fit=crop&w=1200&q=80",
-  serviceTenancy:
-    "https://images.unsplash.com/photo-1484154218962-a197022257cc?auto=format&fit=crop&w=1200&q=80",
-  serviceCarpet:
-    "https://images.unsplash.com/photo-1600166898405-da2576033f8a?auto=format&fit=crop&w=1200&q=80",
-  serviceWindow:
-    "https://images.unsplash.com/photo-1513694203232-6a0f6c21dd47?auto=format&fit=crop&w=1200&q=80",
-  serviceMove:
-    "https://images.unsplash.com/photo-1605276374104-deb2bcf0468f?auto=format&fit=crop&w=1200&q=80",
+  serviceHouse: "/services/house-cleaning.jpg",
+  serviceDeep: "/services/deep-cleaning.jpg",
+  serviceOffice: "/services/office-cleaning.jpg",
+  serviceAirbnb: "/services/airbnb-cleaning.jpg",
+  serviceTenancy: "/services/end-of-tenancy.jpg",
+  serviceCarpet: "/services/carpet-cleaning.jpg",
+  serviceWindow: "/services/window-cleaning.jpg",
+  serviceMove: "/services/move-in-out.jpg",
   whyChoose:
     "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=1600&q=80",
   beforeAfterBefore: "/dirtyroom.png",
