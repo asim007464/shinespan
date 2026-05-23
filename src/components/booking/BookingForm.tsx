@@ -1,29 +1,53 @@
 "use client";
 
+import { BookingServicePanel } from "@/components/booking/BookingServicePanel";
 import { getServiceByTitle } from "@/lib/services";
 import { Skeleton } from "@/components/ui/Skeleton";
 import { ThemeSelect } from "@/components/ui/ThemeSelect";
 import { submitBooking } from "@/services/bookingIntegration";
 import type { BookingPayload } from "@/services/types";
+import {
+  BOOKING_ADDITIONAL_SERVICES,
+  BOOKING_SERVICE_TYPES,
+  buildBookingMessage,
+} from "@/utils/bookingOptions";
 import { SERVICES_LIST } from "@/utils/constants";
-import { bookingFieldErrors } from "@/utils/validation";
-import Image from "next/image";
+import { bookingFieldErrors, combinePreferredDateTime } from "@/utils/validation";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useMemo, useState } from "react";
-import { FiCheck } from "react-icons/fi";
+import { useEffect, useMemo, useState } from "react";
 
 const inputClass =
   "mt-2 w-full rounded-2xl border border-white/15 bg-ss-blue-950/90 px-4 py-3 text-sm text-white outline-none placeholder:text-slate-500 focus:ring-2 focus:ring-ss-blue-500/50";
 
+const labelClass = "text-xs font-semibold uppercase tracking-wider text-slate-300";
+const hintClass = "mt-1.5 text-xs leading-relaxed text-slate-500";
+const formShellClass =
+  "rounded-[2rem] border border-white/10 bg-ss-blue-900/60 p-6 shadow-2xl shadow-black/30 backdrop-blur-sm sm:p-8";
+
+function Label({ children, required }: { children: React.ReactNode; required?: boolean }) {
+  return (
+    <span className={labelClass}>
+      {children}
+      {required ? <span className="text-red-400"> *</span> : null}
+    </span>
+  );
+}
+
 const initial = {
+  service: "",
+  serviceType: "",
+  roomCount: "",
+  bathroomCount: "",
+  additionalServicesNotes: "",
+  additionalServices: [] as string[],
   name: "",
   phone: "",
   email: "",
+  preferredDate: "",
+  preferredTime: "",
   address: "",
-  service: "",
-  datetime: "",
-  message: "",
+  jobNotes: "",
 };
 
 export function BookingForm() {
@@ -31,15 +55,29 @@ export function BookingForm() {
   const searchParams = useSearchParams();
   const preService = searchParams.get("service");
 
+  const serviceFromUrl = useMemo(() => {
+    if (!preService?.trim()) return undefined;
+    return getServiceByTitle(decodeURIComponent(preService.trim()));
+  }, [preService]);
+
+  const showServicePanel = !!serviceFromUrl;
+
   const [form, setForm] = useState(() => ({
     ...initial,
-    service: preService ?? "",
+    service: serviceFromUrl?.title ?? "",
   }));
+  const [files, setFiles] = useState<File[]>([]);
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [loading, setLoading] = useState(false);
   const [result, setResult] = useState<{ ok: boolean; message?: string; reference?: string } | null>(
     null
   );
+
+  useEffect(() => {
+    if (serviceFromUrl) {
+      setForm((f) => ({ ...f, service: serviceFromUrl.title }));
+    }
+  }, [serviceFromUrl]);
 
   const serviceSelectOptions = useMemo(
     () => [
@@ -49,14 +87,34 @@ export function BookingForm() {
     []
   );
 
-  const selectedService = useMemo(
-    () => (form.service ? getServiceByTitle(form.service) : undefined),
-    [form.service]
+  const serviceTypeOptions = useMemo(
+    () => [
+      { value: "", label: "Select type of service" },
+      ...BOOKING_SERVICE_TYPES.map((t) => ({ value: t, label: t })),
+    ],
+    []
   );
 
   function update<K extends keyof typeof form>(key: K, value: (typeof form)[K]) {
     setForm((f) => ({ ...f, [key]: value }));
     setErrors((e) => ({ ...e, [key]: "" }));
+  }
+
+  function toggleAdditionalService(name: string) {
+    setForm((f) => {
+      const has = f.additionalServices.includes(name);
+      return {
+        ...f,
+        additionalServices: has
+          ? f.additionalServices.filter((s) => s !== name)
+          : [...f.additionalServices, name],
+      };
+    });
+  }
+
+  function handleFilesChange(e: React.ChangeEvent<HTMLInputElement>) {
+    const picked = Array.from(e.target.files ?? []);
+    setFiles(picked.slice(0, 6));
   }
 
   async function handleSubmit(e: React.FormEvent) {
@@ -67,20 +125,46 @@ export function BookingForm() {
       phone: form.phone,
       address: form.address,
       service: form.service,
-      datetime: form.datetime,
-      message: form.message,
+      serviceType: form.serviceType,
+      roomCount: form.roomCount,
+      preferredDate: form.preferredDate,
+      preferredTime: form.preferredTime,
     });
+    if (showServicePanel && !form.bathroomCount.trim()) {
+      fieldErrors.bathroomCount = "Number of bathrooms is required";
+    }
     setErrors(fieldErrors);
     if (Object.keys(fieldErrors).length > 0) return;
 
     setLoading(true);
     setResult(null);
 
+    const scheduledAt = combinePreferredDateTime(form.preferredDate, form.preferredTime);
+    const attachmentNames = files.map((f) => f.name);
+    const message = buildBookingMessage({
+      serviceType: form.serviceType,
+      roomCount: form.roomCount,
+      bathroomCount: form.bathroomCount,
+      additionalServices: form.additionalServices,
+      additionalServicesNotes: form.additionalServicesNotes,
+      jobNotes: form.jobNotes,
+      attachmentNames,
+    });
+
     const payload: BookingPayload = {
       service: form.service,
-      scheduledAt: form.datetime,
+      serviceType: form.serviceType,
+      roomCount: form.roomCount,
+      bathroomCount: form.bathroomCount || undefined,
+      additionalServices: form.additionalServices,
+      additionalServicesNotes: form.additionalServicesNotes || undefined,
+      scheduledAt,
+      preferredDate: form.preferredDate,
+      preferredTime: form.preferredTime,
       address: form.address,
-      message: form.message,
+      message,
+      jobNotes: form.jobNotes || undefined,
+      attachmentNames: attachmentNames.length > 0 ? attachmentNames : undefined,
       customerName: form.name,
       customerEmail: form.email,
       customerPhone: form.phone.replace(/\s/g, ""),
@@ -96,85 +180,240 @@ export function BookingForm() {
       reference: res.reference,
     });
     if (res.ok) {
+      setForm({ ...initial, service: serviceFromUrl?.title ?? "" });
+      setFiles([]);
       window.setTimeout(() => router.push("/"), 3200);
     }
   }
 
-  return (
-    <div className="relative mx-auto max-w-3xl pb-24 pt-10">
-      <div className="mb-8 max-w-2xl">
-        <h1 className="font-display text-3xl text-white sm:text-4xl">Book Now</h1>
-        <p className="mt-3 text-base leading-relaxed text-slate-400">
-          One simple form for cleaning services UK-wide — professional cleaners confirmed by phone
-          or email.
+  const resultBanner = result ? (
+    <div
+      className={`mt-6 rounded-2xl px-4 py-3 text-sm ${
+        result.ok
+          ? "border border-emerald-500/40 bg-emerald-950/50 text-emerald-100"
+          : "border border-red-500/40 bg-red-950/50 text-red-100"
+      }`}
+    >
+      {result.ok ? (
+        <>
+          <p className="font-semibold">Booking received — thank you.</p>
+          {result.reference ? (
+            <p className="mt-1 text-xs opacity-90">Reference: {result.reference}</p>
+          ) : null}
+          <p className="mt-2 text-xs">{result.message}</p>
+        </>
+      ) : (
+        <>
+          <p className="font-semibold">Something went wrong.</p>
+          <p className="mt-1 text-xs">{result.message}</p>
+          <Link href="/contact" className="mt-2 inline-block text-xs underline">
+            Contact us directly
+          </Link>
+        </>
+      )}
+    </div>
+  ) : null;
+
+  const contactFields = (
+    <>
+      <label className="block">
+        <Label required>Full name</Label>
+        <input
+          value={form.name}
+          onChange={(e) => update("name", e.target.value)}
+          autoComplete="name"
+          className={inputClass}
+        />
+        {errors.name ? <p className="mt-1 text-xs text-red-400">{errors.name}</p> : null}
+      </label>
+
+      <label className="block">
+        <Label required>Email</Label>
+        <input
+          type="email"
+          value={form.email}
+          onChange={(e) => update("email", e.target.value)}
+          autoComplete="email"
+          className={inputClass}
+        />
+        {errors.email ? <p className="mt-1 text-xs text-red-400">{errors.email}</p> : null}
+      </label>
+
+      <label className="block">
+        <Label required>Phone number</Label>
+        <input
+          value={form.phone}
+          onChange={(e) => update("phone", e.target.value)}
+          autoComplete="tel"
+          placeholder="07384 647705"
+          className={inputClass}
+        />
+        {errors.phone ? <p className="mt-1 text-xs text-red-400">{errors.phone}</p> : null}
+      </label>
+    </>
+  );
+
+  const scheduleFields = (
+    <>
+      <label className="block">
+        <Label required>Preferred date</Label>
+        <input
+          type="date"
+          value={form.preferredDate}
+          onChange={(e) => update("preferredDate", e.target.value)}
+          className={inputClass}
+        />
+        {errors.preferredDate ? (
+          <p className="mt-1 text-xs text-red-400">{errors.preferredDate}</p>
+        ) : null}
+      </label>
+
+      <label className="block">
+        <Label required>Preferred time</Label>
+        <input
+          type="time"
+          value={form.preferredTime}
+          onChange={(e) => update("preferredTime", e.target.value)}
+          className={inputClass}
+        />
+        {errors.preferredTime ? (
+          <p className="mt-1 text-xs text-red-400">{errors.preferredTime}</p>
+        ) : null}
+      </label>
+    </>
+  );
+
+  const notesAndUpload = (
+    <>
+      <label className="block">
+        <Label>Key information &amp; job notes (optional)</Label>
+        <textarea
+          value={form.jobNotes}
+          onChange={(e) => update("jobNotes", e.target.value)}
+          rows={showServicePanel ? 4 : 5}
+          placeholder="Access codes, parking, pets, priorities for the visit…"
+          className={inputClass}
+        />
+      </label>
+
+      <label className="block">
+        <Label>Upload images (optional)</Label>
+        <input
+          type="file"
+          accept="image/*"
+          multiple
+          onChange={handleFilesChange}
+          className="mt-2 block w-full cursor-pointer rounded-2xl border border-dashed border-white/20 bg-ss-blue-950/60 px-4 py-4 text-sm text-slate-400 file:mr-4 file:rounded-xl file:border-0 file:bg-ss-blue-600 file:px-4 file:py-2 file:text-sm file:font-semibold file:text-white hover:file:bg-ss-blue-500"
+        />
+        <p className={hintClass}>
+          Share photos to help us understand your cleaning service needs.
         </p>
+        {files.length > 0 ? (
+          <ul className="mt-2 text-xs text-slate-400">
+            {files.map((f) => (
+              <li key={f.name}>
+                {f.name} ({Math.round(f.size / 1024)} KB)
+              </li>
+            ))}
+          </ul>
+        ) : null}
+      </label>
+    </>
+  );
+
+  const serviceFocusedForm = (
+    <form onSubmit={handleSubmit} className={formShellClass}>
+      <input type="hidden" name="service" value={form.service} />
+
+      <p className="mb-6 text-sm text-slate-400">
+        Booking:{" "}
+        <span className="font-semibold text-white">{serviceFromUrl?.title}</span>
+      </p>
+
+      <div className="space-y-5">
+        {contactFields}
+
+        <label className="block">
+          <Label required>Property address</Label>
+          <textarea
+            value={form.address}
+            onChange={(e) => update("address", e.target.value)}
+            rows={3}
+            placeholder="Full address including postcode"
+            autoComplete="street-address"
+            className={inputClass}
+          />
+          {errors.address ? <p className="mt-1 text-xs text-red-400">{errors.address}</p> : null}
+        </label>
+
+        <label className="block">
+          <Label required>Type of service</Label>
+          <ThemeSelect
+            id="booking-service-type-focused"
+            value={form.serviceType}
+            onChange={(v) => update("serviceType", v)}
+            options={serviceTypeOptions}
+            placeholder="Select type of service"
+          />
+          {errors.serviceType ? (
+            <p className="mt-1 text-xs text-red-400">{errors.serviceType}</p>
+          ) : null}
+        </label>
+
+        <label className="block">
+          <Label required>No. of rooms</Label>
+          <input
+            value={form.roomCount}
+            onChange={(e) => update("roomCount", e.target.value)}
+            placeholder="e.g. 3 bedrooms"
+            className={inputClass}
+          />
+          <p className={hintClass}>
+            Please add total number of rooms — also include the room size/dimensions.
+          </p>
+          {errors.roomCount ? (
+            <p className="mt-1 text-xs text-red-400">{errors.roomCount}</p>
+          ) : null}
+        </label>
+
+        <label className="block">
+          <Label required>No. of bathrooms</Label>
+          <input
+            value={form.bathroomCount}
+            onChange={(e) => update("bathroomCount", e.target.value)}
+            placeholder="e.g. 2"
+            className={inputClass}
+          />
+          {errors.bathroomCount ? (
+            <p className="mt-1 text-xs text-red-400">{errors.bathroomCount}</p>
+          ) : null}
+        </label>
+
+        <div className="grid gap-5 sm:grid-cols-2">
+          {scheduleFields}
+        </div>
+
+        {notesAndUpload}
       </div>
 
-      <form
-        onSubmit={handleSubmit}
-        className="rounded-[2rem] border border-white/10 bg-ss-blue-900/60 p-8 shadow-2xl shadow-black/30 backdrop-blur-sm sm:p-10"
+      {resultBanner}
+
+      <button
+        type="submit"
+        disabled={loading}
+        className="mt-6 w-full rounded-2xl bg-gradient-to-r from-ss-blue-700 to-ss-blue-500 py-4 text-sm font-semibold text-white shadow-xl shadow-ss-blue-600/25 transition hover:brightness-105 disabled:opacity-60 sm:w-auto sm:px-10"
       >
-        <div className="grid gap-6 sm:grid-cols-2">
-          <label className="block sm:col-span-2">
-            <span className="text-xs font-semibold uppercase tracking-wider text-slate-300">
-              Full name
-            </span>
-            <input
-              value={form.name}
-              onChange={(e) => update("name", e.target.value)}
-              autoComplete="name"
-              className={inputClass}
-            />
-            {errors.name ? <p className="mt-1 text-xs text-red-400">{errors.name}</p> : null}
-          </label>
+        {loading ? "Submitting…" : "Submit"}
+      </button>
+    </form>
+  );
 
+  const fullBookingForm = (
+    <form onSubmit={handleSubmit} className={formShellClass}>
+      <div className="grid gap-10 lg:grid-cols-2 lg:gap-12">
+        <div className="space-y-6">
           <label className="block">
-            <span className="text-xs font-semibold uppercase tracking-wider text-slate-300">
-              Phone
-            </span>
-            <input
-              value={form.phone}
-              onChange={(e) => update("phone", e.target.value)}
-              autoComplete="tel"
-              placeholder="07384 647705"
-              className={inputClass}
-            />
-            {errors.phone ? <p className="mt-1 text-xs text-red-400">{errors.phone}</p> : null}
-          </label>
-
-          <label className="block">
-            <span className="text-xs font-semibold uppercase tracking-wider text-slate-300">
-              Email
-            </span>
-            <input
-              type="email"
-              value={form.email}
-              onChange={(e) => update("email", e.target.value)}
-              autoComplete="email"
-              className={inputClass}
-            />
-            {errors.email ? <p className="mt-1 text-xs text-red-400">{errors.email}</p> : null}
-          </label>
-
-          <label className="block sm:col-span-2">
-            <span className="text-xs font-semibold uppercase tracking-wider text-slate-300">
-              Address
-            </span>
-            <textarea
-              value={form.address}
-              onChange={(e) => update("address", e.target.value)}
-              rows={3}
-              placeholder="Postcode and full address"
-              autoComplete="street-address"
-              className={inputClass}
-            />
-            {errors.address ? <p className="mt-1 text-xs text-red-400">{errors.address}</p> : null}
-          </label>
-
-          <label className="block sm:col-span-2">
-            <span className="text-xs font-semibold uppercase tracking-wider text-slate-300">
-              Service
-            </span>
+            <Label required>Service interested in</Label>
             <ThemeSelect
               id="booking-service"
               value={form.service}
@@ -185,104 +424,124 @@ export function BookingForm() {
             {errors.service ? <p className="mt-1 text-xs text-red-400">{errors.service}</p> : null}
           </label>
 
-          {selectedService ? (
-            <div className="sm:col-span-2 overflow-hidden rounded-2xl border border-ss-blue-500/25 bg-ss-blue-950/70">
-              <div className="grid sm:grid-cols-[140px_1fr]">
-                <div className="relative hidden aspect-square sm:block">
-                  <Image
-                    src={selectedService.image}
-                    alt={selectedService.title}
-                    fill
-                    className="object-cover"
-                    sizes="140px"
-                  />
-                </div>
-                <div className="p-5 sm:p-6">
-                  <h2 className="font-display text-xl text-white">{selectedService.title}</h2>
-                  <p className="mt-2 text-sm leading-relaxed text-slate-400">
-                    {selectedService.seoDescription}
-                  </p>
-                  <h3 className="mt-4 text-xs font-semibold uppercase tracking-wider text-ss-blue-300">
-                    What&apos;s included
-                  </h3>
-                  <ul className="mt-2 space-y-1.5 text-sm text-slate-300">
-                    {selectedService.details.map((d) => (
-                      <li key={d} className="flex gap-2">
-                        <FiCheck className="mt-0.5 h-4 w-4 shrink-0 text-ss-blue-400" />
-                        {d}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              </div>
-            </div>
-          ) : null}
-
-          <label className="block sm:col-span-2">
-            <span className="text-xs font-semibold uppercase tracking-wider text-slate-300">
-              Date &amp; time
-            </span>
-            <input
-              type="datetime-local"
-              value={form.datetime}
-              onChange={(e) => update("datetime", e.target.value)}
-              className={inputClass}
+          <label className="block">
+            <Label required>Type of service</Label>
+            <ThemeSelect
+              id="booking-service-type"
+              value={form.serviceType}
+              onChange={(v) => update("serviceType", v)}
+              options={serviceTypeOptions}
+              placeholder="Select type of service"
             />
-            {errors.datetime ? (
-              <p className="mt-1 text-xs text-red-400">{errors.datetime}</p>
+            {errors.serviceType ? (
+              <p className="mt-1 text-xs text-red-400">{errors.serviceType}</p>
             ) : null}
           </label>
 
-          <label className="block sm:col-span-2">
-            <span className="text-xs font-semibold uppercase tracking-wider text-slate-300">
-              Message
-            </span>
+          <label className="block">
+            <Label required>No. of rooms</Label>
+            <input
+              value={form.roomCount}
+              onChange={(e) => update("roomCount", e.target.value)}
+              placeholder="e.g. 3 bedrooms, 2 bathrooms"
+              className={inputClass}
+            />
+            <p className={hintClass}>
+              Please add total number of rooms — also include the main size/dimensions.
+            </p>
+            {errors.roomCount ? (
+              <p className="mt-1 text-xs text-red-400">{errors.roomCount}</p>
+            ) : null}
+          </label>
+
+          <label className="block">
+            <Label>Add more info about additional services (optional)</Label>
             <textarea
-              value={form.message}
-              onChange={(e) => update("message", e.target.value)}
-              rows={4}
-              placeholder="Property size, access notes, pets, or special requests"
+              value={form.additionalServicesNotes}
+              onChange={(e) => update("additionalServicesNotes", e.target.value)}
+              rows={3}
+              placeholder="Any extra detail about add-ons or access"
               className={inputClass}
             />
           </label>
         </div>
 
-        {result ? (
-          <div
-            className={`mt-6 rounded-2xl px-4 py-3 text-sm ${
-              result.ok
-                ? "border border-emerald-500/40 bg-emerald-950/50 text-emerald-100"
-                : "border border-red-500/40 bg-red-950/50 text-red-100"
-            }`}
-          >
-            {result.ok ? (
-              <>
-                <p className="font-semibold">Booking received — thank you.</p>
-                {result.reference ? (
-                  <p className="mt-1 text-xs opacity-90">Reference: {result.reference}</p>
-                ) : null}
-                <p className="mt-2 text-xs">{result.message}</p>
-              </>
-            ) : (
-              <>
-                <p className="font-semibold">Something went wrong.</p>
-                <p className="mt-1 text-xs">{result.message}</p>
-                <Link href="/contact" className="mt-2 inline-block text-xs underline">
-                  Contact us directly
-                </Link>
-              </>
-            )}
+        <fieldset className="min-w-0">
+          <legend className={labelClass}>Additional services (optional)</legend>
+          <div className="mt-3 grid gap-2.5 sm:grid-cols-2">
+            {BOOKING_ADDITIONAL_SERVICES.map((item) => (
+              <label
+                key={item}
+                className="flex cursor-pointer items-start gap-2.5 rounded-xl border border-white/[0.06] bg-ss-blue-950/50 px-3 py-2.5 text-sm text-slate-300 transition hover:border-ss-blue-500/25 hover:bg-ss-blue-950/80"
+              >
+                <input
+                  type="checkbox"
+                  checked={form.additionalServices.includes(item)}
+                  onChange={() => toggleAdditionalService(item)}
+                  className="mt-0.5 h-4 w-4 shrink-0 rounded border-white/25 bg-ss-blue-950 text-ss-blue-500 focus:ring-ss-blue-500/50"
+                />
+                <span>{item}</span>
+              </label>
+            ))}
           </div>
-        ) : null}
+        </fieldset>
+      </div>
 
-        <button
-          type="submit"
-          disabled={loading}
-          className="mt-8 w-full rounded-2xl bg-gradient-to-r from-ss-blue-700 to-ss-blue-500 py-4 text-sm font-semibold text-white shadow-xl shadow-ss-blue-600/25 transition hover:brightness-105 disabled:opacity-60"
-        >
-          {loading ? "Submitting…" : "Book Now"}
-        </button>
-      </form>
+      <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:gap-8">
+        <div className="space-y-6">{contactFields}</div>
+        <div className="space-y-6">
+          {scheduleFields}
+          <label className="block">
+            <Label required>Address</Label>
+            <textarea
+              value={form.address}
+              onChange={(e) => update("address", e.target.value)}
+              rows={4}
+              placeholder="Full address including postcode"
+              autoComplete="street-address"
+              className={inputClass}
+            />
+            {errors.address ? (
+              <p className="mt-1 text-xs text-red-400">{errors.address}</p>
+            ) : null}
+          </label>
+        </div>
+      </div>
+
+      <div className="mt-10 space-y-6">{notesAndUpload}</div>
+
+      {resultBanner}
+
+      <button
+        type="submit"
+        disabled={loading}
+        className="mt-8 rounded-2xl bg-gradient-to-r from-ss-blue-700 to-ss-blue-500 px-10 py-4 text-sm font-semibold text-white shadow-xl shadow-ss-blue-600/25 transition hover:brightness-105 disabled:opacity-60 sm:w-auto"
+      >
+        {loading ? "Submitting…" : "Submit"}
+      </button>
+    </form>
+  );
+
+  return (
+    <div className="relative mx-auto max-w-7xl pb-24 pt-10">
+      {!showServicePanel ? (
+        <div className="mb-8 max-w-2xl">
+          <h1 className="font-display text-3xl text-white sm:text-4xl">Book Now</h1>
+          <p className="mt-3 text-base leading-relaxed text-slate-400">
+            Tell us about your property and preferred visit — our UK coordinators confirm by phone
+            or email.
+          </p>
+        </div>
+      ) : null}
+
+      {showServicePanel && serviceFromUrl ? (
+        <div className="grid items-start gap-10 lg:grid-cols-2 lg:gap-12 xl:gap-16">
+          <BookingServicePanel service={serviceFromUrl} />
+          <div className="min-w-0">{serviceFocusedForm}</div>
+        </div>
+      ) : (
+        fullBookingForm
+      )}
 
       {loading ? (
         <div className="fixed inset-0 z-[70] flex items-center justify-center bg-ss-blue-900/40 backdrop-blur-sm">

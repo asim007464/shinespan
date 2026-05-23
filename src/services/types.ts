@@ -1,8 +1,17 @@
 export type BookingPayload = {
   service: string;
+  serviceType: string;
+  roomCount: string;
+  bathroomCount?: string;
+  additionalServices: string[];
+  additionalServicesNotes?: string;
   scheduledAt: string;
+  preferredDate: string;
+  preferredTime: string;
   address: string;
   message: string;
+  jobNotes?: string;
+  attachmentNames?: string[];
   customerName: string;
   customerEmail: string;
   customerPhone: string;

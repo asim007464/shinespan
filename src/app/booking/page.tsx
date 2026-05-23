@@ -15,7 +15,7 @@ function BookingFallback() {
   return (
     <Container className="py-16">
       <Skeleton className="mx-auto mb-8 h-12 max-w-md rounded-2xl" />
-      <Skeleton className="mx-auto h-[520px] max-w-3xl rounded-[2rem]" />
+      <Skeleton className="mx-auto h-[720px] max-w-6xl rounded-[2rem]" />
     </Container>
   );
 }

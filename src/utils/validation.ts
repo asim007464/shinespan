@@ -24,17 +24,27 @@ export function bookingFieldErrors(data: {
   phone: string;
   address: string;
   service: string;
-  datetime: string;
-  message?: string;
+  serviceType: string;
+  roomCount: string;
+  preferredDate: string;
+  preferredTime: string;
 }): Record<string, string> {
   const errors: Record<string, string> = {};
   if (!data.service?.trim()) errors.service = "Choose a service";
-  if (!data.datetime?.trim()) errors.datetime = "Pick date and time";
+  if (!data.serviceType?.trim()) errors.serviceType = "Choose type of service";
+  if (!data.roomCount?.trim()) errors.roomCount = "Number of rooms is required";
+  if (!data.preferredDate?.trim()) errors.preferredDate = "Preferred date is required";
+  if (!data.preferredTime?.trim()) errors.preferredTime = "Preferred time is required";
   if (!data.address?.trim()) errors.address = "Address is required";
   if (!data.name?.trim()) errors.name = "Name is required";
   if (!isValidEmail(data.email)) errors.email = "Valid email required";
   if (!isValidUkPhone(data.phone)) errors.phone = "Valid UK phone required";
   return errors;
+}
+
+export function combinePreferredDateTime(date: string, time: string): string {
+  if (!date?.trim() || !time?.trim()) return "";
+  return `${date}T${time}`;
 }
 
 export { UK_PHONE_REGEX, EMAIL_REGEX };
