@@ -24,6 +24,7 @@ const labelClass = "text-xs font-semibold uppercase tracking-wider text-slate-30
 const hintClass = "mt-1.5 text-xs leading-relaxed text-slate-500";
 const formShellClass =
   "rounded-[2rem] border border-white/10 bg-ss-blue-900/60 p-6 shadow-2xl shadow-black/30 backdrop-blur-sm sm:p-8";
+const fieldGridClass = "grid gap-5 sm:grid-cols-2";
 
 function Label({ children, required }: { children: React.ReactNode; required?: boolean }) {
   return (
@@ -214,78 +215,95 @@ export function BookingForm() {
     </div>
   ) : null;
 
-  const contactFields = (
-    <>
-      <label className="block">
-        <Label required>Full name</Label>
-        <input
-          value={form.name}
-          onChange={(e) => update("name", e.target.value)}
-          autoComplete="name"
-          className={inputClass}
-        />
-        {errors.name ? <p className="mt-1 text-xs text-red-400">{errors.name}</p> : null}
-      </label>
-
-      <label className="block">
-        <Label required>Email</Label>
-        <input
-          type="email"
-          value={form.email}
-          onChange={(e) => update("email", e.target.value)}
-          autoComplete="email"
-          className={inputClass}
-        />
-        {errors.email ? <p className="mt-1 text-xs text-red-400">{errors.email}</p> : null}
-      </label>
-
-      <label className="block">
-        <Label required>Phone number</Label>
-        <input
-          value={form.phone}
-          onChange={(e) => update("phone", e.target.value)}
-          autoComplete="tel"
-          placeholder="07384 647705"
-          className={inputClass}
-        />
-        {errors.phone ? <p className="mt-1 text-xs text-red-400">{errors.phone}</p> : null}
-      </label>
-    </>
+  const nameField = (
+    <label className="block">
+      <Label required>Full name</Label>
+      <input
+        value={form.name}
+        onChange={(e) => update("name", e.target.value)}
+        autoComplete="name"
+        className={inputClass}
+      />
+      {errors.name ? <p className="mt-1 text-xs text-red-400">{errors.name}</p> : null}
+    </label>
   );
 
-  const scheduleFields = (
-    <>
-      <label className="block">
-        <Label required>Preferred date</Label>
-        <input
-          type="date"
-          value={form.preferredDate}
-          onChange={(e) => update("preferredDate", e.target.value)}
-          className={inputClass}
-        />
-        {errors.preferredDate ? (
-          <p className="mt-1 text-xs text-red-400">{errors.preferredDate}</p>
-        ) : null}
-      </label>
+  const emailField = (
+    <label className="block">
+      <Label required>Email</Label>
+      <input
+        type="email"
+        value={form.email}
+        onChange={(e) => update("email", e.target.value)}
+        autoComplete="email"
+        className={inputClass}
+      />
+      {errors.email ? <p className="mt-1 text-xs text-red-400">{errors.email}</p> : null}
+    </label>
+  );
 
-      <label className="block">
-        <Label required>Preferred time</Label>
-        <input
-          type="time"
-          value={form.preferredTime}
-          onChange={(e) => update("preferredTime", e.target.value)}
-          className={inputClass}
-        />
-        {errors.preferredTime ? (
-          <p className="mt-1 text-xs text-red-400">{errors.preferredTime}</p>
-        ) : null}
-      </label>
-    </>
+  const phoneField = (
+    <label className="block">
+      <Label required>Phone number</Label>
+      <input
+        value={form.phone}
+        onChange={(e) => update("phone", e.target.value)}
+        autoComplete="tel"
+        placeholder="07384 647705"
+        className={inputClass}
+      />
+      {errors.phone ? <p className="mt-1 text-xs text-red-400">{errors.phone}</p> : null}
+    </label>
+  );
+
+  const dateField = (
+    <label className="block">
+      <Label required>Preferred date</Label>
+      <input
+        type="date"
+        value={form.preferredDate}
+        onChange={(e) => update("preferredDate", e.target.value)}
+        className={inputClass}
+      />
+      {errors.preferredDate ? (
+        <p className="mt-1 text-xs text-red-400">{errors.preferredDate}</p>
+      ) : null}
+    </label>
+  );
+
+  const timeField = (
+    <label className="block">
+      <Label required>Preferred time</Label>
+      <input
+        type="time"
+        value={form.preferredTime}
+        onChange={(e) => update("preferredTime", e.target.value)}
+        className={inputClass}
+      />
+      {errors.preferredTime ? (
+        <p className="mt-1 text-xs text-red-400">{errors.preferredTime}</p>
+      ) : null}
+    </label>
+  );
+
+  const addressField = (
+    <label className="block sm:col-span-2">
+      <Label required>{showServicePanel ? "Property address" : "Address"}</Label>
+      <textarea
+        value={form.address}
+        onChange={(e) => update("address", e.target.value)}
+        rows={showServicePanel ? 3 : 4}
+        placeholder="Full address including postcode"
+        autoComplete="street-address"
+        className={inputClass}
+      />
+      {errors.address ? <p className="mt-1 text-xs text-red-400">{errors.address}</p> : null}
+    </label>
   );
 
   const notesAndUpload = (
     <>
-      <label className="block">
+      <label className="block sm:col-span-2">
         <Label>Key information &amp; job notes (optional)</Label>
         <textarea
           value={form.jobNotes}
@@ -296,7 +314,7 @@ export function BookingForm() {
         />
       </label>
 
-      <label className="block">
+      <label className="block sm:col-span-2">
         <Label>Upload images (optional)</Label>
         <input
           type="file"
@@ -330,22 +348,10 @@ export function BookingForm() {
         <span className="font-semibold text-white">{serviceFromUrl?.title}</span>
       </p>
 
-      <div className="space-y-5">
-        {contactFields}
-
-        <label className="block">
-          <Label required>Property address</Label>
-          <textarea
-            value={form.address}
-            onChange={(e) => update("address", e.target.value)}
-            rows={3}
-            placeholder="Full address including postcode"
-            autoComplete="street-address"
-            className={inputClass}
-          />
-          {errors.address ? <p className="mt-1 text-xs text-red-400">{errors.address}</p> : null}
-        </label>
-
+      <div className={fieldGridClass}>
+        {nameField}
+        {emailField}
+        {phoneField}
         <label className="block">
           <Label required>Type of service</Label>
           <ThemeSelect
@@ -359,7 +365,6 @@ export function BookingForm() {
             <p className="mt-1 text-xs text-red-400">{errors.serviceType}</p>
           ) : null}
         </label>
-
         <label className="block">
           <Label required>No. of rooms</Label>
           <input
@@ -375,7 +380,6 @@ export function BookingForm() {
             <p className="mt-1 text-xs text-red-400">{errors.roomCount}</p>
           ) : null}
         </label>
-
         <label className="block">
           <Label required>No. of bathrooms</Label>
           <input
@@ -388,11 +392,9 @@ export function BookingForm() {
             <p className="mt-1 text-xs text-red-400">{errors.bathroomCount}</p>
           ) : null}
         </label>
-
-        <div className="grid gap-5 sm:grid-cols-2">
-          {scheduleFields}
-        </div>
-
+        {dateField}
+        {timeField}
+        {addressField}
         {notesAndUpload}
       </div>
 
@@ -410,105 +412,100 @@ export function BookingForm() {
 
   const fullBookingForm = (
     <form onSubmit={handleSubmit} className={formShellClass}>
-      <div className="grid gap-10 lg:grid-cols-2 lg:gap-12">
-        <div className="space-y-6">
-          <label className="block">
-            <Label required>Service interested in</Label>
-            <ThemeSelect
-              id="booking-service"
-              value={form.service}
-              onChange={(v) => update("service", v)}
-              options={serviceSelectOptions}
-              placeholder="Select a service"
-            />
-            {errors.service ? <p className="mt-1 text-xs text-red-400">{errors.service}</p> : null}
-          </label>
+      <div className={fieldGridClass}>
+        <label className="block">
+          <Label required>Service interested in</Label>
+          <ThemeSelect
+            id="booking-service"
+            value={form.service}
+            onChange={(v) => update("service", v)}
+            options={serviceSelectOptions}
+            placeholder="Select a service"
+          />
+          {errors.service ? <p className="mt-1 text-xs text-red-400">{errors.service}</p> : null}
+        </label>
 
-          <label className="block">
-            <Label required>Type of service</Label>
-            <ThemeSelect
-              id="booking-service-type"
-              value={form.serviceType}
-              onChange={(v) => update("serviceType", v)}
-              options={serviceTypeOptions}
-              placeholder="Select type of service"
-            />
-            {errors.serviceType ? (
-              <p className="mt-1 text-xs text-red-400">{errors.serviceType}</p>
-            ) : null}
-          </label>
+        <label className="block">
+          <Label required>Type of service</Label>
+          <ThemeSelect
+            id="booking-service-type"
+            value={form.serviceType}
+            onChange={(v) => update("serviceType", v)}
+            options={serviceTypeOptions}
+            placeholder="Select type of service"
+          />
+          {errors.serviceType ? (
+            <p className="mt-1 text-xs text-red-400">{errors.serviceType}</p>
+          ) : null}
+        </label>
 
-          <label className="block">
-            <Label required>No. of rooms</Label>
-            <input
-              value={form.roomCount}
-              onChange={(e) => update("roomCount", e.target.value)}
-              placeholder="e.g. 3 bedrooms, 2 bathrooms"
-              className={inputClass}
-            />
-            <p className={hintClass}>
-              Please add total number of rooms — also include the main size/dimensions.
-            </p>
-            {errors.roomCount ? (
-              <p className="mt-1 text-xs text-red-400">{errors.roomCount}</p>
-            ) : null}
-          </label>
+        <label className="block">
+          <Label required>No. of rooms</Label>
+          <input
+            value={form.roomCount}
+            onChange={(e) => update("roomCount", e.target.value)}
+            placeholder="e.g. 3 bedrooms, 2 bathrooms"
+            className={inputClass}
+          />
+          <p className={hintClass}>
+            Please add total number of rooms — also include the main size/dimensions.
+          </p>
+          {errors.roomCount ? (
+            <p className="mt-1 text-xs text-red-400">{errors.roomCount}</p>
+          ) : null}
+        </label>
 
-          <label className="block">
-            <Label>Add more info about additional services (optional)</Label>
-            <textarea
-              value={form.additionalServicesNotes}
-              onChange={(e) => update("additionalServicesNotes", e.target.value)}
-              rows={3}
-              placeholder="Any extra detail about add-ons or access"
-              className={inputClass}
-            />
-          </label>
-        </div>
+        <label className="block">
+          <Label required>No. of bathrooms</Label>
+          <input
+            value={form.bathroomCount}
+            onChange={(e) => update("bathroomCount", e.target.value)}
+            placeholder="e.g. 2"
+            className={inputClass}
+          />
+        </label>
 
-        <fieldset className="min-w-0">
-          <legend className={labelClass}>Additional services (optional)</legend>
-          <div className="mt-3 grid gap-2.5 sm:grid-cols-2">
-            {BOOKING_ADDITIONAL_SERVICES.map((item) => (
-              <label
-                key={item}
-                className="flex cursor-pointer items-start gap-2.5 rounded-xl border border-white/[0.06] bg-ss-blue-950/50 px-3 py-2.5 text-sm text-slate-300 transition hover:border-ss-blue-500/25 hover:bg-ss-blue-950/80"
-              >
-                <input
-                  type="checkbox"
-                  checked={form.additionalServices.includes(item)}
-                  onChange={() => toggleAdditionalService(item)}
-                  className="mt-0.5 h-4 w-4 shrink-0 rounded border-white/25 bg-ss-blue-950 text-ss-blue-500 focus:ring-ss-blue-500/50"
-                />
-                <span>{item}</span>
-              </label>
-            ))}
-          </div>
-        </fieldset>
+        <label className="block sm:col-span-2">
+          <Label>Add more info about additional services (optional)</Label>
+          <textarea
+            value={form.additionalServicesNotes}
+            onChange={(e) => update("additionalServicesNotes", e.target.value)}
+            rows={3}
+            placeholder="Any extra detail about add-ons or access"
+            className={inputClass}
+          />
+        </label>
       </div>
 
-      <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:gap-8">
-        <div className="space-y-6">{contactFields}</div>
-        <div className="space-y-6">
-          {scheduleFields}
-          <label className="block">
-            <Label required>Address</Label>
-            <textarea
-              value={form.address}
-              onChange={(e) => update("address", e.target.value)}
-              rows={4}
-              placeholder="Full address including postcode"
-              autoComplete="street-address"
-              className={inputClass}
-            />
-            {errors.address ? (
-              <p className="mt-1 text-xs text-red-400">{errors.address}</p>
-            ) : null}
-          </label>
+      <fieldset className="mt-8 min-w-0">
+        <legend className={labelClass}>Additional services (optional)</legend>
+        <div className="mt-3 grid gap-2.5 sm:grid-cols-2 lg:grid-cols-3">
+          {BOOKING_ADDITIONAL_SERVICES.map((item) => (
+            <label
+              key={item}
+              className="flex cursor-pointer items-start gap-2.5 rounded-xl border border-white/[0.06] bg-ss-blue-950/50 px-3 py-2.5 text-sm text-slate-300 transition hover:border-ss-blue-500/25 hover:bg-ss-blue-950/80"
+            >
+              <input
+                type="checkbox"
+                checked={form.additionalServices.includes(item)}
+                onChange={() => toggleAdditionalService(item)}
+                className="mt-0.5 h-4 w-4 shrink-0 rounded border-white/25 bg-ss-blue-950 text-ss-blue-500 focus:ring-ss-blue-500/50"
+              />
+              <span>{item}</span>
+            </label>
+          ))}
         </div>
-      </div>
+      </fieldset>
 
-      <div className="mt-10 space-y-6">{notesAndUpload}</div>
+      <div className={`mt-10 ${fieldGridClass}`}>
+        {nameField}
+        {emailField}
+        {phoneField}
+        {dateField}
+        {timeField}
+        {addressField}
+        {notesAndUpload}
+      </div>
 
       {resultBanner}
 
