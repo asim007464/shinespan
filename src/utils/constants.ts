@@ -60,7 +60,7 @@ export const IMAGES = {
   trusted: "https://images.unsplash.com/photo-1628177142898-93e36e4e3a50?auto=format&fit=crop&w=1600&q=80",
   serviceHouse: "/services/housecleaning.png",
   serviceDeep: "/deepcleaning.png",
-  serviceOffice: "/services/office-cleaning.jpg",
+  serviceOffice: "/92bb565e-f3e0-42dc-9ad2-8650fec99af6.png",
   serviceAirbnb: "/services/airbnb-cleaning.jpg",
   serviceTenancy: "/moveinout.png",
   serviceCarpet: "/carpetcleaning.png",
@@ -211,6 +211,9 @@ export const SERVICES_LIST: readonly ServiceItem[] = [
     image: IMAGES.serviceSanitisation,
   },
 ] as const;
+
+/** Footer service links — Room Sanitisation omitted from footer only */
+export const FOOTER_SERVICES = SERVICES_LIST.filter((s) => s.slug !== "room-sanitisation");
 
 export const FAQ_ITEMS = [
   {

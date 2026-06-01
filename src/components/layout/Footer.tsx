@@ -5,8 +5,8 @@ import { PhoneContactLink } from "@/components/common/PhoneContactLink";
 import {
   COMPANY,
   FOOTER_QUICK_LINKS,
+  FOOTER_SERVICES,
   IMAGES,
-  SERVICES_LIST,
   SOCIAL_LINKS,
 } from "@/utils/constants";
 import Image from "next/image";
@@ -59,10 +59,13 @@ export function Footer() {
             </div>
           </div>
 
-          <div className="lg:col-span-2">
-            <h3 className="text-xs font-semibold uppercase tracking-[0.2em] text-ss-blue-400">
+          <nav className="lg:col-span-2" aria-labelledby="footer-quick-links">
+            <p
+              id="footer-quick-links"
+              className="text-xs font-semibold uppercase tracking-[0.2em] text-ss-blue-400"
+            >
               Quick links
-            </h3>
+            </p>
             <ul className="mt-4 space-y-2.5">
               {FOOTER_QUICK_LINKS.map((l) => (
                 <li key={l.href}>
@@ -75,14 +78,17 @@ export function Footer() {
                 </li>
               ))}
             </ul>
-          </div>
+          </nav>
 
-          <div className="lg:col-span-3">
-            <h3 className="text-xs font-semibold uppercase tracking-[0.2em] text-ss-blue-400">
+          <nav className="lg:col-span-3" aria-labelledby="footer-services">
+            <p
+              id="footer-services"
+              className="text-xs font-semibold uppercase tracking-[0.2em] text-ss-blue-400"
+            >
               Services
-            </h3>
+            </p>
             <ul className="mt-4 grid gap-2.5 sm:grid-cols-2 lg:grid-cols-1">
-              {SERVICES_LIST.map((s) => (
+              {FOOTER_SERVICES.map((s) => (
                 <li key={s.slug}>
                   <Link
                     href={`/booking?service=${encodeURIComponent(s.title)}`}
@@ -93,13 +99,16 @@ export function Footer() {
                 </li>
               ))}
             </ul>
-          </div>
+          </nav>
 
           <div className="lg:col-span-3">
-            <h3 className="text-xs font-semibold uppercase tracking-[0.2em] text-ss-blue-400">
+            <p
+              id="footer-contact"
+              className="text-xs font-semibold uppercase tracking-[0.2em] text-ss-blue-400"
+            >
               Contact
-            </h3>
-            <ul className="mt-4 space-y-4 text-sm">
+            </p>
+            <ul className="mt-4 space-y-4 text-sm" aria-labelledby="footer-contact">
               <li>
                 <p className="text-xs font-medium uppercase tracking-wider text-slate-500">Phone</p>
                 <PhoneContactLink className="mt-1 inline-flex items-center gap-2 font-medium text-slate-200 hover:text-white">
@@ -127,7 +136,7 @@ export function Footer() {
         </div>
 
         <div className="mt-14 flex flex-col items-center justify-between gap-4 border-t border-white/10 pt-8 text-center text-xs text-slate-500 sm:flex-row sm:text-left">
-          <p>
+          <p suppressHydrationWarning>
             © {new Date().getFullYear()} {COMPANY.name}. All rights reserved. {COMPANY.region}.
           </p>
           <p className="flex flex-wrap justify-center gap-4">
