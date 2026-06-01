@@ -25,7 +25,7 @@ export function ServiceCard({
       >
         <Image
           src={service.image}
-          alt={`${service.title} — cleaning services UK`}
+          alt={`${service.title} — cleaning services in London`}
           fill
           loading={priorityImage ? undefined : "lazy"}
           priority={priorityImage}
@@ -39,7 +39,7 @@ export function ServiceCard({
       </Link>
 
       <div className="flex min-h-0 flex-1 flex-col px-5 py-5 sm:px-6 sm:py-6">
-        <TitleTag className="font-sans text-[1.05rem] font-semibold leading-snug tracking-tight text-white sm:text-lg">
+        <TitleTag className="font-sans text-[1.05rem] font-semibold leading-snug tracking-tight text-white sm:text-base lg:text-lg">
           <Link href={bookingHref} className="transition-colors hover:text-ss-blue-300">
             {service.title}
           </Link>

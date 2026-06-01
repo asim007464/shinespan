@@ -3,15 +3,60 @@
 import { ScrollReveal } from "@/components/animations/ScrollReveal";
 import { IMAGES } from "@/utils/constants";
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
+
+const SLIDER_MIN = 8;
+const SLIDER_MAX = 92;
+const ANIMATION_MS = 4500;
+
+function easeInOutCubic(t: number): number {
+  return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+}
 
 export function BeforeAfterSlider() {
-  const [pct, setPct] = useState(48);
+  const [pct, setPct] = useState(SLIDER_MIN);
+  const sectionRef = useRef<HTMLElement>(null);
+  const animatedRef = useRef(false);
+  const rafRef = useRef<number | null>(null);
 
   const clipInnerWidth = pct > 0 ? `${(100 / pct) * 100}%` : "100%";
 
+  useEffect(() => {
+    const el = sectionRef.current;
+    if (!el) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (!entry.isIntersecting || animatedRef.current) return;
+        animatedRef.current = true;
+
+        const from = SLIDER_MIN;
+        const to = SLIDER_MAX;
+        const startTime = performance.now();
+
+        const tick = (now: number) => {
+          const progress = Math.min(1, (now - startTime) / ANIMATION_MS);
+          const eased = easeInOutCubic(progress);
+          setPct(from + (to - from) * eased);
+          if (progress < 1) {
+            rafRef.current = requestAnimationFrame(tick);
+          }
+        };
+
+        rafRef.current = requestAnimationFrame(tick);
+      },
+      { threshold: 0.3, rootMargin: "0px 0px -8% 0px" }
+    );
+
+    observer.observe(el);
+    return () => {
+      observer.disconnect();
+      if (rafRef.current !== null) cancelAnimationFrame(rafRef.current);
+    };
+  }, []);
+
   return (
-    <section className="page-section py-20 sm:py-28">
+    <section ref={sectionRef} className="page-section py-20 sm:py-28">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <ScrollReveal className="mx-auto mb-10 max-w-3xl text-center">
           <p className="text-xs font-semibold uppercase tracking-[0.25em] text-ss-blue-400">
@@ -19,14 +64,14 @@ export function BeforeAfterSlider() {
           </p>
           <h2 className="mt-3 font-display text-3xl text-white md:text-5xl">Before / After</h2>
           <p className="mt-3 text-slate-400">
-            Drag the slider — same room, transformed from cluttered and dusty to neat and spotless.
+            Scroll to see the transformation — same room, from cluttered and dusty to neat and
+            spotless. Drag the slider anytime to compare.
           </p>
         </ScrollReveal>
 
         <ScrollReveal>
           <div className="relative mx-auto max-w-4xl overflow-hidden rounded-[2rem] border border-white/10 shadow-2xl shadow-black/40">
             <div className="relative aspect-[16/10] select-none">
-              {/* After — clean (full frame, right when dragging) */}
               <Image
                 src={IMAGES.beforeAfterAfter}
                 alt="Living room after professional cleaning — tidy and spotless"
@@ -35,7 +80,6 @@ export function BeforeAfterSlider() {
                 sizes="(max-width:896px) 100vw, 896px"
               />
 
-              {/* Before — dirty / messy (left clip) */}
               <div
                 className="absolute inset-y-0 left-0 z-[2] overflow-hidden border-r-2 border-white shadow-[2px_0_12px_rgba(0,0,0,0.35)]"
                 style={{ width: `${pct}%` }}
@@ -60,8 +104,8 @@ export function BeforeAfterSlider() {
 
               <input
                 type="range"
-                min={8}
-                max={92}
+                min={SLIDER_MIN}
+                max={SLIDER_MAX}
                 value={pct}
                 onChange={(e) => setPct(Number(e.target.value))}
                 className="absolute inset-0 z-10 h-full w-full cursor-ew-resize opacity-0"

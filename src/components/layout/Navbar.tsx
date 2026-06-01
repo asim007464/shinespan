@@ -1,7 +1,8 @@
 "use client";
 
-import { COMPANY, NAV_LINKS } from "@/utils/constants";
+import { COMPANY, IMAGES, NAV_LINKS } from "@/utils/constants";
 import { AnimatePresence, motion } from "framer-motion";
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
@@ -15,16 +16,15 @@ export function Navbar() {
   return (
     <header className="sticky top-0 z-50 border-b border-white/10 bg-ss-blue-950/85 backdrop-blur-xl">
       <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-4 sm:px-6 lg:px-8">
-        <Link href="/" className="group flex items-center gap-2">
-          <span className="flex h-10 w-10 items-center justify-center rounded-2xl bg-gradient-to-br from-ss-blue-700 to-ss-blue-500 text-lg font-bold text-white shadow-lg shadow-ss-blue-600/30">
-            S
-          </span>
-          <span className="hidden flex-col leading-tight sm:flex">
-            <span className="font-display text-lg font-semibold text-white">{COMPANY.shortName}</span>
-            <span className="text-[10px] uppercase tracking-widest text-blue-200/75">
-              Cleaning Services
-            </span>
-          </span>
+        <Link href="/" className="group flex items-center">
+          <Image
+            src={IMAGES.logo}
+            alt={`${COMPANY.shortName} — cleaning services London`}
+            width={220}
+            height={68}
+            className="h-11 w-auto sm:h-12"
+            priority
+          />
         </Link>
 
         <nav className="hidden items-center gap-1 lg:flex">

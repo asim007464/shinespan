@@ -2,8 +2,9 @@ export const COMPANY = {
   name: "Shine & Span Cleaning Services Ltd",
   shortName: "Shine & Span",
   email: "cleaning@shinespan.co.uk",
-  /** Opens default mail app — recipient prefilled; user adds message and taps Send */
-  emailHref: "mailto:cleaning@shinespan.co.uk?subject=Cleaning%20service%20enquiry",
+  /** @deprecated Prefer getStandardMailtoHref() or EmailContactLink — kept for metadata */
+  emailHref:
+    "mailto:cleaning@shinespan.co.uk?subject=Cleaning%20service%20enquiry&body=Hello%0A%0A",
   phone: "07384 647705",
   phoneHref: "tel:+447384647705",
   whatsapp: "447384647705",
@@ -11,10 +12,10 @@ export const COMPANY = {
   whatsappHref:
     "https://wa.me/447384647705?text=" +
     encodeURIComponent("Hi, I want to book a cleaning service. Please assist me."),
-  region: "United Kingdom",
-  addressLine: "Serving homes & businesses across the UK",
-  hours: "Mon–Sat: 7:00–19:00 · Sun: 9:00–16:00",
-  tagline: "Premium cleaning tailored for UK homes, offices & rentals.",
+  region: "London",
+  addressLine: "Serving homes & businesses across London",
+  hours: "Open 24 hours · 7 days a week",
+  tagline: "Premium cleaning tailored for London homes, offices & apartments.",
 } as const;
 
 export const NAV_LINKS = [
@@ -33,14 +34,26 @@ export const FOOTER_QUICK_LINKS = [
 ] as const;
 
 export const SOCIAL_LINKS = [
-  { label: "Facebook", href: "https://facebook.com", icon: "facebook" as const },
-  { label: "Instagram", href: "https://instagram.com", icon: "instagram" as const },
-  { label: "Twitter / X", href: "https://twitter.com", icon: "twitter" as const },
-  { label: "LinkedIn", href: "https://linkedin.com", icon: "linkedin" as const },
+  {
+    label: "Facebook",
+    href: "https://www.facebook.com/share/1UnMSMQz23/?mibextid=wwXIfr",
+    icon: "facebook" as const,
+  },
+  {
+    label: "Instagram",
+    href: "https://www.instagram.com/shine_span_cleaning_services?utm_source=qr",
+    icon: "instagram" as const,
+  },
+  {
+    label: "WhatsApp",
+    href: COMPANY.whatsappHref,
+    icon: "whatsapp" as const,
+  },
 ] as const;
 
 /** Curated Unsplash images — cleaning / interiors */
 export const IMAGES = {
+  logo: "/unnamed-removebg-preview.png",
   hero: "https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&w=2400&q=85",
   heroSecondary:
     "https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=1200&q=85",
@@ -49,10 +62,10 @@ export const IMAGES = {
   serviceDeep: "/deepcleaning.png",
   serviceOffice: "/services/office-cleaning.jpg",
   serviceAirbnb: "/services/airbnb-cleaning.jpg",
-  serviceTenancy: "/endtendancycleaning.png",
+  serviceTenancy: "/moveinout.png",
   serviceCarpet: "/carpetcleaning.png",
   serviceWindow: "/windowcleaning.png",
-  serviceMove: "/moveinout.png",
+  serviceSanitisation: "/cleanroom.png",
   whyChoose:
     "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=1600&q=80",
   beforeAfterBefore: "/dirtyroom.png",
@@ -80,12 +93,12 @@ export type ServiceItem = {
 
 export const SERVICES_LIST: readonly ServiceItem[] = [
   {
-    slug: "house-cleaning",
-    title: "House Cleaning",
+    slug: "regular-cleaning",
+    title: "Regular Cleaning",
     description:
-      "Reliable home cleaning services for kitchens, bathrooms, and living spaces — consistently fresh.",
+      "Reliable regular cleaning for kitchens, bathrooms, and living spaces — consistently fresh.",
     seoDescription:
-      "Our home cleaning services keep UK households spotless with professional cleaners on a schedule that suits you — ideal for busy families and working professionals.",
+      "Our regular cleaning services keep London households spotless with professional cleaners on a schedule that suits you — ideal for busy families and working professionals.",
     details: [
       "Kitchen and bathroom sanitisation",
       "Dusting, vacuuming, and floor care",
@@ -103,6 +116,7 @@ export const SERVICES_LIST: readonly ServiceItem[] = [
     details: [
       "Inside appliances and hard-to-reach areas",
       "Degreasing and detailed scrubbing",
+      "Bathroom and kitchen hard areas — tiles, grout, and built-up grime",
       "Perfect before guests or seasonal resets",
     ],
     image: IMAGES.serviceDeep,
@@ -111,13 +125,13 @@ export const SERVICES_LIST: readonly ServiceItem[] = [
     slug: "office-cleaning",
     title: "Office Cleaning",
     description:
-      "Discreet office cleaning after hours — desks, communal areas, and hygiene-focused washrooms.",
+      "Discreet office cleaning when your workplace is quiet — desks, communal areas, and hygiene-focused washrooms.",
     seoDescription:
-      "Office cleaning for UK workplaces: reliable crews, minimal disruption, and standards your team and clients will notice from day one.",
+      "Office cleaning for London workplaces: reliable crews, minimal disruption, and standards your team and clients will notice from day one.",
     details: [
       "Desks, meeting rooms, and reception areas",
       "Washroom restocking and sanitisation",
-      "Out-of-hours or early-morning slots",
+      "Flexible slots — available 24 hours a day",
     ],
     image: IMAGES.serviceOffice,
   },
@@ -129,22 +143,27 @@ export const SERVICES_LIST: readonly ServiceItem[] = [
     seoDescription:
       "Short-let and Airbnb cleaning with turnaround times built around your calendar — professional cleaners who protect your reviews and listing photos.",
     details: [
+      "Kitchen cleaning — worktops, appliances, and floors",
+      "Bathroom cleaning — sanitised fixtures and surfaces",
+      "Bedrooms and living rooms — dusted, vacuumed, and guest-ready",
       "Linen change and staging",
-      "Supply checks and quick damage reports",
       "Same-day turnover options where available",
     ],
     image: IMAGES.serviceAirbnb,
   },
   {
     slug: "end-of-tenancy",
-    title: "End of Tenancy Cleaning",
+    title: "End of Tenancy Cleaning (Move In / Move Out Cleaning)",
     description:
-      "Inventory-ready end of tenancy cleans — ovens, fixtures, and landlord checklist standards.",
+      "Inventory-ready end of tenancy and move handovers — blank-slate cleans with ovens, fixtures, and landlord checklist standards.",
     seoDescription:
-      "End of tenancy cleaning designed to meet agent and landlord expectations across the UK — deposit-friendly finishes from experienced professional cleaners.",
+      "End of tenancy and move in / move out cleaning across London — deposit-friendly, inventory-ready finishes for tenants, landlords, buyers, and sellers.",
     details: [
-      "Oven, hob, and appliance detailing",
+      "Oven, hob, and appliance detailing — fridge, microwave, dishwasher, and other appliances",
       "Bathrooms and fixtures descaled",
+      "All rooms cleaned — bedrooms, living areas, halls, and stairs",
+      "Inside cupboards and wardrobes",
+      "Full property sanitisation — ready for keys or boxes",
       "Checklist-aligned room-by-room scope",
     ],
     image: IMAGES.serviceTenancy,
@@ -178,18 +197,18 @@ export const SERVICES_LIST: readonly ServiceItem[] = [
     image: IMAGES.serviceWindow,
   },
   {
-    slug: "move-in-out",
-    title: "Move In / Move Out Cleaning",
+    slug: "room-sanitisation",
+    title: "Room Sanitisation",
     description:
-      "Blank-slate handovers — cupboards cleared, surfaces sanitised, ready for keys or boxes.",
+      "Targeted disinfecting and sanitisation for bedrooms, living areas, and high-touch surfaces — ideal after illness or before guests.",
     seoDescription:
-      "Move in / move out cleaning for stress-free handovers — combines deep cleaning services with empty-property focus for buyers, sellers, and tenants.",
+      "Professional room sanitisation across London — hospital-grade products on handles, switches, and surfaces so your home feels hygienically fresh.",
     details: [
-      "Inside cupboards and wardrobes",
-      "Full property sanitisation",
-      "Ideal paired with end of tenancy standards",
+      "High-touch points: door handles, switches, remotes",
+      "Bedrooms, bathrooms, and living spaces treated",
+      "Eco-conscious disinfectants where possible",
     ],
-    image: IMAGES.serviceMove,
+    image: IMAGES.serviceSanitisation,
   },
 ] as const;
 
@@ -204,7 +223,7 @@ export const FAQ_ITEMS = [
   },
   {
     q: "Which areas do you cover?",
-    a: "We serve residential and commercial clients across the UK — confirm postcode at booking.",
+    a: "We serve residential and commercial clients across London — confirm your postcode at booking.",
   },
   {
     q: "Can I reschedule?",

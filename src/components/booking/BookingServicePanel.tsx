@@ -1,9 +1,15 @@
+import { EmailContactLink } from "@/components/common/EmailContactLink";
+import { PhoneContactLink } from "@/components/common/PhoneContactLink";
 import type { ServiceItem } from "@/utils/constants";
 import { COMPANY } from "@/utils/constants";
 import reviewsData from "@/data/reviews.json";
 import Image from "next/image";
 import Link from "next/link";
+import { FaWhatsapp } from "react-icons/fa";
 import { FiCheck, FiMail, FiPhone, FiStar } from "react-icons/fi";
+
+const panelActionBtn =
+  "inline-flex items-center gap-2 rounded-xl border border-white/15 bg-white/5 px-4 py-2.5 text-sm font-medium text-white transition hover:bg-white/10";
 
 type Props = {
   service: ServiceItem;
@@ -32,7 +38,7 @@ export function BookingServicePanel({ service }: Props) {
             {COMPANY.shortName} · {COMPANY.region}
           </p>
           <h1 className="mt-2 font-display text-2xl leading-tight text-white sm:text-3xl">
-            {service.title} in the UK
+            {service.title} in London
           </h1>
 
           <p className="mt-4 text-sm leading-relaxed text-slate-300">{service.description}</p>
@@ -40,13 +46,13 @@ export function BookingServicePanel({ service }: Props) {
 
           <p className="mt-5 text-sm leading-relaxed text-slate-300">
             Need a quote or ready to book? Call us at{" "}
-            <a href={COMPANY.phoneHref} className="font-semibold text-ss-blue-300 hover:text-white">
+            <PhoneContactLink className="font-semibold text-ss-blue-300 hover:text-white">
               {COMPANY.phone}
-            </a>{" "}
+            </PhoneContactLink>{" "}
             or{" "}
-            <a href={COMPANY.emailHref} className="font-semibold text-ss-blue-300 hover:text-white">
+            <EmailContactLink className="font-semibold text-ss-blue-300 hover:text-white">
               email {COMPANY.email}
-            </a>
+            </EmailContactLink>
             .
           </p>
 
@@ -64,19 +70,22 @@ export function BookingServicePanel({ service }: Props) {
 
           <div className="mt-8 flex flex-wrap gap-3">
             <a
-              href={COMPANY.phoneHref}
-              className="inline-flex items-center gap-2 rounded-xl border border-white/15 bg-white/5 px-4 py-2.5 text-sm font-medium text-white transition hover:bg-white/10"
+              href={COMPANY.whatsappHref}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={`${panelActionBtn} border-emerald-500/25 hover:border-emerald-400/40 hover:bg-emerald-600/10`}
             >
-              <FiPhone className="h-4 w-4 text-ss-blue-400" aria-hidden />
+              <FaWhatsapp className="h-4 w-4 shrink-0 text-emerald-400" aria-hidden />
+              WhatsApp
+            </a>
+            <PhoneContactLink className={panelActionBtn}>
+              <FiPhone className="h-4 w-4 shrink-0 text-ss-blue-400" aria-hidden />
               Call now
-            </a>
-            <a
-              href={COMPANY.emailHref}
-              className="inline-flex items-center gap-2 rounded-xl border border-white/15 bg-white/5 px-4 py-2.5 text-sm font-medium text-white transition hover:bg-white/10"
-            >
-              <FiMail className="h-4 w-4 text-ss-blue-400" aria-hidden />
-              Email us
-            </a>
+            </PhoneContactLink>
+            <EmailContactLink className={panelActionBtn}>
+              <FiMail className="h-4 w-4 shrink-0 text-ss-blue-400" aria-hidden />
+              {COMPANY.email}
+            </EmailContactLink>
           </div>
         </div>
       </div>

@@ -10,7 +10,23 @@ export function LocalBusinessJsonLd() {
     url: SITE_URL,
     telephone: COMPANY.phone,
     email: COMPANY.email,
-    areaServed: { "@type": "Country", name: "United Kingdom" },
+    areaServed: { "@type": "City", name: "London" },
+    openingHoursSpecification: [
+      {
+        "@type": "OpeningHoursSpecification",
+        dayOfWeek: [
+          "Monday",
+          "Tuesday",
+          "Wednesday",
+          "Thursday",
+          "Friday",
+          "Saturday",
+          "Sunday",
+        ],
+        opens: "00:00",
+        closes: "23:59",
+      },
+    ],
     priceRange: "££",
     image: `${SITE_URL}/window.svg`,
     hasOfferCatalog: {

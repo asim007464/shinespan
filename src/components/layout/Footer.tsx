@@ -1,20 +1,24 @@
 "use client";
 
+import { EmailContactLink } from "@/components/common/EmailContactLink";
+import { PhoneContactLink } from "@/components/common/PhoneContactLink";
 import {
   COMPANY,
   FOOTER_QUICK_LINKS,
+  IMAGES,
   SERVICES_LIST,
   SOCIAL_LINKS,
 } from "@/utils/constants";
+import Image from "next/image";
 import Link from "next/link";
-import { FaFacebookF, FaInstagram, FaLinkedinIn, FaXTwitter } from "react-icons/fa6";
+import { FaWhatsapp } from "react-icons/fa";
+import { FaFacebookF, FaInstagram } from "react-icons/fa6";
 import { FiMail, FiPhone } from "react-icons/fi";
 
 const iconMap = {
   facebook: FaFacebookF,
   instagram: FaInstagram,
-  twitter: FaXTwitter,
-  linkedin: FaLinkedinIn,
+  whatsapp: FaWhatsapp,
 } as const;
 
 export function Footer() {
@@ -23,15 +27,18 @@ export function Footer() {
       <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
         <div className="grid gap-12 sm:grid-cols-2 lg:grid-cols-12">
           <div className="lg:col-span-4">
-            <div className="flex items-center gap-2">
-              <span className="flex h-10 w-10 items-center justify-center rounded-2xl bg-gradient-to-br from-ss-blue-700 to-ss-blue-500 text-lg font-bold text-white">
-                S
-              </span>
-              <span className="font-display text-xl font-semibold text-white">{COMPANY.shortName}</span>
-            </div>
+            <Link href="/" className="inline-block">
+              <Image
+                src={IMAGES.logo}
+                alt={`${COMPANY.shortName} — cleaning services London`}
+                width={220}
+                height={68}
+                className="h-12 w-auto"
+              />
+            </Link>
             <p className="mt-4 max-w-sm text-sm leading-relaxed text-slate-400">
-              Premium cleaning services UK — insured professional cleaners for homes, offices, and
-              short-let properties.
+              Premium cleaning services in London — insured professional cleaners for homes, offices, and
+              apartments.
             </p>
             <div className="mt-6 flex flex-wrap gap-2.5">
               {SOCIAL_LINKS.map((s) => {
@@ -95,23 +102,17 @@ export function Footer() {
             <ul className="mt-4 space-y-4 text-sm">
               <li>
                 <p className="text-xs font-medium uppercase tracking-wider text-slate-500">Phone</p>
-                <a
-                  href={COMPANY.phoneHref}
-                  className="mt-1 inline-flex items-center gap-2 font-medium text-slate-200 hover:text-white"
-                >
+                <PhoneContactLink className="mt-1 inline-flex items-center gap-2 font-medium text-slate-200 hover:text-white">
                   <FiPhone className="h-4 w-4 text-ss-blue-400" />
                   {COMPANY.phone}
-                </a>
+                </PhoneContactLink>
               </li>
               <li>
                 <p className="text-xs font-medium uppercase tracking-wider text-slate-500">Email</p>
-                <a
-                  href={COMPANY.emailHref}
-                  className="mt-1 inline-flex items-center gap-2 break-all font-medium text-slate-200 hover:text-white"
-                >
+                <EmailContactLink className="mt-1 inline-flex items-center gap-2 break-all font-medium text-slate-200 hover:text-white">
                   <FiMail className="h-4 w-4 shrink-0 text-ss-blue-400" />
                   {COMPANY.email}
-                </a>
+                </EmailContactLink>
               </li>
               <li className="text-slate-400">{COMPANY.hours}</li>
               <li className="text-slate-400">{COMPANY.addressLine}</li>

@@ -22,7 +22,7 @@ export function HeroSection() {
           >
             <p className="inline-flex items-center gap-2 rounded-full border border-ss-blue-500/20 bg-ss-blue-500/[0.08] px-4 py-1.5 text-[11px] font-semibold uppercase tracking-[0.18em] text-ss-blue-300/90">
               <FiShield className="h-3.5 w-3.5" aria-hidden />
-              Cleaning services UK
+              Cleaning services in London
             </p>
 
             <h1 className="mt-7 max-w-[16ch] font-display text-[2rem] leading-[1.12] tracking-tight text-white sm:max-w-none sm:text-[2.65rem] lg:text-[3.125rem] lg:leading-[1.08]">
@@ -30,7 +30,7 @@ export function HeroSection() {
             </h1>
 
             <p className="mt-6 max-w-xl text-[15px] leading-[1.7] text-slate-400 sm:text-base">
-              Premium home and office cleaning across the UK — reliable crews, clear pricing, and
+              Premium home and office cleaning across London — reliable crews, clear pricing, and
               finishes you can see from the doorway.
             </p>
 
@@ -55,7 +55,7 @@ export function HeroSection() {
                 <FiStar className="h-4 w-4 text-amber-400/90" aria-hidden />
                 <span>
                   <span className="font-semibold text-white">4.9</span>
-                  <span className="text-slate-500"> · UK clients</span>
+                  <span className="text-slate-500"> · London clients</span>
                 </span>
               </div>
               {TRUST_POINTS.map((item) => (
@@ -80,7 +80,7 @@ export function HeroSection() {
               <div className="relative aspect-[5/4] w-full overflow-hidden rounded-[1.625rem] border border-white/[0.08] bg-[#0a1220] shadow-[0_24px_48px_-20px_rgba(0,0,0,0.55)] sm:aspect-[4/3]">
                 <Image
                   src={IMAGES.hero}
-                  alt="Professionally cleaned modern home interior in the UK"
+                  alt="Professionally cleaned modern home interior in London"
                   fill
                   priority
                   className="object-cover object-center"

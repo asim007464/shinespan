@@ -131,10 +131,10 @@ export function Testimonials() {
             Client reviews
           </p>
           <h2 id="reviews-heading" className="mt-3 font-display text-3xl text-white md:text-5xl">
-            Trusted by UK homeowners &amp; businesses
+            Trusted by London homeowners &amp; businesses
           </h2>
           <p className="mt-4 text-base text-slate-400">
-            Real feedback from customers who use our cleaning services UK-wide.
+            Real feedback from customers who use our cleaning services across London.
           </p>
         </ScrollReveal>
 

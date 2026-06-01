@@ -3,23 +3,23 @@
 import { ScrollReveal } from "@/components/animations/ScrollReveal";
 import { IMAGES } from "@/utils/constants";
 import Image from "next/image";
-import { FiClock, FiHeart, FiStar } from "react-icons/fi";
+import { FiCalendar, FiClock, FiShield } from "react-icons/fi";
 
 const points = [
   {
-    icon: FiStar,
-    title: "Hotel-grade detail",
-    text: "Checklists aligned to how premium hospitality teams work — nothing rushed.",
+    icon: FiCalendar,
+    title: "Stressless booking",
+    text: "Book online in minutes — clear options, no hassle, and confirmation you can rely on.",
   },
   {
     icon: FiClock,
-    title: "On-time, every time",
-    text: "SMS updates and predictable arrival windows — ideal for offices and turnovers.",
+    title: "Arrive on time",
+    text: "Punctual, professional crews who respect your schedule and keep you updated.",
   },
   {
-    icon: FiHeart,
-    title: "People-first service",
-    text: "Respectful crews who know how to work quietly around your family or colleagues.",
+    icon: FiShield,
+    title: "Professional cleaning",
+    text: "Insured, trained cleaners with consistent standards on every visit.",
   },
 ];
 
@@ -36,10 +36,6 @@ export function WhyChooseUs() {
             sizes="(max-width:1024px) 100vw, 50vw"
           />
           <div className="absolute inset-0 bg-gradient-to-tr from-ss-blue-900/50 to-transparent" />
-          <div className="absolute bottom-6 left-6 max-w-xs rounded-2xl border border-white/20 bg-ss-blue-950/70 p-5 text-white backdrop-blur-xl">
-            <p className="text-xs uppercase tracking-widest text-blue-200/90">Client sentiment</p>
-            <p className="mt-2 font-display text-2xl">“Like walking into a suite.”</p>
-          </div>
         </ScrollReveal>
 
         <div>
@@ -48,11 +44,11 @@ export function WhyChooseUs() {
               Why Shine &amp; Span
             </p>
             <h2 className="mt-3 font-display text-3xl text-white md:text-5xl">
-              Precision without the noise
+              Cleaning you can count on
             </h2>
             <p className="mt-4 text-slate-400">
-              We obsess over finish lines — edges, grout, glass — so your space feels renewed, not
-              merely tidy.
+              Easy booking, reliable arrivals, and professional results — every time we visit your
+              home or workplace in London.
             </p>
           </ScrollReveal>
 

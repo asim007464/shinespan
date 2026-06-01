@@ -1,6 +1,8 @@
 "use client";
 
 import { ScrollReveal } from "@/components/animations/ScrollReveal";
+import { EmailContactLink } from "@/components/common/EmailContactLink";
+import { PhoneContactLink } from "@/components/common/PhoneContactLink";
 import { COMPANY, IMAGES } from "@/utils/constants";
 import Image from "next/image";
 import Link from "next/link";
@@ -32,24 +34,18 @@ export function ContactCta() {
                 Contact us for a quote or advice
               </h2>
               <p className="mt-3 text-white/85">
-                Questions about home cleaning, office cleaning, or a one-off deep clean? Our UK team
-                replies same day — or book online anytime.
+                Questions about home cleaning, office cleaning, or a one-off deep clean? Our London team
+                available 24/7 — or book online anytime.
               </p>
               <div className="mt-5 flex flex-wrap gap-4 text-sm text-white/75">
-                <a
-                  href={COMPANY.phoneHref}
-                  className="inline-flex items-center gap-2 transition hover:text-white"
-                >
+                <PhoneContactLink className="inline-flex items-center gap-2 transition hover:text-white">
                   <FiPhone className="h-4 w-4 text-ss-blue-300" aria-hidden />
                   {COMPANY.phone}
-                </a>
-                <a
-                  href={COMPANY.emailHref}
-                  className="inline-flex items-center gap-2 transition hover:text-white"
-                >
+                </PhoneContactLink>
+                <EmailContactLink className="inline-flex items-center gap-2 transition hover:text-white">
                   <FiMail className="h-4 w-4 text-ss-blue-300" aria-hidden />
                   {COMPANY.email}
-                </a>
+                </EmailContactLink>
               </div>
             </div>
             <Link

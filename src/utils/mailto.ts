@@ -7,10 +7,19 @@ export function getMailtoHref(options?: {
 }): string {
   const params = new URLSearchParams();
   params.set("subject", options?.subject ?? "Cleaning service enquiry");
-  if (options?.body?.trim()) {
-    params.set("body", options.body.trim());
+  if (options?.body !== undefined) {
+    params.set("body", options.body);
+  } else {
+    params.set("body", "Hello,\n\n");
   }
-  return `mailto:${COMPANY.email}?${params.toString()}`;
+  // Use %20 instead of + so all mail clients open correctly
+  const query = params.toString().replace(/\+/g, "%20");
+  return `mailto:${COMPANY.email}?${query}`;
+}
+
+/** Standard site-wide mailto with subject and greeting in body */
+export function getStandardMailtoHref(): string {
+  return getMailtoHref();
 }
 
 export function getContactFormMailto(name: string, fromEmail: string, message: string): string {

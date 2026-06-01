@@ -1,24 +1,27 @@
 import { ScrollReveal } from "@/components/animations/ScrollReveal";
+import { PhoneContactLink } from "@/components/common/PhoneContactLink";
 import { ContactCta } from "@/components/home/ContactCta";
 import { Container } from "@/components/ui/Container";
 import { COMPANY, IMAGES, SERVICES_LIST } from "@/utils/constants";
 import { buildPageMetadata } from "@/lib/seo";
 import Image from "next/image";
-import { FiBookmark, FiClipboard, FiSmile } from "react-icons/fi";
+import Link from "next/link";
+import { FaWhatsapp } from "react-icons/fa";
+import { FiBookmark, FiClipboard, FiEdit3, FiPhone, FiSmile } from "react-icons/fi";
 
 export const metadata = buildPageMetadata({
-  title: "About Us — Trusted Cleaning Services UK",
-  description: `About ${COMPANY.name} — professional cleaners for homes, offices, rentals and commercial spaces across the UK.`,
+  title: "About Us — Trusted Cleaning Services London",
+  description: `About ${COMPANY.name} — professional cleaners for homes, offices, apartments and commercial spaces across London.`,
   path: "/about",
 });
 
-const processCards = [
-  {
-    icon: FiClipboard,
-    title: "Get a price",
-    text: "Looking for affordable, professional cleaning in the UK?",
-    highlight: "Request a quick quote today — no hidden fees.",
-  },
+const stepCardClass =
+  "relative flex h-full flex-col rounded-3xl border border-white/10 bg-ss-blue-900/40 p-8 pt-11 shadow-lg shadow-black/20";
+
+const contactActionBtn =
+  "inline-flex min-h-[3.25rem] flex-1 items-center justify-center gap-2.5 rounded-xl px-4 py-3 text-sm font-semibold text-white transition hover:-translate-y-px hover:shadow-lg";
+
+const stepCards = [
   {
     icon: FiBookmark,
     title: "Book it",
@@ -62,7 +65,7 @@ export default function AboutPage() {
           <ScrollReveal>
             <h1 className="font-display text-4xl text-white md:text-6xl">About Us</h1>
             <p className="mx-auto mt-4 max-w-2xl text-lg text-slate-400">
-              Trusted cleaning services across the UK
+              Trusted cleaning services across London
             </p>
           </ScrollReveal>
         </Container>
@@ -76,25 +79,29 @@ export default function AboutPage() {
               <div className="relative aspect-[4/3] overflow-hidden rounded-2xl border border-white/10 shadow-2xl shadow-black/30">
                 <Image
                   src={IMAGES.trusted}
-                  alt="Professional cleaner at work in the UK"
+                  alt="Professional cleaner at work in London"
                   fill
                   className="object-cover"
                   sizes="(max-width:1024px) 100vw, 50vw"
                 />
               </div>
-              <div className="absolute -left-2 top-6 rounded-2xl border border-slate-200/90 bg-white px-7 py-5 shadow-[0_12px_40px_-8px_rgba(0,0,0,0.45)] sm:left-4">
+              <Link
+                href="/services"
+                className="absolute -left-2 top-6 rounded-2xl border border-slate-200/90 bg-white px-7 py-5 shadow-[0_12px_40px_-8px_rgba(0,0,0,0.45)] transition hover:border-ss-blue-300 hover:shadow-xl focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ss-blue-500 sm:left-4"
+                aria-label={`View all ${serviceCount} cleaning services`}
+              >
                 <p className="font-display text-4xl font-bold leading-none text-ss-blue-600">
                   {serviceCount}+
                 </p>
                 <p className="mt-2 text-sm font-semibold text-slate-700">Services we provide</p>
-              </div>
+              </Link>
             </ScrollReveal>
 
             <ScrollReveal delay={0.06}>
               <div className="space-y-5 text-base leading-relaxed text-slate-400">
                 <p>
                   At <strong className="text-white">{COMPANY.name}</strong>, we&apos;re on a mission to
-                  make homes, rentals, and workspaces across the UK shine. Whether you&apos;re a
+                  make homes, apartments, and workspaces across London shine. Whether you&apos;re a
                   homeowner, landlord, tenant, or business owner — we offer flexible, high-quality
                   cleaning tailored to your schedule and space.
                 </p>
@@ -114,37 +121,73 @@ export default function AboutPage() {
       {/* Smarter way — 3 steps */}
       <section className="page-section border-y border-white/[0.06] bg-white/[0.02] py-16 sm:py-20">
         <Container>
-          <div className="grid gap-10 lg:grid-cols-2 lg:items-start lg:gap-16">
-            <ScrollReveal>
-              <p className="text-sm font-semibold text-ss-blue-400">Get a quote fast</p>
-              <h2 className="mt-2 font-display text-3xl text-white md:text-4xl">
-                The smarter way to find reliable cleaning services
-              </h2>
-            </ScrollReveal>
-            <ScrollReveal delay={0.05}>
-              <p className="text-base leading-relaxed text-slate-400">
-                We provide flexible, high-quality cleaning services across homes, offices, rentals,
-                and short-let properties. From one-time deep cleans to ongoing service plans, our
-                team handles it all — so you can focus on what matters.
-              </p>
-            </ScrollReveal>
-          </div>
+          <ScrollReveal className="max-w-3xl">
+            <p className="text-sm font-semibold text-ss-blue-400">Get a quote fast</p>
+            <p className="mt-4 text-base leading-relaxed text-slate-400">
+              We provide flexible, high-quality cleaning services across homes, offices, rentals, and
+              apartments. From one-time deep cleans to ongoing service plans, our team handles it all
+              — so you can focus on what matters.
+            </p>
+          </ScrollReveal>
 
-          <div className="mt-12 grid gap-6 md:grid-cols-3">
-            {processCards.map((card, i) => (
-              <ScrollReveal key={card.title} delay={i * 0.06}>
-                <article className="relative h-full rounded-3xl border border-white/10 bg-ss-blue-900/40 p-8 pt-10 shadow-lg shadow-black/20">
-                  <div className="absolute -top-5 left-8 flex h-12 w-12 items-center justify-center rounded-full bg-ss-blue-600 text-white shadow-lg shadow-ss-blue-600/30">
-                    <card.icon className="h-6 w-6" aria-hidden />
+          <div className="mt-12 flex flex-col gap-6">
+            <ScrollReveal>
+              <article className={`${stepCardClass} lg:p-10 lg:pt-12`}>
+                <div className="absolute -top-5 left-8 flex h-12 w-12 items-center justify-center rounded-full bg-ss-blue-600 text-white shadow-lg shadow-ss-blue-600/30">
+                  <FiClipboard className="h-6 w-6" aria-hidden />
+                </div>
+                <div className="flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">
+                  <div className="max-w-xl">
+                    <h3 className="mt-2 font-display text-2xl text-white md:text-3xl">Get a price</h3>
+                    <p className="mt-3 text-sm leading-relaxed text-slate-400 md:text-base">
+                      Contact us on WhatsApp or phone, or book online — we&apos;ll reply quickly with a
+                      clear quote.
+                    </p>
                   </div>
-                  <h3 className="mt-4 font-display text-xl text-white">{card.title}</h3>
-                  <p className="mt-3 text-sm leading-relaxed text-slate-400">
-                    {card.text}{" "}
-                    <span className="font-medium text-slate-200">{card.highlight}</span>
-                  </p>
-                </article>
-              </ScrollReveal>
-            ))}
+                  <div className="grid w-full grid-cols-1 gap-3 sm:grid-cols-3 lg:max-w-2xl">
+                    <a
+                      href={COMPANY.whatsappHref}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className={`${contactActionBtn} border border-emerald-500/30 bg-emerald-600/15 hover:bg-emerald-600/25 hover:shadow-emerald-900/30`}
+                    >
+                      <FaWhatsapp className="h-5 w-5 shrink-0 text-emerald-400" aria-hidden />
+                      <span className="truncate">WhatsApp</span>
+                    </a>
+                    <PhoneContactLink
+                      className={`${contactActionBtn} border border-white/12 bg-white/[0.06] hover:border-ss-blue-400/40 hover:bg-ss-blue-600/15`}
+                    >
+                      <FiPhone className="h-5 w-5 shrink-0 text-ss-blue-300" aria-hidden />
+                      <span className="truncate text-xs sm:text-sm">{COMPANY.phone}</span>
+                    </PhoneContactLink>
+                    <Link
+                      href="/booking"
+                      className={`${contactActionBtn} border border-ss-blue-400/40 bg-gradient-to-r from-ss-blue-600 to-ss-blue-500 shadow-md shadow-ss-blue-900/40 hover:brightness-110`}
+                    >
+                      <FiEdit3 className="h-5 w-5 shrink-0" aria-hidden />
+                      <span className="truncate">Book online</span>
+                    </Link>
+                  </div>
+                </div>
+              </article>
+            </ScrollReveal>
+
+            <div className="grid gap-6 md:grid-cols-2">
+              {stepCards.map((card, i) => (
+                <ScrollReveal key={card.title} delay={0.06 * (i + 1)}>
+                  <article className={stepCardClass}>
+                    <div className="absolute -top-5 left-8 flex h-12 w-12 items-center justify-center rounded-full bg-ss-blue-600 text-white shadow-lg shadow-ss-blue-600/30">
+                      <card.icon className="h-6 w-6" aria-hidden />
+                    </div>
+                    <h3 className="mt-2 font-display text-xl text-white">{card.title}</h3>
+                    <p className="mt-3 flex-1 text-sm leading-relaxed text-slate-400">
+                      {card.text}{" "}
+                      <span className="font-medium text-slate-200">{card.highlight}</span>
+                    </p>
+                  </article>
+                </ScrollReveal>
+              ))}
+            </div>
           </div>
         </Container>
       </section>
@@ -160,7 +203,7 @@ export default function AboutPage() {
             <p className="mt-6 text-base leading-relaxed text-slate-400">
               We&apos;re here to make your space spotless and your life easier. With fast bookings,
               flexible packages, and a team you can trust — {COMPANY.name} is your cleaning partner
-              across the UK.
+              across London.
             </p>
           </ScrollReveal>
 

@@ -17,7 +17,7 @@ export function getAssistantReply(input: string, cleaningType?: string): ChatRep
   ) {
     return {
       text:
-        "Happy to help you choose:\n\n• Regular upkeep → House Cleaning\n• Moving or inventory → End of Tenancy / Move In-Out\n• Workplace → Office Cleaning\n• Short lets → Airbnb Cleaning\n• One-off refresh → Deep Cleaning\n\nTell me your property type (home, office, rental) and I will narrow it down.",
+        "Happy to help you choose:\n\n• Regular upkeep → Regular Cleaning\n• Moving or inventory → End of Tenancy (Move In / Move Out)\n• Workplace → Office Cleaning\n• Short lets → Airbnb Cleaning\n• One-off refresh → Deep Cleaning\n\nTell me your property type (home, office, rental) and I will narrow it down.",
     };
   }
 
@@ -26,7 +26,7 @@ export function getAssistantReply(input: string, cleaningType?: string): ChatRep
     (lower.includes("service") || lower.includes("offer") || lower.includes("what do you"))
   ) {
     return {
-      text: `Our cleaning services UK portfolio:\n\n${formatServiceList()}\n\nAsk about any service by name for full details, or tap Book Now to reserve a slot.`,
+      text: `Our cleaning services in London:\n\n${formatServiceList()}\n\nAsk about any service by name for full details, or tap Book Now to reserve a slot.`,
       suggestBooking: true,
     };
   }
@@ -51,10 +51,11 @@ export function getAssistantReply(input: string, cleaningType?: string): ChatRep
     (s) =>
       lower.includes(s.slug.replace(/-/g, " ")) ||
       lower.includes(s.title.toLowerCase()) ||
-      (s.title === "House Cleaning" && (lower.includes("home") || lower.includes("house"))) ||
+      (s.title === "Regular Cleaning" && (lower.includes("home") || lower.includes("house") || lower.includes("regular"))) ||
       (s.title === "Deep Cleaning" && lower.includes("deep")) ||
       (s.title === "Office Cleaning" && lower.includes("office")) ||
-      (s.title === "End of Tenancy Cleaning" && (lower.includes("tenancy") || lower.includes("move out")))
+      (s.title.startsWith("End of Tenancy Cleaning") &&
+        (lower.includes("tenancy") || lower.includes("move out") || lower.includes("move in")))
   );
 
   if (matched) {
@@ -92,7 +93,7 @@ export function getAssistantReply(input: string, cleaningType?: string): ChatRep
     lower.includes("bristol")
   ) {
     return {
-      text: "Location noted. We serve clients UK-wide — confirm your postcode at booking. Ready to Book Now?",
+      text: "Location noted. We serve clients across London — confirm your postcode at booking. Ready to Book Now?",
       suggestBooking: true,
     };
   }

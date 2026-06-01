@@ -38,7 +38,7 @@ export function bookingFieldErrors(data: {
   if (!data.address?.trim()) errors.address = "Address is required";
   if (!data.name?.trim()) errors.name = "Name is required";
   if (!isValidEmail(data.email)) errors.email = "Valid email required";
-  if (!isValidUkPhone(data.phone)) errors.phone = "Valid UK phone required";
+  if (!isValidUkPhone(data.phone)) errors.phone = "Valid phone number required";
   return errors;
 }
 

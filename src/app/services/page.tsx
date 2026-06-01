@@ -6,9 +6,9 @@ import { SERVICES_LIST } from "@/utils/constants";
 import Link from "next/link";
 
 export const metadata = buildPageMetadata({
-  title: "Cleaning Services UK",
+  title: "Cleaning Services London",
   description:
-    "Home cleaning services, office cleaning, deep cleaning services, end of tenancy, Airbnb, carpet and window cleans — professional cleaners UK-wide.",
+    "Home cleaning services, office cleaning, deep cleaning services, end of tenancy, Airbnb, carpet and window cleans — professional cleaners across London.",
   path: "/services",
 });
 
@@ -21,7 +21,7 @@ export default function ServicesPage() {
             Services
           </p>
           <h1 className="mt-3 font-display text-4xl text-white md:text-6xl">
-            Cleaning services UK — homes, offices &amp; rentals
+            Cleaning services in London — homes, offices &amp; apartments
           </h1>
           <p className="mt-4 text-lg leading-relaxed text-slate-400">
             Choose from home cleaning services, office cleaning, deep cleaning services, and
@@ -43,8 +43,8 @@ export default function ServicesPage() {
             Not sure which service fits?
           </h2>
           <p className="mx-auto mt-3 max-w-xl text-slate-400">
-            Our team will recommend the right scope — or use the chat assistant on any page for
-            instant guidance.
+            Our team will recommend the right scope for your property. Contact us for quick,
+            personalised guidance.
           </p>
           <div className="mt-6 flex flex-wrap justify-center gap-3">
             <Link

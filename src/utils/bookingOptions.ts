@@ -15,8 +15,6 @@ export const BOOKING_SERVICE_TYPES = [
 
 /** Optional add-on checkboxes — booking form */
 export const BOOKING_ADDITIONAL_SERVICES = [
-  "Deep Cleaning",
-  "Move In Out",
   "Inside Cabinets",
   "Interior Windows",
   "Wet Wipe Window Blinds",
@@ -26,6 +24,10 @@ export const BOOKING_ADDITIONAL_SERVICES = [
   "Organization",
   "Laundry & Folding",
   "Dishes",
+  "Dishwasher Cleaning",
+  "Washing Machine Cleaning",
+  "Microwave Cleaning",
+  "Rooms Sanitisation",
 ] as const;
 
 export type BookingServiceType = (typeof BOOKING_SERVICE_TYPES)[number];

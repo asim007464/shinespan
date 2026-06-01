@@ -1,20 +1,20 @@
 "use client";
 
 import { ScrollReveal } from "@/components/animations/ScrollReveal";
+import { EmailContactLink } from "@/components/common/EmailContactLink";
+import { PhoneContactLink } from "@/components/common/PhoneContactLink";
 import { Container } from "@/components/ui/Container";
 import { COMPANY, SOCIAL_LINKS } from "@/utils/constants";
 import { getContactFormMailto } from "@/utils/mailto";
 import { isValidEmail } from "@/utils/validation";
 import { useState } from "react";
-import { FaFacebookF, FaInstagram, FaLinkedinIn } from "react-icons/fa";
-import { FaXTwitter } from "react-icons/fa6";
+import { FaFacebookF, FaInstagram, FaWhatsapp } from "react-icons/fa";
 import { FiClock, FiMail, FiMapPin, FiPhone } from "react-icons/fi";
 
 const iconMap = {
   facebook: FaFacebookF,
   instagram: FaInstagram,
-  twitter: FaXTwitter,
-  linkedin: FaLinkedinIn,
+  whatsapp: FaWhatsapp,
 } as const;
 
 const inputClass =
@@ -47,17 +47,14 @@ export function ContactClient() {
           <p className="text-xs font-semibold uppercase tracking-[0.25em] text-ss-blue-400">Contact</p>
           <h1 className="mt-3 font-display text-4xl text-white md:text-6xl">Let&apos;s talk cleans</h1>
           <p className="mt-4 text-slate-400">
-            Coordinators reply same day during business hours. Call{" "}
-            <a href={COMPANY.phoneHref} className="font-medium text-ss-blue-400 hover:text-ss-blue-300">
+            We are available 24 hours a day — coordinators reply quickly. Call{" "}
+            <PhoneContactLink className="font-medium text-ss-blue-400 hover:text-ss-blue-300">
               {COMPANY.phone}
-            </a>{" "}
+            </PhoneContactLink>{" "}
             or email{" "}
-            <a
-              href={COMPANY.emailHref}
-              className="font-medium text-ss-blue-400 hover:text-ss-blue-300"
-            >
+            <EmailContactLink className="font-medium text-ss-blue-400 hover:text-ss-blue-300">
               {COMPANY.email}
-            </a>
+            </EmailContactLink>
             .
           </p>
         </ScrollReveal>
@@ -71,27 +68,24 @@ export function ContactClient() {
                   <FiPhone className="mt-0.5 h-5 w-5 shrink-0 text-ss-blue-400" />
                   <div>
                     <p className="font-semibold text-white">Phone</p>
-                    <a href={COMPANY.phoneHref} className="text-slate-400 hover:text-white">
+                    <PhoneContactLink className="text-slate-400 hover:text-white">
                       {COMPANY.phone}
-                    </a>
+                    </PhoneContactLink>
                   </div>
                 </li>
                 <li className="flex gap-3">
                   <FiMail className="mt-0.5 h-5 w-5 shrink-0 text-ss-blue-400" />
                   <div>
                     <p className="font-semibold text-white">Email</p>
-                    <a
-                      href={COMPANY.emailHref}
-                      className="break-all text-slate-400 hover:text-white"
-                    >
+                    <EmailContactLink className="break-all text-slate-400 hover:text-white">
                       {COMPANY.email}
-                    </a>
+                    </EmailContactLink>
                   </div>
                 </li>
                 <li className="flex gap-3">
                   <FiClock className="mt-0.5 h-5 w-5 shrink-0 text-ss-blue-400" />
                   <div>
-                    <p className="font-semibold text-white">Hours</p>
+                    <p className="font-semibold text-white">Availability</p>
                     <p className="text-slate-400">{COMPANY.hours}</p>
                   </div>
                 </li>
@@ -182,8 +176,8 @@ export function ContactClient() {
 
         <ScrollReveal className="mt-14 overflow-hidden rounded-[2rem] border border-white/10 shadow-xl shadow-black/30">
           <iframe
-            title="UK map — Shine & Span service coverage"
-            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d9410757.787586507!2d-4.571686823583723!3d54.23613194551957!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47d0a98a6b32f39f%3A0xfff11cd9e27c6bc8!2sUnited%20Kingdom!5e0!3m2!1sen!2suk!4v1715000000000!5m2!1sen!2suk"
+            title="London map — Shine & Span service coverage"
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d158857.839!2d-0.1276!3d51.5074!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47d8a00baf21de75%3A0x52962966d4962492!2sLondon!5e0!3m2!1sen!2suk!4v1715000000000!5m2!1sen!2suk"
             className="h-[320px] w-full border-0 sm:h-[420px]"
             loading="lazy"
             referrerPolicy="no-referrer-when-downgrade"

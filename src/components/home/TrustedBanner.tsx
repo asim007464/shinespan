@@ -3,7 +3,7 @@
 import { ScrollReveal } from "@/components/animations/ScrollReveal";
 import { IMAGES } from "@/utils/constants";
 import Image from "next/image";
-import { FiAward, FiCheckCircle } from "react-icons/fi";
+import { FiCheckCircle } from "react-icons/fi";
 
 const badges = ["Checkatrade-style vetting", "Eco-conscious supplies", "Same-week availability"];
 
@@ -20,10 +20,6 @@ export function TrustedBanner() {
             sizes="(max-width:768px) 100vw, 400px"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-ss-blue-900/70 to-transparent" />
-          <div className="absolute bottom-4 left-4 flex items-center gap-2 text-white">
-            <FiAward className="h-6 w-6 text-amber-300" />
-            <span className="text-sm font-semibold">Award-calibre finish</span>
-          </div>
         </ScrollReveal>
 
         <div className="flex-1 space-y-6">
@@ -32,7 +28,7 @@ export function TrustedBanner() {
               Trusted cleaning services
             </p>
             <h2 className="mt-2 font-display text-3xl text-white md:text-4xl">
-              Built for UK homes, offices & rentals
+              Built for London homes, offices & apartments
             </h2>
             <p className="mt-3 max-w-xl text-slate-400">
               From boutique Airbnb turnovers to corporate HQ schedules — consistent standards,

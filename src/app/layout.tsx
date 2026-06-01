@@ -1,6 +1,6 @@
 import { ClientShell } from "@/components/layout/ClientShell";
 import { LocalBusinessJsonLd } from "@/components/seo/LocalBusinessJsonLd";
-import { COMPANY } from "@/utils/constants";
+import { COMPANY, IMAGES } from "@/utils/constants";
 import type { Metadata } from "next";
 import { DM_Serif_Display, Plus_Jakarta_Sans } from "next/font/google";
 import "./globals.css";
@@ -20,12 +20,12 @@ const dmSerif = DM_Serif_Display({
 export const metadata: Metadata = {
   metadataBase: new URL("https://shinespan.co.uk"),
   title: {
-    default: `${COMPANY.shortName} | Cleaning Services UK — Professional Cleaners`,
+    default: `${COMPANY.shortName} | Cleaning Services London — Professional Cleaners`,
     template: `%s | ${COMPANY.shortName}`,
   },
-  description: `${COMPANY.tagline} Home cleaning services, office cleaning, and deep cleaning services with insured professional cleaners across the UK.`,
+  description: `${COMPANY.tagline} Home cleaning services, office cleaning, and deep cleaning services with insured professional cleaners across London.`,
   keywords: [
-    "cleaning services UK",
+    "cleaning services London",
     "home cleaning services",
     "office cleaning",
     "deep cleaning services",
@@ -34,13 +34,17 @@ export const metadata: Metadata = {
     "Airbnb cleaning",
   ],
   openGraph: {
-    title: `${COMPANY.shortName} | Cleaning Services UK`,
+    title: `${COMPANY.shortName} | Cleaning Services London`,
     description: COMPANY.tagline,
     locale: "en_GB",
     type: "website",
     siteName: COMPANY.shortName,
   },
   robots: { index: true, follow: true },
+  icons: {
+    icon: [{ url: IMAGES.logo, type: "image/png" }],
+    apple: IMAGES.logo,
+  },
 };
 
 export default function RootLayout({

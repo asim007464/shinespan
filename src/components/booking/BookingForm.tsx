@@ -525,7 +525,7 @@ export function BookingForm() {
         <div className="mb-8 max-w-2xl">
           <h1 className="font-display text-3xl text-white sm:text-4xl">Book Now</h1>
           <p className="mt-3 text-base leading-relaxed text-slate-400">
-            Tell us about your property and preferred visit — our UK coordinators confirm by phone
+            Tell us about your property and preferred visit — our London coordinators confirm by phone
             or email.
           </p>
         </div>
