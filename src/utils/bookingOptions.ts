@@ -27,7 +27,6 @@ export const BOOKING_ADDITIONAL_SERVICES = [
   "Dishwasher Cleaning",
   "Washing Machine Cleaning",
   "Microwave Cleaning",
-  "Rooms Sanitisation",
 ] as const;
 
 export type BookingServiceType = (typeof BOOKING_SERVICE_TYPES)[number];

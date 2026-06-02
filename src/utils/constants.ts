@@ -65,7 +65,6 @@ export const IMAGES = {
   serviceTenancy: "/moveinout.png",
   serviceCarpet: "/carpetcleaning.png",
   serviceWindow: "/windowcleaning.png",
-  serviceSanitisation: "/cleanroom.png",
   whyChoose:
     "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=1600&q=80",
   beforeAfterBefore: "/dirtyroom.png",
@@ -196,24 +195,9 @@ export const SERVICES_LIST: readonly ServiceItem[] = [
     ],
     image: IMAGES.serviceWindow,
   },
-  {
-    slug: "room-sanitisation",
-    title: "Room Sanitisation",
-    description:
-      "Targeted disinfecting and sanitisation for bedrooms, living areas, and high-touch surfaces — ideal after illness or before guests.",
-    seoDescription:
-      "Professional room sanitisation across London — hospital-grade products on handles, switches, and surfaces so your home feels hygienically fresh.",
-    details: [
-      "High-touch points: door handles, switches, remotes",
-      "Bedrooms, bathrooms, and living spaces treated",
-      "Eco-conscious disinfectants where possible",
-    ],
-    image: IMAGES.serviceSanitisation,
-  },
 ] as const;
 
-/** Footer service links — Room Sanitisation omitted from footer only */
-export const FOOTER_SERVICES = SERVICES_LIST.filter((s) => s.slug !== "room-sanitisation");
+export const FOOTER_SERVICES = SERVICES_LIST;
 
 export const FAQ_ITEMS = [
   {

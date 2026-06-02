@@ -23,7 +23,9 @@ export function ServicesCards() {
         </ScrollReveal>
 
         <div className="grid grid-cols-1 gap-7 sm:grid-cols-2 sm:items-stretch lg:grid-cols-3 lg:gap-8">
-          {SERVICES_LIST.map((s, i) => (
+          {SERVICES_LIST.filter((s) => s.slug !== "window-cleaning")
+            .slice(0, 6)
+            .map((s, i) => (
             <ScrollReveal key={s.slug} delay={(i % 3) * 0.05} className="flex h-full w-full">
               <ServiceCard service={s} headingLevel="h3" priorityImage={i < 3} />
             </ScrollReveal>
