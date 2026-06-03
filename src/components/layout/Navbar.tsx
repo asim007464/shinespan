@@ -44,12 +44,6 @@ export function Navbar() {
               </Link>
             );
           })}
-          <Link
-            href="/login"
-            className="ml-2 rounded-xl px-4 py-2 text-sm font-medium text-slate-200 hover:bg-white/10 hover:text-white"
-          >
-            Login
-          </Link>
         </nav>
 
         <div className="flex items-center gap-2">
@@ -86,13 +80,6 @@ export function Navbar() {
                   {link.label}
                 </Link>
               ))}
-              <Link
-                href="/login"
-                onClick={() => setOpen(false)}
-                className="rounded-xl px-3 py-3 text-base font-medium text-slate-200 hover:bg-white/10"
-              >
-                Login
-              </Link>
               <Button href="/booking" className="w-full justify-center">
                 Book Now
               </Button>

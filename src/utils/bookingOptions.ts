@@ -10,7 +10,7 @@ export const BOOKING_SERVICE_TYPES = [
   "Airbnb turnover",
   "Office — daily",
   "Office — weekly",
-  "Not sure — please advise",
+  "Not sure — contact us for a quote",
 ] as const;
 
 /** Optional add-on checkboxes — booking form */

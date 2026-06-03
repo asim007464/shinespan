@@ -31,7 +31,7 @@ export function ContactCta() {
                 id="contact-cta-heading"
                 className="mt-3 font-display text-3xl text-white md:text-4xl"
               >
-                Contact us for a quote or advice
+                Contact us for a quote
               </h2>
               <p className="mt-3 text-white/85">
                 Questions about home cleaning, office cleaning, or a one-off deep clean? Our London team

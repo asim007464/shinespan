@@ -30,7 +30,6 @@ export const FOOTER_QUICK_LINKS = [
   { href: "/about", label: "About Us" },
   { href: "/booking", label: "Book Now" },
   { href: "/contact", label: "Contact" },
-  { href: "/login", label: "Client Login" },
 ] as const;
 
 export const SOCIAL_LINKS = [
