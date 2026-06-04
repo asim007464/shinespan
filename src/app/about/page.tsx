@@ -1,32 +1,34 @@
 import { ScrollReveal } from "@/components/animations/ScrollReveal";
-import { PhoneContactLink } from "@/components/common/PhoneContactLink";
+import {
+  ContactPhoneButton,
+  ContactWhatsAppButton,
+} from "@/components/common/ContactActionButtons";
 import { ContactCta } from "@/components/home/ContactCta";
 import { Container } from "@/components/ui/Container";
 import { COMPANY, IMAGES, SERVICES_LIST } from "@/utils/constants";
 import { buildPageMetadata } from "@/lib/seo";
 import Image from "next/image";
 import Link from "next/link";
-import { FaWhatsapp } from "react-icons/fa";
-import { FiBookmark, FiClipboard, FiEdit3, FiPhone, FiSmile } from "react-icons/fi";
+import { FiBookmark, FiClipboard, FiEdit3, FiSmile } from "react-icons/fi";
 
 export const metadata = buildPageMetadata({
-  title: "About Us — Trusted Cleaning Services London",
-  description: `About ${COMPANY.name} — professional cleaners for homes, offices, apartments and commercial spaces across London.`,
+  title: "About Us, Trusted Cleaning Services London",
+  description: `About ${COMPANY.name}, professional cleaners for homes, offices, apartments and commercial spaces across London.`,
   path: "/about",
 });
 
 const stepCardClass =
-  "relative flex h-full flex-col rounded-3xl border border-white/10 bg-ss-blue-900/40 p-8 pt-11 shadow-lg shadow-black/20";
+  "ss-card relative flex h-full flex-col rounded-3xl p-8 pt-11";
 
 const contactActionBtn =
-  "inline-flex min-h-[3.25rem] flex-1 items-center justify-center gap-2.5 rounded-xl px-4 py-3 text-sm font-semibold text-white transition hover:-translate-y-px hover:shadow-lg";
+  "inline-flex min-h-[3.25rem] flex-1 items-center justify-center gap-2.5 rounded-xl px-4 py-3 text-sm font-semibold transition hover:-translate-y-px hover:shadow-md";
 
 const stepCards = [
   {
     icon: FiBookmark,
     title: "Book it",
     text: "Simple booking. Fast scheduling.",
-    highlight: "Choose your service and date — we'll handle the rest.",
+    highlight: "Choose your service and date, we'll handle the rest.",
   },
   {
     icon: FiSmile,
@@ -64,7 +66,7 @@ export default function AboutPage() {
         <Container className="relative pb-12 text-center sm:pb-16">
           <ScrollReveal>
             <h1 className="font-display text-4xl text-white md:text-6xl">About Us</h1>
-            <p className="mx-auto mt-4 max-w-2xl text-lg text-slate-400">
+            <p className="mx-auto mt-4 max-w-2xl text-lg text-slate-200">
               Trusted cleaning services across London
             </p>
           </ScrollReveal>
@@ -76,7 +78,7 @@ export default function AboutPage() {
         <Container>
           <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
             <ScrollReveal className="relative">
-              <div className="relative aspect-[4/3] overflow-hidden rounded-2xl border border-white/10 shadow-2xl shadow-black/30">
+              <div className="relative aspect-[4/3] overflow-hidden rounded-2xl border border-slate-200/80 shadow-lg">
                 <Image
                   src={IMAGES.trusted}
                   alt="Professional cleaner at work in London"
@@ -87,29 +89,29 @@ export default function AboutPage() {
               </div>
               <Link
                 href="/services"
-                className="absolute -left-2 top-6 rounded-2xl border border-slate-200/90 bg-white px-7 py-5 shadow-[0_12px_40px_-8px_rgba(0,0,0,0.45)] transition hover:border-ss-blue-300 hover:shadow-xl focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ss-blue-500 sm:left-4"
+                className="absolute -left-2 top-6 rounded-2xl border border-slate-200/80 bg-white/95 px-7 py-5 shadow-[0_12px_40px_-8px_rgba(0,0,0,0.45)] transition hover:border-ss-blue-300 hover:shadow-xl focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ss-blue-500 sm:left-4"
                 aria-label={`View all ${serviceCount} cleaning services`}
               >
                 <p className="font-display text-4xl font-bold leading-none text-ss-blue-600">
                   {serviceCount}+
                 </p>
-                <p className="mt-2 text-sm font-semibold text-slate-700">Services we provide</p>
+                <p className="mt-2 text-sm font-semibold text-slate-600">Services we provide</p>
               </Link>
             </ScrollReveal>
 
             <ScrollReveal delay={0.06}>
               <div className="space-y-5 text-base leading-relaxed text-slate-400">
                 <p>
-                  At <strong className="text-white">{COMPANY.name}</strong>, we&apos;re on a mission to
+                  At <strong className="text-slate-900">{COMPANY.name}</strong>, we&apos;re on a mission to
                   make homes, apartments, and workspaces across London shine. Whether you&apos;re a
-                  homeowner, landlord, tenant, or business owner — we offer flexible, high-quality
+                  homeowner, landlord, tenant, or business owner, we offer flexible, high-quality
                   cleaning tailored to your schedule and space.
                 </p>
                 <p>
                   We believe a clean environment leads to better living and working. That&apos;s why
                   every clean we deliver is handled with care, attention to detail, and a commitment to
                   your satisfaction. From regular housekeeping and end-of-tenancy cleaning to Airbnb
-                  turnovers and commercial maintenance — {COMPANY.shortName} is the name people trust for
+                  turnovers and commercial maintenance, {COMPANY.shortName} is the name people trust for
                   dependable service.
                 </p>
               </div>
@@ -118,51 +120,42 @@ export default function AboutPage() {
         </Container>
       </section>
 
-      {/* Smarter way — 3 steps */}
-      <section className="page-section border-y border-white/[0.06] bg-white/[0.02] py-16 sm:py-20">
+      {/* Smarter way, 3 steps */}
+      <section className="page-section border-y border-slate-200/80 py-16 sm:py-20">
         <Container>
           <ScrollReveal className="max-w-3xl">
-            <p className="text-sm font-semibold text-ss-blue-400">Get a quote fast</p>
+            <p className="text-sm font-semibold text-ss-blue-600">Get a quote fast</p>
             <p className="mt-4 text-base leading-relaxed text-slate-400">
               We provide flexible, high-quality cleaning services across homes, offices, rentals, and
-              apartments. From one-time deep cleans to ongoing service plans, our team handles it all
-              — so you can focus on what matters.
+              apartments. From one-time deep cleans to ongoing service plans, our team handles it all,
+              so you can focus on what matters.
             </p>
           </ScrollReveal>
 
           <div className="mt-12 flex flex-col gap-6">
             <ScrollReveal>
               <article className={`${stepCardClass} lg:p-10 lg:pt-12`}>
-                <div className="absolute -top-5 left-8 flex h-12 w-12 items-center justify-center rounded-full bg-ss-blue-600 text-white shadow-lg shadow-ss-blue-600/30">
+                <div className="absolute -top-5 left-8 flex h-12 w-12 items-center justify-center rounded-full bg-ss-blue-600 text-slate-900 shadow-lg shadow-ss-blue-600/30">
                   <FiClipboard className="h-6 w-6" aria-hidden />
                 </div>
                 <div className="flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">
                   <div className="max-w-xl">
-                    <h3 className="mt-2 font-display text-2xl text-white md:text-3xl">Get a price</h3>
+                    <h3 className="mt-2 font-display text-2xl text-slate-900 md:text-3xl">Get a price</h3>
                     <p className="mt-3 text-sm leading-relaxed text-slate-400 md:text-base">
-                      Contact us on WhatsApp or phone, or book online — we&apos;ll reply quickly with a
+                      Contact us on WhatsApp or phone, or book online, we&apos;ll reply quickly with a
                       clear quote.
                     </p>
                   </div>
                   <div className="grid w-full grid-cols-1 gap-3 sm:grid-cols-3 lg:max-w-2xl">
-                    <a
-                      href={COMPANY.whatsappHref}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className={`${contactActionBtn} border border-emerald-500/30 bg-emerald-600/15 hover:bg-emerald-600/25 hover:shadow-emerald-900/30`}
-                    >
-                      <FaWhatsapp className="h-5 w-5 shrink-0 text-emerald-400" aria-hidden />
-                      <span className="truncate">WhatsApp</span>
-                    </a>
-                    <PhoneContactLink
-                      className={`${contactActionBtn} border border-white/12 bg-white/[0.06] hover:border-ss-blue-400/40 hover:bg-ss-blue-600/15`}
-                    >
-                      <FiPhone className="h-5 w-5 shrink-0 text-ss-blue-300" aria-hidden />
-                      <span className="truncate text-xs sm:text-sm">{COMPANY.phone}</span>
-                    </PhoneContactLink>
+                    <ContactWhatsAppButton
+                      className={`${contactActionBtn} min-h-[3.25rem] flex-1 border border-emerald-500/30 bg-emerald-600/15 hover:bg-emerald-600/25 hover:shadow-emerald-900/30`}
+                    />
+                    <ContactPhoneButton
+                      className={`${contactActionBtn} min-h-[3.25rem] flex-1 text-xs sm:text-sm`}
+                    />
                     <Link
                       href="/booking"
-                      className={`${contactActionBtn} border border-ss-blue-400/40 bg-gradient-to-r from-ss-blue-600 to-ss-blue-500 shadow-md shadow-ss-blue-900/40 hover:brightness-110`}
+                      className={`${contactActionBtn} border border-ss-blue-400/40 bg-gradient-to-r from-ss-blue-600 to-ss-blue-500 text-white shadow-md shadow-ss-blue-900/20 hover:brightness-110`}
                     >
                       <FiEdit3 className="h-5 w-5 shrink-0" aria-hidden />
                       <span className="truncate">Book online</span>
@@ -176,13 +169,13 @@ export default function AboutPage() {
               {stepCards.map((card, i) => (
                 <ScrollReveal key={card.title} delay={0.06 * (i + 1)}>
                   <article className={stepCardClass}>
-                    <div className="absolute -top-5 left-8 flex h-12 w-12 items-center justify-center rounded-full bg-ss-blue-600 text-white shadow-lg shadow-ss-blue-600/30">
+                    <div className="absolute -top-5 left-8 flex h-12 w-12 items-center justify-center rounded-full bg-ss-blue-600 text-slate-900 shadow-lg shadow-ss-blue-600/30">
                       <card.icon className="h-6 w-6" aria-hidden />
                     </div>
-                    <h3 className="mt-2 font-display text-xl text-white">{card.title}</h3>
+                    <h3 className="mt-2 font-display text-xl text-slate-900">{card.title}</h3>
                     <p className="mt-3 flex-1 text-sm leading-relaxed text-slate-400">
                       {card.text}{" "}
-                      <span className="font-medium text-slate-200">{card.highlight}</span>
+                      <span className="font-medium text-slate-600">{card.highlight}</span>
                     </p>
                   </article>
                 </ScrollReveal>
@@ -196,13 +189,13 @@ export default function AboutPage() {
       <section className="page-section py-20 sm:py-28">
         <Container>
           <ScrollReveal className="mx-auto max-w-3xl text-center">
-            <p className="text-sm font-semibold text-ss-blue-400">About us</p>
-            <h2 className="mt-3 font-display text-3xl leading-tight text-white md:text-5xl">
+            <p className="text-sm font-semibold text-ss-blue-600">About us</p>
+            <h2 className="mt-3 font-display text-3xl leading-tight text-slate-900 md:text-5xl">
               Get satisfied with the services we provide A to Z in cleaning
             </h2>
             <p className="mt-6 text-base leading-relaxed text-slate-400">
               We&apos;re here to make your space spotless and your life easier. With fast bookings,
-              flexible packages, and a team you can trust — {COMPANY.name} is your cleaning partner
+              flexible packages, and a team you can trust, {COMPANY.name} is your cleaning partner
               across London.
             </p>
           </ScrollReveal>
@@ -210,7 +203,7 @@ export default function AboutPage() {
           <div className="mt-14 grid grid-cols-2 gap-8 lg:grid-cols-4">
             {highlightStats.map((stat, i) => (
               <ScrollReveal key={stat.label} delay={i * 0.05} className="text-center">
-                <p className="font-display text-4xl text-ss-blue-400 md:text-5xl">{stat.value}</p>
+                <p className="font-display text-4xl text-ss-blue-600 md:text-5xl">{stat.value}</p>
                 <p className="mt-2 text-sm text-slate-500">{stat.label}</p>
               </ScrollReveal>
             ))}

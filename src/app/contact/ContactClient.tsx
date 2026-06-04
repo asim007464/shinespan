@@ -1,15 +1,19 @@
 "use client";
 
 import { ScrollReveal } from "@/components/animations/ScrollReveal";
+import {
+  ContactEmailButton,
+  ContactPhoneButton,
+  ContactWhatsAppButton,
+} from "@/components/common/ContactActionButtons";
 import { EmailContactLink } from "@/components/common/EmailContactLink";
-import { PhoneContactLink } from "@/components/common/PhoneContactLink";
 import { Container } from "@/components/ui/Container";
 import { COMPANY, SOCIAL_LINKS } from "@/utils/constants";
 import { getContactFormMailto } from "@/utils/mailto";
 import { isValidEmail } from "@/utils/validation";
 import { useState } from "react";
 import { FaFacebookF, FaInstagram, FaWhatsapp } from "react-icons/fa";
-import { FiClock, FiMail, FiMapPin, FiPhone } from "react-icons/fi";
+import { FiClock, FiMapPin } from "react-icons/fi";
 
 const iconMap = {
   facebook: FaFacebookF,
@@ -17,8 +21,8 @@ const iconMap = {
   whatsapp: FaWhatsapp,
 } as const;
 
-const inputClass =
-  "mt-2 w-full rounded-2xl border border-white/15 bg-ss-blue-950/90 px-4 py-3 text-sm text-white outline-none placeholder:text-slate-500 focus:ring-2 focus:ring-ss-blue-500/50";
+const inputClass = "ss-input";
+const panelClass = "ss-card rounded-3xl p-8";
 
 export function ContactClient() {
   const [name, setName] = useState("");
@@ -32,7 +36,7 @@ export function ContactClient() {
       setStatus("error");
       return;
     }
-    window.location.href = getContactFormMailto(name, email, message);
+    window.open(getContactFormMailto(name, email, message), "_blank", "noopener,noreferrer");
     setStatus("sent");
     setName("");
     setEmail("");
@@ -44,55 +48,40 @@ export function ContactClient() {
     <section className="page-section pb-24 pt-16 sm:pt-20">
       <Container>
         <ScrollReveal className="mb-12 max-w-3xl">
-          <p className="text-xs font-semibold uppercase tracking-[0.25em] text-ss-blue-400">Contact</p>
-          <h1 className="mt-3 font-display text-4xl text-white md:text-6xl">Let&apos;s talk cleans</h1>
+          <p className="text-xs font-semibold uppercase tracking-[0.25em] text-ss-blue-600">Contact</p>
+          <h1 className="mt-3 font-display text-4xl text-slate-900 md:text-6xl">Let&apos;s talk cleans</h1>
           <p className="mt-4 text-slate-400">
-            We are available 24 hours a day — coordinators reply quickly. Call{" "}
-            <PhoneContactLink className="font-medium text-ss-blue-400 hover:text-ss-blue-300">
-              {COMPANY.phone}
-            </PhoneContactLink>{" "}
-            or email{" "}
-            <EmailContactLink className="font-medium text-ss-blue-400 hover:text-ss-blue-300">
-              {COMPANY.email}
-            </EmailContactLink>
-            .
+            We are available 24 hours a day, coordinators reply quickly. Reach us on WhatsApp, phone,
+            or email.
           </p>
+          <div className="mt-5 flex flex-wrap gap-3">
+            <ContactWhatsAppButton />
+            <ContactPhoneButton />
+            <ContactEmailButton />
+          </div>
         </ScrollReveal>
 
         <div className="grid gap-12 lg:grid-cols-5">
           <ScrollReveal className="lg:col-span-2 space-y-8">
-            <div className="rounded-3xl border border-white/10 bg-ss-blue-900/50 p-8 shadow-xl shadow-black/20 backdrop-blur-sm">
-              <h2 className="font-display text-xl text-white">Direct lines</h2>
+            <div className={panelClass}>
+              <h2 className="font-display text-xl text-slate-900">Direct lines</h2>
+              <div className="mt-6 flex flex-col gap-2.5">
+                <ContactWhatsAppButton className="w-full justify-start" />
+                <ContactPhoneButton className="w-full justify-start" />
+                <ContactEmailButton className="w-full justify-start break-all" />
+              </div>
               <ul className="mt-6 space-y-5 text-sm">
                 <li className="flex gap-3">
-                  <FiPhone className="mt-0.5 h-5 w-5 shrink-0 text-ss-blue-400" />
+                  <FiClock className="mt-0.5 h-5 w-5 shrink-0 text-ss-blue-600" />
                   <div>
-                    <p className="font-semibold text-white">Phone</p>
-                    <PhoneContactLink className="text-slate-400 hover:text-white">
-                      {COMPANY.phone}
-                    </PhoneContactLink>
-                  </div>
-                </li>
-                <li className="flex gap-3">
-                  <FiMail className="mt-0.5 h-5 w-5 shrink-0 text-ss-blue-400" />
-                  <div>
-                    <p className="font-semibold text-white">Email</p>
-                    <EmailContactLink className="break-all text-slate-400 hover:text-white">
-                      {COMPANY.email}
-                    </EmailContactLink>
-                  </div>
-                </li>
-                <li className="flex gap-3">
-                  <FiClock className="mt-0.5 h-5 w-5 shrink-0 text-ss-blue-400" />
-                  <div>
-                    <p className="font-semibold text-white">Availability</p>
+                    <p className="font-semibold text-slate-900">Availability</p>
                     <p className="text-slate-400">{COMPANY.hours}</p>
                   </div>
                 </li>
                 <li className="flex gap-3">
-                  <FiMapPin className="mt-0.5 h-5 w-5 shrink-0 text-ss-blue-400" />
+                  <FiMapPin className="mt-0.5 h-5 w-5 shrink-0 text-ss-blue-600" />
                   <div>
-                    <p className="font-semibold text-white">Coverage</p>
+                    <p className="font-semibold text-slate-900">Coverage</p>
                     <p className="text-slate-400">{COMPANY.addressLine}</p>
                   </div>
                 </li>
@@ -108,7 +97,7 @@ export function ContactClient() {
                       target="_blank"
                       rel="noopener noreferrer"
                       aria-label={s.label}
-                      className="flex h-11 w-11 items-center justify-center rounded-xl border border-white/15 bg-white/10 text-white transition hover:bg-white/15"
+                      className="flex h-11 w-11 items-center justify-center rounded-xl border border-slate-200 bg-slate-50 text-ss-blue-600 shadow-sm transition hover:bg-slate-100"
                     >
                       <Icon className="h-4 w-4" />
                     </a>
@@ -121,17 +110,17 @@ export function ContactClient() {
           <ScrollReveal delay={0.06} className="lg:col-span-3">
             <form
               onSubmit={handleSubmit}
-              className="rounded-3xl border border-white/10 bg-ss-blue-900/50 p-8 shadow-xl shadow-black/20 backdrop-blur-sm"
+              className={panelClass}
             >
               <div className="grid gap-5 sm:grid-cols-2">
                 <label className="block sm:col-span-2">
-                  <span className="text-xs font-semibold uppercase tracking-wider text-slate-300">
+                  <span className="text-xs font-semibold uppercase tracking-wider text-slate-400">
                     Name
                   </span>
                   <input value={name} onChange={(e) => setName(e.target.value)} className={inputClass} />
                 </label>
                 <label className="block sm:col-span-2">
-                  <span className="text-xs font-semibold uppercase tracking-wider text-slate-300">
+                  <span className="text-xs font-semibold uppercase tracking-wider text-slate-400">
                     Email
                   </span>
                   <input
@@ -142,7 +131,7 @@ export function ContactClient() {
                   />
                 </label>
                 <label className="block sm:col-span-2">
-                  <span className="text-xs font-semibold uppercase tracking-wider text-slate-300">
+                  <span className="text-xs font-semibold uppercase tracking-wider text-slate-400">
                     Message
                   </span>
                   <textarea
@@ -159,7 +148,7 @@ export function ContactClient() {
                 </p>
               ) : null}
               {status === "sent" ? (
-                <p className="mt-4 text-sm text-emerald-400">Thanks — we&apos;ll be in touch shortly.</p>
+                <p className="mt-4 text-sm text-emerald-400">Thanks, we&apos;ll be in touch shortly.</p>
               ) : null}
               <button
                 type="submit"
@@ -168,15 +157,20 @@ export function ContactClient() {
                 Send message
               </button>
               <p className="mt-4 text-center text-xs text-slate-500">
-                Send opens your email app to {COMPANY.email} — add any details and press Send.
+                Opens Gmail to{" "}
+                <EmailContactLink className="font-medium text-ss-blue-600 hover:text-ss-blue-700">
+                  {COMPANY.email}
+                </EmailContactLink>
+                {" "}
+                with your message filled in, then press Send in Gmail.
               </p>
             </form>
           </ScrollReveal>
         </div>
 
-        <ScrollReveal className="mt-14 overflow-hidden rounded-[2rem] border border-white/10 shadow-xl shadow-black/30">
+        <ScrollReveal className="mt-14 overflow-hidden rounded-[2rem] border border-slate-200/80 shadow-lg">
           <iframe
-            title="London map — Shine & Span service coverage"
+            title="London map, Shine & Span service coverage"
             src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d158857.839!2d-0.1276!3d51.5074!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47d8a00baf21de75%3A0x52962966d4962492!2sLondon!5e0!3m2!1sen!2suk!4v1715000000000!5m2!1sen!2suk"
             className="h-[320px] w-full border-0 sm:h-[420px]"
             loading="lazy"
@@ -185,7 +179,7 @@ export function ContactClient() {
         </ScrollReveal>
 
         <p className="mt-6 text-center text-xs text-slate-500">
-          Map shows national coverage — exact routing confirmed at booking.
+          Map shows national coverage, exact routing confirmed at booking.
         </p>
       </Container>
     </section>

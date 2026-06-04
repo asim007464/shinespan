@@ -1,4 +1,4 @@
-/** Type of service (frequency / scope) — booking form dropdown */
+/** Type of service (frequency / scope), booking form dropdown */
 export const BOOKING_SERVICE_TYPES = [
   "One-off cleaning",
   "Weekly cleaning",
@@ -8,12 +8,12 @@ export const BOOKING_SERVICE_TYPES = [
   "End of tenancy",
   "Move in / move out",
   "Airbnb turnover",
-  "Office — daily",
-  "Office — weekly",
-  "Not sure — contact us for a quote",
+  "Office, daily",
+  "Office, weekly",
+  "Not sure, contact us for a quote",
 ] as const;
 
-/** Optional add-on checkboxes — booking form */
+/** Optional add-on checkboxes, booking form */
 export const BOOKING_ADDITIONAL_SERVICES = [
   "Inside Cabinets",
   "Interior Windows",

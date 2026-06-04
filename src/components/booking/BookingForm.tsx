@@ -17,13 +17,12 @@ import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
 
-const inputClass =
-  "mt-2 w-full rounded-2xl border border-white/15 bg-ss-blue-950/90 px-4 py-3 text-sm text-white outline-none placeholder:text-slate-500 focus:ring-2 focus:ring-ss-blue-500/50";
+const inputClass = "ss-input";
 
-const labelClass = "text-xs font-semibold uppercase tracking-wider text-slate-300";
+const labelClass = "text-xs font-semibold uppercase tracking-wider text-slate-700";
 const hintClass = "mt-1.5 text-xs leading-relaxed text-slate-500";
 const formShellClass =
-  "rounded-[2rem] border border-white/10 bg-ss-blue-900/60 p-6 shadow-2xl shadow-black/30 backdrop-blur-sm sm:p-8";
+  "ss-card rounded-[2rem] p-6 sm:p-8";
 const fieldGridClass = "grid gap-5 sm:grid-cols-2";
 
 function Label({ children, required }: { children: React.ReactNode; required?: boolean }) {
@@ -197,7 +196,7 @@ export function BookingForm() {
     >
       {result.ok ? (
         <>
-          <p className="font-semibold">Booking received — thank you.</p>
+          <p className="font-semibold">Booking received, thank you.</p>
           {result.reference ? (
             <p className="mt-1 text-xs opacity-90">Reference: {result.reference}</p>
           ) : null}
@@ -321,7 +320,7 @@ export function BookingForm() {
           accept="image/*"
           multiple
           onChange={handleFilesChange}
-          className="mt-2 block w-full cursor-pointer rounded-2xl border border-dashed border-white/20 bg-ss-blue-950/60 px-4 py-4 text-sm text-slate-400 file:mr-4 file:rounded-xl file:border-0 file:bg-ss-blue-600 file:px-4 file:py-2 file:text-sm file:font-semibold file:text-white hover:file:bg-ss-blue-500"
+          className="mt-2 block w-full cursor-pointer rounded-2xl border border-dashed border-slate-300 bg-slate-50 px-4 py-4 text-sm text-slate-400 file:mr-4 file:rounded-xl file:border-0 file:bg-ss-blue-600 file:px-4 file:py-2 file:text-sm file:font-semibold file:text-slate-900 hover:file:bg-ss-blue-500"
         />
         <p className={hintClass}>
           Share photos to help us understand your cleaning service needs.
@@ -345,7 +344,7 @@ export function BookingForm() {
 
       <p className="mb-6 text-sm text-slate-400">
         Booking:{" "}
-        <span className="font-semibold text-white">{serviceFromUrl?.title}</span>
+        <span className="font-semibold text-slate-900">{serviceFromUrl?.title}</span>
       </p>
 
       <div className={fieldGridClass}>
@@ -374,7 +373,7 @@ export function BookingForm() {
             className={inputClass}
           />
           <p className={hintClass}>
-            Please add total number of rooms — also include the room size/dimensions.
+            Please add total number of rooms, also include the room size/dimensions.
           </p>
           {errors.roomCount ? (
             <p className="mt-1 text-xs text-red-400">{errors.roomCount}</p>
@@ -448,7 +447,7 @@ export function BookingForm() {
             className={inputClass}
           />
           <p className={hintClass}>
-            Please add total number of rooms — also include the main size/dimensions.
+            Please add total number of rooms, also include the main size/dimensions.
           </p>
           {errors.roomCount ? (
             <p className="mt-1 text-xs text-red-400">{errors.roomCount}</p>
@@ -483,13 +482,13 @@ export function BookingForm() {
           {BOOKING_ADDITIONAL_SERVICES.map((item) => (
             <label
               key={item}
-              className="flex cursor-pointer items-start gap-2.5 rounded-xl border border-white/[0.06] bg-ss-blue-950/50 px-3 py-2.5 text-sm text-slate-300 transition hover:border-ss-blue-500/25 hover:bg-ss-blue-950/80"
+              className="flex cursor-pointer items-start gap-2.5 rounded-xl border border-slate-200 bg-slate-50 px-3 py-2.5 text-sm text-slate-700 transition hover:border-ss-blue-300 hover:bg-ss-blue-50"
             >
               <input
                 type="checkbox"
                 checked={form.additionalServices.includes(item)}
                 onChange={() => toggleAdditionalService(item)}
-                className="mt-0.5 h-4 w-4 shrink-0 rounded border-white/25 bg-ss-blue-950 text-ss-blue-500 focus:ring-ss-blue-500/50"
+                className="mt-0.5 h-4 w-4 shrink-0 rounded border-white/30 bg-transparent text-ss-blue-600 focus:ring-ss-blue-500/50"
               />
               <span>{item}</span>
             </label>
@@ -523,9 +522,9 @@ export function BookingForm() {
     <div className="relative mx-auto max-w-7xl pb-24 pt-10">
       {!showServicePanel ? (
         <div className="mb-8 max-w-2xl">
-          <h1 className="font-display text-3xl text-white sm:text-4xl">Book Now</h1>
+          <h1 className="font-display text-3xl text-slate-900 sm:text-4xl">Book Now</h1>
           <p className="mt-3 text-base leading-relaxed text-slate-400">
-            Tell us about your property and preferred visit — our London coordinators confirm by phone
+            Tell us about your property and preferred visit, our London coordinators confirm by phone
             or email.
           </p>
         </div>
@@ -541,9 +540,9 @@ export function BookingForm() {
       )}
 
       {loading ? (
-        <div className="fixed inset-0 z-[70] flex items-center justify-center bg-ss-blue-900/40 backdrop-blur-sm">
-          <div className="w-full max-w-md space-y-4 rounded-3xl border border-white/15 bg-ss-blue-950/95 p-8 shadow-2xl">
-            <p className="text-center font-semibold text-white">Sending your booking…</p>
+        <div className="fixed inset-0 z-[70] flex items-center justify-center bg-slate-900/20 backdrop-blur-sm">
+          <div className="ss-card w-full max-w-md space-y-4 rounded-3xl p-8">
+            <p className="text-center font-semibold text-slate-900">Sending your booking…</p>
             <Skeleton className="h-4 w-full" />
             <Skeleton className="h-4 w-5/6 mx-auto" />
           </div>

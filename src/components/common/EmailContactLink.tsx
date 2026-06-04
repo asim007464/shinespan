@@ -1,28 +1,30 @@
 "use client";
 
-import { getStandardMailtoHref } from "@/utils/mailto";
-import type { ComponentProps, MouseEvent } from "react";
+import { COMPANY } from "@/utils/constants";
+import { getGmailComposeHref } from "@/utils/mailto";
+import type { ComponentProps } from "react";
 
 type EmailContactLinkProps = ComponentProps<"a">;
 
 export function EmailContactLink({
   href,
-  onClick,
   children,
+  target = "_blank",
+  rel = "noopener noreferrer",
+  title = "Open Gmail with our email address filled in",
   ...props
 }: EmailContactLinkProps) {
-  const mailto = href ?? getStandardMailtoHref();
-
-  function handleClick(e: MouseEvent<HTMLAnchorElement>) {
-    onClick?.(e);
-    if (e.defaultPrevented) return;
-
-    e.preventDefault();
-    window.location.href = mailto;
-  }
+  const composeHref = href ?? getGmailComposeHref();
 
   return (
-    <a href={mailto} onClick={handleClick} {...props}>
+    <a
+      href={composeHref}
+      target={target}
+      rel={rel}
+      title={title}
+      aria-label={`Email ${COMPANY.email} in Gmail`}
+      {...props}
+    >
       {children}
     </a>
   );

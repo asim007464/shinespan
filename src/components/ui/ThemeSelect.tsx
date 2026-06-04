@@ -55,9 +55,9 @@ export function ThemeSelect({
         aria-expanded={open}
         aria-controls={open ? listboxId : undefined}
         onClick={() => setOpen((o) => !o)}
-        className="flex w-full items-center justify-between gap-2 rounded-2xl border border-white/15 bg-ss-blue-950/90 px-4 py-3 text-left text-sm outline-none focus:ring-2 focus:ring-ss-blue-500/50"
+        className="flex w-full items-center justify-between gap-2 rounded-2xl border border-slate-200 bg-white px-4 py-3 text-left text-sm outline-none focus:ring-2 focus:ring-ss-blue-500/40"
       >
-        <span className={showFilled ? "text-white" : "text-slate-500"}>{labelText}</span>
+        <span className={showFilled ? "text-slate-900" : "text-slate-500"}>{labelText}</span>
         <FiChevronDown
           className={`h-4 w-4 shrink-0 text-slate-400 transition-transform ${open ? "rotate-180" : ""}`}
           aria-hidden
@@ -68,15 +68,15 @@ export function ThemeSelect({
           id={listboxId}
           role="listbox"
           tabIndex={-1}
-          className="absolute left-0 right-0 z-80 mt-1 max-h-60 overflow-y-auto rounded-2xl border border-white/15 bg-ss-blue-900 py-1 shadow-2xl shadow-black/50 ring-1 ring-white/5"
+          className="absolute left-0 right-0 z-80 mt-1 max-h-60 overflow-y-auto rounded-2xl border border-slate-200 bg-white py-1 shadow-xl ring-1 ring-slate-100"
         >
           {options.map((opt) => (
             <li
               key={opt.value === "" ? "__empty__" : opt.value}
               role="option"
               aria-selected={value === opt.value}
-              className={`cursor-pointer px-4 py-2.5 text-sm text-slate-100 hover:bg-ss-blue-700/70 ${
-                value === opt.value ? "bg-ss-blue-700/50 font-medium text-white" : ""
+              className={`cursor-pointer px-4 py-2.5 text-sm text-slate-700 hover:bg-ss-blue-50 ${
+                value === opt.value ? "bg-ss-blue-50 font-medium text-ss-blue-800" : ""
               }`}
               onMouseDown={(e) => e.preventDefault()}
               onClick={() => {

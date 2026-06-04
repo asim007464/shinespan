@@ -23,7 +23,7 @@ function Stars({ rating }: { rating: number }) {
       {Array.from({ length: 5 }).map((_, j) => (
         <FiStar
           key={j}
-          className={`h-5 w-5 ${j < rating ? "fill-current" : "text-slate-600"}`}
+          className={`h-5 w-5 ${j < rating ? "fill-current" : "text-slate-300"}`}
         />
       ))}
     </div>
@@ -34,14 +34,14 @@ function ReviewCard({ review }: { review: Review }) {
   const rating = Math.min(5, Math.max(1, review.rating));
 
   return (
-    <figure className="flex h-full min-h-[280px] flex-col rounded-3xl border border-white/10 bg-ss-blue-900/50 p-6 shadow-xl shadow-black/20 backdrop-blur-sm sm:p-8">
+    <figure className="ss-card flex h-full min-h-[280px] flex-col rounded-3xl p-6 sm:p-8">
       <Stars rating={rating} />
-      <blockquote className="mt-5 flex-1 text-sm leading-relaxed text-slate-200 sm:text-base">
+      <blockquote className="mt-5 flex-1 text-sm leading-relaxed text-slate-600 sm:text-base">
         &ldquo;{review.comment}&rdquo;
       </blockquote>
-      <figcaption className="mt-6 border-t border-white/10 pt-5">
-        <p className="font-semibold text-white">{review.customerName}</p>
-        <p className="mt-1 text-sm text-slate-500">{formatReviewDate(review.date)}</p>
+      <figcaption className="mt-6 border-t border-slate-200/80 pt-5">
+        <p className="font-semibold text-slate-800">{review.customerName}</p>
+        <p className="mt-1 text-sm text-slate-400">{formatReviewDate(review.date)}</p>
       </figcaption>
     </figure>
   );
@@ -124,16 +124,19 @@ export function Testimonials() {
   if (!loading && reviews.length === 0) return null;
 
   return (
-    <section className="page-section py-20 sm:py-28" aria-labelledby="reviews-heading">
+    <section
+      className="page-section py-20 sm:py-28"
+      aria-labelledby="reviews-heading"
+    >
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <ScrollReveal className="mb-10 max-w-3xl">
-          <p className="text-xs font-semibold uppercase tracking-[0.25em] text-ss-blue-400">
+          <p className="text-xs font-semibold uppercase tracking-[0.25em] text-ss-blue-600">
             Client reviews
           </p>
-          <h2 id="reviews-heading" className="mt-3 font-display text-3xl text-white md:text-5xl">
+          <h2 id="reviews-heading" className="mt-3 font-display text-3xl text-slate-900 md:text-5xl">
             Trusted by London homeowners &amp; businesses
           </h2>
-          <p className="mt-4 text-base text-slate-400">
+          <p className="mt-4 text-base text-slate-600">
             Real feedback from customers who use our cleaning services across London.
           </p>
         </ScrollReveal>
@@ -143,7 +146,7 @@ export function Testimonials() {
             {Array.from({ length: 3 }).map((_, i) => (
               <div
                 key={i}
-                className="h-64 animate-pulse rounded-3xl border border-white/10 bg-ss-blue-900/40"
+                className="h-64 animate-pulse rounded-3xl border border-slate-200 bg-white"
               />
             ))}
           </div>
@@ -185,7 +188,7 @@ export function Testimonials() {
                   type="button"
                   onClick={() => goToSlide(activePage - 1)}
                   aria-label="Previous reviews"
-                  className="absolute -left-2 top-1/2 z-10 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-xl border border-white/15 bg-ss-blue-950/90 text-white shadow-lg transition hover:bg-ss-blue-900 sm:-left-4 lg:-left-12"
+                  className="absolute -left-2 top-1/2 z-10 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-xl border border-slate-200 bg-white text-slate-700 shadow-md transition hover:bg-ss-blue-50 sm:-left-4 lg:-left-12"
                 >
                   <FiChevronLeft className="h-5 w-5" />
                 </button>
@@ -193,7 +196,7 @@ export function Testimonials() {
                   type="button"
                   onClick={() => goToSlide(activePage + 1)}
                   aria-label="Next reviews"
-                  className="absolute -right-2 top-1/2 z-10 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-xl border border-white/15 bg-ss-blue-950/90 text-white shadow-lg transition hover:bg-ss-blue-900 sm:-right-4 lg:-right-12"
+                  className="absolute -right-2 top-1/2 z-10 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-xl border border-slate-200 bg-white text-slate-700 shadow-md transition hover:bg-ss-blue-50 sm:-right-4 lg:-right-12"
                 >
                   <FiChevronRight className="h-5 w-5" />
                 </button>
@@ -207,7 +210,7 @@ export function Testimonials() {
                       aria-label={`Go to review slide ${i + 1}`}
                       aria-current={i === activePage ? "true" : undefined}
                       className={`h-2 rounded-full transition-all ${
-                        i === activePage ? "w-8 bg-ss-blue-500" : "w-2 bg-white/25 hover:bg-white/40"
+                        i === activePage ? "w-8 bg-ss-blue-500" : "w-2 bg-slate-300 hover:bg-slate-400"
                       }`}
                     />
                   ))}

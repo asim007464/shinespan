@@ -2,7 +2,7 @@ export const COMPANY = {
   name: "Shine & Span Cleaning Services Ltd",
   shortName: "Shine & Span",
   email: "cleaning@shinespan.co.uk",
-  /** @deprecated Prefer getStandardMailtoHref() or EmailContactLink — kept for metadata */
+  /** @deprecated Prefer getStandardMailtoHref() or EmailContactLink, kept for metadata */
   emailHref:
     "mailto:cleaning@shinespan.co.uk?subject=Cleaning%20service%20enquiry&body=Hello%0A%0A",
   phone: "07384 647705",
@@ -50,10 +50,13 @@ export const SOCIAL_LINKS = [
   },
 ] as const;
 
-/** Curated Unsplash images — cleaning / interiors */
+/** Curated Unsplash images, cleaning / interiors */
 export const IMAGES = {
   logo: "/unnamed-removebg-preview.png",
   hero: "https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&w=2400&q=85",
+  /** Hero background video (Mixkit, free to use). Swap for /hero.mp4 in public/ if you prefer your own file */
+  heroVideo: "https://assets.mixkit.co/videos/21380/21380-720.mp4",
+  heroVideoFallback: "https://assets.mixkit.co/videos/8722/8722-720.mp4",
   heroSecondary:
     "https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=1200&q=85",
   trusted: "https://images.unsplash.com/photo-1628177142898-93e36e4e3a50?auto=format&fit=crop&w=1600&q=80",
@@ -61,11 +64,14 @@ export const IMAGES = {
   serviceDeep: "/deepcleaning.png",
   serviceOffice: "/92bb565e-f3e0-42dc-9ad2-8650fec99af6.png",
   serviceAirbnb: "/services/airbnb-cleaning.jpg",
-  serviceTenancy: "/moveinout.png",
+  serviceTenancy: "/moveinout.webp",
   serviceCarpet: "/carpetcleaning.png",
   serviceWindow: "/windowcleaning.png",
-  whyChoose:
-    "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=1600&q=80",
+  serviceMedical: "/services/gp-surgery-medical.png",
+  serviceDental: "/services/dental-practice.png",
+  dentalPracticePromo: "/services/dental-practice.png",
+  /** Couple carrying moving boxes into a home */
+  whyChoose: "/911b1872-f2c9-4d2b-a12f-06ed5946d368.png",
   beforeAfterBefore: "/dirtyroom.png",
   beforeAfterAfter: "/cleanroom.png",
   team1:
@@ -76,27 +82,136 @@ export const IMAGES = {
     "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&w=800&q=80",
   aboutHero:
     "https://images.unsplash.com/photo-1556912173-46f337c7fd42?auto=format&fit=crop&w=2000&q=80",
-  ctaBanner:
-    "https://images.unsplash.com/photo-1455587734955-081b22074882?auto=format&fit=crop&w=2000&q=80",
+  /** Support worker with headset speaking with a customer */
+  ctaBanner: "/contact-cta-banner.jpg",
 } as const;
+
+export type ServiceFocusArea = {
+  readonly title: string;
+  readonly description: string;
+};
+
+export type ServiceTrustBadge = {
+  readonly title: string;
+  readonly description?: string;
+};
+
+export type ServiceFeaturedTheme = "medical" | "dental";
+
+export type ServiceFeaturedContent = {
+  readonly theme: ServiceFeaturedTheme;
+  readonly badgeLabel: string;
+  readonly bookLabel: string;
+  readonly imageAlt: string;
+  readonly tagline: string;
+  readonly subtitle: string;
+  readonly values: readonly string[];
+  readonly headline: string;
+  readonly intro: string;
+  readonly focusAreas: readonly ServiceFocusArea[];
+  readonly servingTitle?: string;
+  readonly servingItems?: readonly string[];
+  readonly trustBadges?: readonly ServiceTrustBadge[];
+  readonly promoImage?: string;
+};
 
 export type ServiceItem = {
   readonly slug: string;
   readonly title: string;
+  /** Shorter label for service cards (optional) */
+  readonly cardTitle?: string;
+  readonly cardSubtitle?: string;
   readonly description: string;
   readonly seoDescription: string;
   readonly details: readonly string[];
   readonly image: string;
+  readonly featured?: ServiceFeaturedContent;
 };
 
 export const SERVICES_LIST: readonly ServiceItem[] = [
   {
+    slug: "gp-surgery-medical-cleaning",
+    title: "GP Surgery & Other Medical Services",
+    description:
+      "Trusted cleaning and disinfecting for GP surgeries and medical spaces. Professional, reliable, hygienic.",
+    seoDescription:
+      "Delivering exceptional cleaning and disinfecting standards for healthcare environments across London, reception, consulting rooms, waiting areas, and washrooms.",
+    details: [
+      "Consulting room cleaning and disinfecting",
+      "Reception and waiting area cleaning and disinfecting",
+      "Washroom disinfecting and high-touch surface cleaning",
+      "GP surgeries, clinics, and other medical premises",
+      "Out-of-hours visits to limit disruption",
+    ],
+    image: IMAGES.serviceMedical,
+  },
+  {
+    slug: "dental-practice-cleaning",
+    title: "Dental Practices",
+    description:
+      "Specialist cleaning for dental practices. Reliable, discreet, hygienic, professional. Organised and run by a registered medical professional.",
+    seoDescription:
+      "High-standard cleaning tailored for dental practices across London, surgery rooms, reception, sterilisation areas, and patient facilities with fully vetted, DBS-checked crews.",
+    details: [
+      "Surgery room cleaning and disinfecting",
+      "Reception and waiting area cleaning",
+      "Sterilisation and decontamination zones",
+      "Patient washrooms and staff facilities",
+      "Evening and weekend visits to avoid clinic downtime",
+    ],
+    image: IMAGES.serviceDental,
+    featured: {
+      theme: "dental",
+      badgeLabel: "Dental cleaning",
+      bookLabel: "Book dental practice cleaning",
+      imageAlt: "Shine and Span specialist cleaning for dental practices",
+      tagline: "Reliable · Discreet · Hygienic · Professional",
+      subtitle: "Organised and run by a registered medical professional",
+      values: ["Reliable", "Discreet", "Hygienic", "Professional"],
+      headline: "Specialist Cleaning for Dental Practices",
+      intro: "High-standard cleaning tailored for dental practices you can trust.",
+      focusAreas: [
+        {
+          title: "Surgery room cleaning & disinfecting",
+          description:
+            "Dental chairs, lights, surfaces, and equipment touchpoints cleaned to clinical standards.",
+        },
+        {
+          title: "Reception & waiting area cleaning",
+          description:
+            "Patient-facing areas kept spotless, seating, counters, and shared touchpoints sanitised.",
+        },
+        {
+          title: "Sterilisation & decontamination zones",
+          description:
+            "Decontamination areas, washrooms, and high-touch surfaces disinfected throughout.",
+        },
+      ],
+      trustBadges: [
+        { title: "Professionally trained" },
+        { title: "Fully vetted" },
+        { title: "DBS checked" },
+        { title: "Fully insured" },
+      ],
+      servingTitle: "Serving dental practices",
+      servingItems: [
+        "General dental practices",
+        "Orthodontic clinics",
+        "Hygienist suites",
+        "Cosmetic dentistry",
+        "Multi-chair surgeries",
+        "Other dental premises",
+      ],
+      promoImage: IMAGES.dentalPracticePromo,
+    },
+  },
+  {
     slug: "regular-cleaning",
     title: "Regular Cleaning",
     description:
-      "Reliable regular cleaning for kitchens, bathrooms, and living spaces — consistently fresh.",
+      "Reliable regular cleaning for kitchens, bathrooms, and living spaces, consistently fresh.",
     seoDescription:
-      "Our regular cleaning services keep London households spotless with professional cleaners on a schedule that suits you — ideal for busy families and working professionals.",
+      "Our regular cleaning services keep London households spotless with professional cleaners on a schedule that suits you, ideal for busy families and working professionals.",
     details: [
       "Kitchen and bathroom sanitisation",
       "Dusting, vacuuming, and floor care",
@@ -110,61 +225,63 @@ export const SERVICES_LIST: readonly ServiceItem[] = [
     description:
       "Intensive deep cleaning services for appliances, detail areas, and a full property refresh.",
     seoDescription:
-      "Book deep cleaning services when you need a top-to-bottom reset — our professional cleaners tackle built-up grime so your home feels newly refreshed.",
+      "Book deep cleaning services when you need a top-to-bottom reset, our professional cleaners tackle built-up grime so your home feels newly refreshed.",
     details: [
       "Inside appliances and hard-to-reach areas",
       "Degreasing and detailed scrubbing",
-      "Bathroom and kitchen hard areas — tiles, grout, and built-up grime",
+      "Bathroom and kitchen hard areas, tiles, grout, and built-up grime",
       "Perfect before guests or seasonal resets",
     ],
     image: IMAGES.serviceDeep,
   },
   {
-    slug: "office-cleaning",
-    title: "Office Cleaning",
+    slug: "end-of-tenancy",
+    title: "End of Tenancy Cleaning (Move In / Move Out Cleaning)",
+    cardTitle: "End of Tenancy Cleaning",
+    cardSubtitle: "Move in / move out",
     description:
-      "Discreet office cleaning when your workplace is quiet — desks, communal areas, and hygiene-focused washrooms.",
+      "Inventory-ready end of tenancy and move handovers, blank-slate cleans with ovens, fixtures, and landlord checklist standards.",
     seoDescription:
-      "Office cleaning for London workplaces: reliable crews, minimal disruption, and standards your team and clients will notice from day one.",
+      "End of tenancy and move in / move out cleaning across London, deposit-friendly, inventory-ready finishes for tenants, landlords, buyers, and sellers.",
     details: [
-      "Desks, meeting rooms, and reception areas",
-      "Washroom restocking and sanitisation",
-      "Flexible slots — available 24 hours a day",
+      "Oven, hob, and appliance detailing, fridge, microwave, dishwasher, and other appliances",
+      "Bathrooms and fixtures descaled",
+      "All rooms cleaned, bedrooms, living areas, halls, and stairs",
+      "Inside cupboards and wardrobes",
+      "Full property sanitisation, ready for keys or boxes",
+      "Checklist-aligned room-by-room scope",
     ],
-    image: IMAGES.serviceOffice,
+    image: IMAGES.serviceTenancy,
   },
   {
     slug: "airbnb-cleaning",
     title: "Airbnb Cleaning",
     description:
-      "Guest-ready turnovers aligned with check-ins — crisp linens and inventory-aware resets.",
+      "Guest-ready turnovers aligned with check-ins, crisp linens and inventory-aware resets.",
     seoDescription:
-      "Short-let and Airbnb cleaning with turnaround times built around your calendar — professional cleaners who protect your reviews and listing photos.",
+      "Short-let and Airbnb cleaning with turnaround times built around your calendar, professional cleaners who protect your reviews and listing photos.",
     details: [
-      "Kitchen cleaning — worktops, appliances, and floors",
-      "Bathroom cleaning — sanitised fixtures and surfaces",
-      "Bedrooms and living rooms — dusted, vacuumed, and guest-ready",
+      "Kitchen cleaning, worktops, appliances, and floors",
+      "Bathroom cleaning, sanitised fixtures and surfaces",
+      "Bedrooms and living rooms, dusted, vacuumed, and guest-ready",
       "Linen change and staging",
       "Same-day turnover options where available",
     ],
     image: IMAGES.serviceAirbnb,
   },
   {
-    slug: "end-of-tenancy",
-    title: "End of Tenancy Cleaning (Move In / Move Out Cleaning)",
+    slug: "office-cleaning",
+    title: "Office Cleaning",
     description:
-      "Inventory-ready end of tenancy and move handovers — blank-slate cleans with ovens, fixtures, and landlord checklist standards.",
+      "Discreet office cleaning when your workplace is quiet, desks, communal areas, and hygiene-focused washrooms.",
     seoDescription:
-      "End of tenancy and move in / move out cleaning across London — deposit-friendly, inventory-ready finishes for tenants, landlords, buyers, and sellers.",
+      "Office cleaning for London workplaces: reliable crews, minimal disruption, and standards your team and clients will notice from day one.",
     details: [
-      "Oven, hob, and appliance detailing — fridge, microwave, dishwasher, and other appliances",
-      "Bathrooms and fixtures descaled",
-      "All rooms cleaned — bedrooms, living areas, halls, and stairs",
-      "Inside cupboards and wardrobes",
-      "Full property sanitisation — ready for keys or boxes",
-      "Checklist-aligned room-by-room scope",
+      "Desks, meeting rooms, and reception areas",
+      "Washroom restocking and sanitisation",
+      "Flexible slots, available 24 hours a day",
     ],
-    image: IMAGES.serviceTenancy,
+    image: IMAGES.serviceOffice,
   },
   {
     slug: "carpet-cleaning",
@@ -172,7 +289,7 @@ export const SERVICES_LIST: readonly ServiceItem[] = [
     description:
       "Hot-water extraction and stain treatment for rugs, stairs, and fitted carpets.",
     seoDescription:
-      "Professional carpet cleaning to lift stains and revive fibres — add to home cleaning services or book as a standalone treatment.",
+      "Professional carpet cleaning to lift stains and revive fibres, add to home cleaning services or book as a standalone treatment.",
     details: [
       "Stain assessment and pre-treatment",
       "Deep extraction for fitted carpets",
@@ -184,9 +301,9 @@ export const SERVICES_LIST: readonly ServiceItem[] = [
     slug: "window-cleaning",
     title: "Window Cleaning",
     description:
-      "Streak-free interior and exterior glass — frames and sills wiped for lasting clarity.",
+      "Streak-free interior and exterior glass, frames and sills wiped for lasting clarity.",
     seoDescription:
-      "Window cleaning for homes and commercial fronts — safe access methods and a finish that lets natural light back in.",
+      "Window cleaning for homes and commercial fronts, safe access methods and a finish that lets natural light back in.",
     details: [
       "Interior and exterior panes where accessible",
       "Frames, sills, and ledges wiped down",
@@ -201,7 +318,7 @@ export const FOOTER_SERVICES = SERVICES_LIST;
 export const FAQ_ITEMS = [
   {
     q: "Are you insured and DBS-checked?",
-    a: "Yes — full public liability insurance and vetted team members for peace of mind.",
+    a: "Yes, full public liability insurance and vetted team members for peace of mind.",
   },
   {
     q: "Do you bring equipment and products?",
@@ -209,10 +326,10 @@ export const FAQ_ITEMS = [
   },
   {
     q: "Which areas do you cover?",
-    a: "We serve residential and commercial clients across London — confirm your postcode at booking.",
+    a: "We serve residential and commercial clients across London, confirm your postcode at booking.",
   },
   {
     q: "Can I reschedule?",
-    a: "Absolutely — contact us or reply to your confirmation at least 24 hours ahead.",
+    a: "Absolutely, contact us or reply to your confirmation at least 24 hours ahead.",
   },
 ] as const;

@@ -24,7 +24,7 @@ export function ChatbotWidget() {
   const [messages, setMessages] = useState<{ role: "user" | "assistant"; text: string }[]>([
     {
       role: "assistant",
-      text: "Hi — I'm your Shine Assistant. I can search our cleaning services, explain what's included, and help you pick the right bookable service.",
+      text: "Hi, I'm your Shine Assistant. I can search our cleaning services, explain what's included, and help you pick the right bookable service.",
     },
   ]);
   const { value: inquiries, setValue: setInquiries, hydrated } = useLocalStorage<
@@ -59,7 +59,7 @@ export function ChatbotWidget() {
     try {
       await axios.post("/api/inquiries", payload, { validateStatus: () => true });
     } catch {
-      /* offline — localStorage still holds copy */
+      /* offline, localStorage still holds copy */
     }
   }
 
@@ -118,11 +118,11 @@ export function ChatbotWidget() {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 24, scale: 0.96 }}
             transition={{ duration: 0.25 }}
-            className="fixed bottom-24 right-5 z-50 flex h-[min(560px,78vh)] w-[min(380px,92vw)] flex-col overflow-hidden rounded-3xl border border-white/12 bg-ss-blue-950/98 shadow-2xl shadow-black/40 backdrop-blur-xl sm:bottom-28 sm:right-8"
+            className="fixed bottom-24 right-5 z-50 flex h-[min(560px,78vh)] w-[min(380px,92vw)] flex-col overflow-hidden rounded-3xl border border-slate-200 bg-white/98 shadow-2xl shadow-black/40 backdrop-blur-xl sm:bottom-28 sm:right-8"
           >
-            <div className="flex items-center justify-between border-b border-white/10 px-4 py-3">
+            <div className="flex items-center justify-between border-b border-slate-200/80 px-4 py-3">
               <div>
-                <p className="text-sm font-semibold text-white">Shine Assistant</p>
+                <p className="text-sm font-semibold text-slate-900">Shine Assistant</p>
                 <p className="text-[11px] text-slate-400">
                   {hydrated && (inquiries?.length ?? 0) > 0
                     ? `${inquiries?.length ?? 0} saved inquiries`
@@ -133,7 +133,7 @@ export function ChatbotWidget() {
                 type="button"
                 onClick={() => setOpen(false)}
                 aria-label="Close chat"
-                className="rounded-xl p-2 text-slate-300 hover:bg-white/10 hover:text-white"
+                className="rounded-xl p-2 text-slate-400 hover:bg-slate-50 hover:text-slate-900"
               >
                 <FiX className="h-5 w-5" />
               </button>
@@ -149,7 +149,7 @@ export function ChatbotWidget() {
                     className={`max-w-[85%] whitespace-pre-line rounded-2xl px-4 py-3 text-sm leading-relaxed ${
                       m.role === "user"
                         ? "bg-gradient-to-r from-ss-blue-700 to-ss-blue-500 text-white"
-                        : "border border-white/10 bg-ss-blue-900/80 text-slate-100"
+                        : "border border-slate-200 bg-slate-50 text-slate-700"
                     }`}
                   >
                     {m.text}
@@ -162,7 +162,7 @@ export function ChatbotWidget() {
                     key={q}
                     type="button"
                     onClick={() => send(q)}
-                    className="rounded-full border border-white/20 bg-white/10 px-3 py-1.5 text-xs font-medium text-slate-200 hover:border-white/35 hover:bg-white/15"
+                    className="rounded-full border border-slate-200 bg-white px-3 py-1.5 text-xs font-medium text-slate-700 hover:border-ss-blue-300 hover:bg-ss-blue-50"
                   >
                     {q}
                   </button>
@@ -171,14 +171,14 @@ export function ChatbotWidget() {
               <Link
                 href="/booking"
                 onClick={() => setOpen(false)}
-                className="mt-2 inline-flex w-full items-center justify-center rounded-2xl bg-white/10 py-2.5 text-xs font-semibold text-white ring-1 ring-white/15 hover:bg-white/15"
+                className="mt-2 inline-flex w-full items-center justify-center rounded-2xl border border-ss-blue-200 bg-ss-blue-50 py-2.5 text-xs font-semibold text-ss-blue-800 hover:bg-ss-blue-100"
               >
                 Book Now
               </Link>
             </div>
 
             <form
-              className="border-t border-white/10 p-3"
+              className="border-t border-slate-200/80 p-3"
               onSubmit={(e) => {
                 e.preventDefault();
                 send();
@@ -189,7 +189,7 @@ export function ChatbotWidget() {
                   value={input}
                   onChange={(e) => setInput(e.target.value)}
                   placeholder="Search services or ask for help…"
-                  className="flex-1 rounded-2xl border border-white/15 bg-ss-blue-950/90 px-4 py-3 text-sm text-white outline-none placeholder:text-slate-500 focus:ring-2 focus:ring-ss-blue-500/50"
+                  className="ss-input flex-1 !mt-0"
                 />
                 <button
                   type="submit"

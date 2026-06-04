@@ -14,12 +14,12 @@ export function Navbar() {
   const [open, setOpen] = useState(false);
 
   return (
-    <header className="sticky top-0 z-50 border-b border-white/10 bg-ss-blue-950/85 backdrop-blur-xl">
+    <header className="sticky top-0 z-50 border-b border-slate-200/80 bg-white/80 shadow-sm shadow-slate-200/30 backdrop-blur-xl">
       <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-4 sm:px-6 lg:px-8">
         <Link href="/" className="group flex items-center">
           <Image
             src={IMAGES.logo}
-            alt={`${COMPANY.shortName} — cleaning services London`}
+            alt={`${COMPANY.shortName}, cleaning services London`}
             width={220}
             height={68}
             className="h-11 w-auto sm:h-12"
@@ -36,8 +36,8 @@ export function Navbar() {
                 href={link.href}
                 className={`rounded-xl px-4 py-2 text-sm font-medium transition ${
                   active
-                    ? "bg-white/15 text-white"
-                    : "text-slate-200 hover:bg-white/10 hover:text-white"
+                    ? "bg-ss-blue-50 text-ss-blue-800"
+                    : "text-slate-600 hover:bg-slate-50 hover:text-ss-blue-800"
                 }`}
               >
                 {link.label}
@@ -52,7 +52,7 @@ export function Navbar() {
           </Button>
           <button
             type="button"
-            className="inline-flex h-11 w-11 items-center justify-center rounded-xl border border-white/15 bg-white/10 text-white lg:hidden"
+            className="inline-flex h-11 w-11 items-center justify-center rounded-xl border border-slate-200 bg-white text-slate-700 shadow-sm lg:hidden"
             aria-label="Toggle menu"
             onClick={() => setOpen((v) => !v)}
           >
@@ -67,7 +67,7 @@ export function Navbar() {
             initial={{ height: 0, opacity: 0 }}
             animate={{ height: "auto", opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
-            className="border-t border-white/10 bg-ss-blue-950/98 lg:hidden"
+            className="border-t border-slate-200 bg-white lg:hidden"
           >
             <div className="flex flex-col gap-1 px-4 py-4">
               {NAV_LINKS.map((link) => (
@@ -75,7 +75,7 @@ export function Navbar() {
                   key={link.href}
                   href={link.href}
                   onClick={() => setOpen(false)}
-                  className="rounded-xl px-3 py-3 text-base font-medium text-slate-100 hover:bg-white/10"
+                  className="rounded-xl px-3 py-3 text-base font-medium text-slate-700 hover:bg-ss-blue-50"
                 >
                   {link.label}
                 </Link>

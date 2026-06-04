@@ -38,7 +38,7 @@ export async function POST(req: Request) {
         ok: true,
         reference,
         message:
-          "Booking received. Our coordinators will confirm — external sync will retry automatically.",
+          "Booking received. Our coordinators will confirm, external sync will retry automatically.",
         forwarded: false,
       });
     }

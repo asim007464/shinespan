@@ -31,7 +31,7 @@ export function ScrollToTop() {
           transition={{ duration: 0.25 }}
           onClick={goTop}
           aria-label="Back to top"
-          className="fixed bottom-5 right-5 z-40 flex h-12 w-12 items-center justify-center rounded-2xl border border-white/15 bg-ss-blue-950/95 text-white shadow-xl shadow-black/30 backdrop-blur sm:bottom-6 sm:right-6"
+          className="fixed bottom-5 right-5 z-40 flex h-12 w-12 items-center justify-center rounded-2xl border border-slate-200 bg-white text-ss-blue-700 shadow-lg sm:bottom-6 sm:right-6"
         >
           <FiChevronUp className="h-6 w-6" />
         </motion.button>

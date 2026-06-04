@@ -7,7 +7,7 @@ import { Skeleton } from "@/components/ui/Skeleton";
 
 export const metadata = buildPageMetadata({
   title: "Book Cleaning Services",
-  description: `Book Now with ${COMPANY.shortName} — home cleaning services, office cleaning, and deep cleaning services across London. Professional cleaners on your schedule.`,
+  description: `Book Now with ${COMPANY.shortName}, home cleaning services, office cleaning, and deep cleaning services across London. Professional cleaners on your schedule.`,
   path: "/booking",
 });
 

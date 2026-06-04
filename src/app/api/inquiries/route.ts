@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 
-/** Stub endpoint for chatbot / future CRM — persists-ready shape */
+/** Stub endpoint for chatbot / future CRM, persists-ready shape */
 export async function POST(req: Request) {
   try {
     const body = await req.json();

@@ -17,7 +17,7 @@ export function getAssistantReply(input: string, cleaningType?: string): ChatRep
   ) {
     return {
       text:
-        "Happy to help you choose:\n\n• Regular upkeep → Regular Cleaning\n• Moving or inventory → End of Tenancy (Move In / Move Out)\n• Workplace → Office Cleaning\n• Short lets → Airbnb Cleaning\n• One-off refresh → Deep Cleaning\n\nTell me your property type (home, office, rental) and I will narrow it down.",
+        "Happy to help you choose:\n\n• Regular upkeep → Regular Cleaning\n• Moving or inventory → End of Tenancy (Move In / Move Out)\n• Workplace → Office Cleaning\n• GP surgery or clinic → GP Surgery & Other Medical Services\n• Dental surgery → Dental Practices\n• Short lets → Airbnb Cleaning\n• One-off refresh → Deep Cleaning\n\nTell me your property type (home, office, medical, dental, rental) and I will narrow it down.",
     };
   }
 
@@ -36,7 +36,7 @@ export function getAssistantReply(input: string, cleaningType?: string): ChatRep
     const hits = searchServices(term);
     if (hits.length === 0) {
       return {
-        text: `No exact match for "${input.trim()}". Try: house, deep, office, tenancy, carpet, or window.`,
+        text: `No exact match for "${input.trim()}". Try: house, deep, office, medical, GP, tenancy, carpet, or window.`,
       };
     }
     if (hits.length === 1) {
@@ -54,6 +54,16 @@ export function getAssistantReply(input: string, cleaningType?: string): ChatRep
       (s.title === "Regular Cleaning" && (lower.includes("home") || lower.includes("house") || lower.includes("regular"))) ||
       (s.title === "Deep Cleaning" && lower.includes("deep")) ||
       (s.title === "Office Cleaning" && lower.includes("office")) ||
+      (s.title === "Dental Practices" &&
+        (lower.includes("dental") ||
+          lower.includes("dentist") ||
+          lower.includes("orthodont"))) ||
+      (s.title.startsWith("GP Surgery") &&
+        (lower.includes("gp") ||
+          lower.includes("surgery") ||
+          lower.includes("medical") ||
+          lower.includes("clinic") ||
+          lower.includes("cqc"))) ||
       (s.title.startsWith("End of Tenancy Cleaning") &&
         (lower.includes("tenancy") || lower.includes("move out") || lower.includes("move in")))
   );
@@ -71,7 +81,7 @@ export function getAssistantReply(input: string, cleaningType?: string): ChatRep
 
   if (lower.includes("budget") || lower.includes("price") || lower.includes("cost")) {
     return {
-      text: "Pricing depends on property size, frequency, and service level. Share your postcode and preferred service — we will quote clearly before you book.",
+      text: "Pricing depends on property size, frequency, and service level. Share your postcode and preferred service, we will quote clearly before you book.",
     };
   }
 
@@ -81,7 +91,7 @@ export function getAssistantReply(input: string, cleaningType?: string): ChatRep
     lower.includes("schedule")
   ) {
     return {
-      text: "Use Book Now on our site — one simple form with your address, service, and preferred date & time. We confirm by phone or email.",
+      text: "Use Book Now on our site, one simple form with your address, service, and preferred date & time. We confirm by phone or email.",
       suggestBooking: true,
     };
   }
@@ -93,7 +103,7 @@ export function getAssistantReply(input: string, cleaningType?: string): ChatRep
     lower.includes("bristol")
   ) {
     return {
-      text: "Location noted. We serve clients across London — confirm your postcode at booking. Ready to Book Now?",
+      text: "Location noted. We serve clients across London, confirm your postcode at booking. Ready to Book Now?",
       suggestBooking: true,
     };
   }
@@ -130,5 +140,15 @@ export function getAssistantReply(input: string, cleaningType?: string): ChatRep
 function formatServiceDetail(title: string): string {
   const s = getServiceByTitle(title);
   if (!s) return "Service not found.";
+  if (s.featured) {
+    const f = s.featured;
+    const trust = f.trustBadges?.map((b) => b.title).join(", ");
+    const serving =
+      f.servingTitle && f.servingItems
+        ? `\n\n${f.servingTitle}: ${f.servingItems.join(", ")}`
+        : "";
+    const trustLine = trust ? `\n\n${trust}` : "";
+    return `${f.tagline}\n\n${f.subtitle}\n\n${f.headline}\n${f.intro}\n\n${f.focusAreas.map((a) => `• ${a.title}`).join("\n")}${trustLine}${serving}\n\nReady? Tap Book Now to submit your request.`;
+  }
   return `${s.title}\n\n${s.seoDescription}\n\nIncludes:\n${s.details.map((d) => `• ${d}`).join("\n")}\n\nReady? Tap Book Now to submit your request.`;
 }

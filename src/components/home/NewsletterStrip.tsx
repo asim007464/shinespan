@@ -15,18 +15,18 @@ export function NewsletterStrip() {
   }
 
   return (
-    <section className="pb-20">
+    <section className="page-section pb-20 pt-4">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <ScrollReveal>
-          <div className="rounded-[2rem] border border-ss-blue-500/15 bg-gradient-to-r from-ss-blue-800 via-ss-blue-700 to-ss-blue-600 p-8 text-white shadow-2xl shadow-ss-blue-900/25 sm:p-12">
+          <div className="rounded-[2rem] border border-ss-blue-200/60 bg-gradient-to-br from-ss-blue-50 via-white to-slate-50 p-8 shadow-lg sm:p-12">
             <div className="flex flex-col gap-8 lg:flex-row lg:items-center lg:justify-between">
               <div>
-                <p className="text-xs font-semibold uppercase tracking-[0.25em] text-ss-blue-200">
+                <p className="text-xs font-semibold uppercase tracking-[0.25em] text-ss-blue-600">
                   Stay polished
                 </p>
-                <h3 className="mt-2 font-display text-2xl sm:text-3xl">Join the Shine &amp; Span list</h3>
-                <p className="mt-2 max-w-xl text-sm text-white/85">
-                  Seasonal deep-clean reminders and limited slots — unsubscribe anytime.
+                <h3 className="mt-2 font-display text-2xl text-slate-900 sm:text-3xl">Join the Shine &amp; Span list</h3>
+                <p className="mt-2 max-w-xl text-sm text-slate-600">
+                  Seasonal deep-clean reminders and limited slots, unsubscribe anytime.
                 </p>
               </div>
               <form onSubmit={onSubmit} className="flex w-full max-w-md flex-col gap-3 sm:flex-row">
@@ -36,7 +36,7 @@ export function NewsletterStrip() {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="Email address"
-                  className="flex-1 rounded-2xl border border-white/25 bg-white/15 px-5 py-4 text-sm text-white outline-none placeholder:text-white/60 focus:ring-2 focus:ring-white/40"
+                  className="ss-input flex-1 !mt-0"
                 />
                 <button
                   type="submit"

@@ -1,28 +1,51 @@
 import { COMPANY } from "@/utils/constants";
 
-/** Opens the user’s email app to cleaning@shinespan.co.uk with a helpful subject line. */
-export function getMailtoHref(options?: {
+const DEFAULT_SUBJECT = "Cleaning service enquiry";
+const DEFAULT_BODY = "Hello,\n\n";
+
+function resolveEmailContent(options?: { subject?: string; body?: string }) {
+  return {
+    subject: options?.subject ?? DEFAULT_SUBJECT,
+    body: options?.body ?? DEFAULT_BODY,
+  };
+}
+
+/** Opens Gmail compose with To, subject, and greeting already filled in. */
+export function getGmailComposeHref(options?: {
   subject?: string;
   body?: string;
 }): string {
+  const { subject, body } = resolveEmailContent(options);
+  const params = new URLSearchParams({
+    view: "cm",
+    fs: "1",
+    to: COMPANY.email,
+    su: subject,
+    body,
+  });
+  return `https://mail.google.com/mail/?${params.toString()}`;
+}
+
+/** mailto fallback (other email apps) */
+export function getMailtoHref(options?: { subject?: string; body?: string }): string {
+  const { subject, body } = resolveEmailContent(options);
   const params = new URLSearchParams();
-  params.set("subject", options?.subject ?? "Cleaning service enquiry");
-  if (options?.body !== undefined) {
-    params.set("body", options.body);
-  } else {
-    params.set("body", "Hello,\n\n");
-  }
-  // Use %20 instead of + so all mail clients open correctly
+  params.set("subject", subject);
+  params.set("body", body);
   const query = params.toString().replace(/\+/g, "%20");
   return `mailto:${COMPANY.email}?${query}`;
 }
 
-/** Standard site-wide mailto with subject and greeting in body */
+/** Primary email link target for the site */
 export function getStandardMailtoHref(): string {
-  return getMailtoHref();
+  return getGmailComposeHref();
 }
 
-export function getContactFormMailto(name: string, fromEmail: string, message: string): string {
+export function getContactFormMailto(
+  name: string,
+  fromEmail: string,
+  message: string,
+): string {
   const body = [
     `Name: ${name.trim()}`,
     `Email: ${fromEmail.trim()}`,
@@ -30,7 +53,7 @@ export function getContactFormMailto(name: string, fromEmail: string, message: s
     message.trim(),
   ].join("\n");
 
-  return getMailtoHref({
+  return getGmailComposeHref({
     subject: `Website enquiry from ${name.trim()}`,
     body,
   });

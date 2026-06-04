@@ -20,7 +20,7 @@ const dmSerif = DM_Serif_Display({
 export const metadata: Metadata = {
   metadataBase: new URL("https://shinespan.co.uk"),
   title: {
-    default: `${COMPANY.shortName} | Cleaning Services London — Professional Cleaners`,
+    default: `${COMPANY.shortName} | Cleaning Services London, Professional Cleaners`,
     template: `%s | ${COMPANY.shortName}`,
   },
   description: `${COMPANY.tagline} Home cleaning services, office cleaning, and deep cleaning services with insured professional cleaners across London.`,
@@ -32,6 +32,9 @@ export const metadata: Metadata = {
     "professional cleaners",
     "end of tenancy cleaning",
     "Airbnb cleaning",
+    "GP surgery cleaning",
+    "dental practice cleaning",
+    "medical facility cleaning",
   ],
   openGraph: {
     title: `${COMPANY.shortName} | Cleaning Services London`,
@@ -53,7 +56,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en-GB" suppressHydrationWarning className="dark h-full">
+    <html lang="en-GB" suppressHydrationWarning className="h-full">
       <body
         className={`${plusJakarta.variable} ${dmSerif.variable} flex min-h-full flex-col font-sans antialiased`}
       >
