@@ -8,7 +8,7 @@ import {
 import {
   COMPANY,
   FOOTER_QUICK_LINKS,
-  FOOTER_SERVICES,
+  FOOTER_SERVICE_LINKS,
   IMAGES,
   SOCIAL_LINKS,
 } from "@/utils/constants";
@@ -90,13 +90,13 @@ export function Footer() {
               Services
             </p>
             <ul className="mt-4 grid gap-2.5 sm:grid-cols-2 lg:grid-cols-1">
-              {FOOTER_SERVICES.map((s) => (
-                <li key={s.slug}>
+              {FOOTER_SERVICE_LINKS.map((s) => (
+                <li key={s.label}>
                   <Link
-                    href={`/booking?service=${encodeURIComponent(s.title)}`}
+                    href={s.href}
                     className="text-sm text-slate-600 transition hover:text-ss-blue-700"
                   >
-                    {s.title}
+                    {s.label}
                   </Link>
                 </li>
               ))}

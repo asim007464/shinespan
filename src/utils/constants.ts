@@ -14,7 +14,7 @@ export const COMPANY = {
     encodeURIComponent("Hi, I want to book a cleaning service. Please assist me."),
   region: "London",
   addressLine: "Serving homes & businesses across London",
-  hours: "Open 24 hours · 7 days a week",
+  hours: "8am to 8pm · 7 days a week",
   tagline: "Premium cleaning tailored for London homes, offices & apartments.",
 } as const;
 
@@ -140,7 +140,6 @@ export const SERVICES_LIST: readonly ServiceItem[] = [
       "Consulting room cleaning and disinfecting",
       "Reception and waiting area cleaning and disinfecting",
       "Washroom disinfecting and high-touch surface cleaning",
-      "GP surgeries, clinics, and other medical premises",
       "Out-of-hours visits to limit disruption",
     ],
     image: IMAGES.serviceMedical,
@@ -277,7 +276,7 @@ export const SERVICES_LIST: readonly ServiceItem[] = [
     details: [
       "Desks, meeting rooms, and reception areas",
       "Washroom restocking and sanitisation",
-      "Flexible slots, available 24 hours a day",
+      "Flexible slots, 8am to 8pm",
     ],
     image: IMAGES.serviceOffice,
   },
@@ -311,7 +310,29 @@ export const SERVICES_LIST: readonly ServiceItem[] = [
   },
 ] as const;
 
-export const FOOTER_SERVICES = SERVICES_LIST;
+export type FooterServiceLink = {
+  readonly label: string;
+  readonly href: string;
+};
+
+export const FOOTER_SERVICE_LINKS: readonly FooterServiceLink[] = SERVICES_LIST.flatMap((s) => {
+  if (s.slug === "regular-cleaning" || s.slug === "deep-cleaning") return [];
+
+  const link: FooterServiceLink = {
+    label: s.title,
+    href: `/booking?service=${encodeURIComponent(s.title)}`,
+  };
+
+  if (s.slug === "dental-practice-cleaning") {
+    return [
+      link,
+      { label: "Domestic Cleaning", href: "/services?category=domestic" },
+      { label: "Commercial Cleaning", href: "/services?category=commercial" },
+    ];
+  }
+
+  return [link];
+});
 
 export const FAQ_ITEMS = [
   {

@@ -13,7 +13,13 @@ import {
   buildBookingMessage,
 } from "@/utils/bookingOptions";
 import { SERVICES_LIST } from "@/utils/constants";
-import { bookingFieldErrors, combinePreferredDateTime } from "@/utils/validation";
+import {
+  BOOKING_ARRIVAL_TIME_MAX,
+  BOOKING_ARRIVAL_TIME_MIN,
+  bookingFieldErrors,
+  combinePreferredDateTime,
+  formatUkAddress,
+} from "@/utils/validation";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
@@ -48,7 +54,11 @@ const initial = {
   email: "",
   preferredDate: "",
   preferredTime: "",
-  address: "",
+  addressLine1: "",
+  addressLine2: "",
+  townCity: "",
+  county: "",
+  postcode: "",
   jobNotes: "",
 };
 
@@ -129,7 +139,11 @@ export function BookingForm() {
       lastName: form.lastName,
       email: form.email,
       phone: form.phone,
-      address: form.address,
+      addressLine1: form.addressLine1,
+      addressLine2: form.addressLine2,
+      townCity: form.townCity,
+      county: form.county,
+      postcode: form.postcode,
       service: form.service,
       serviceType: form.serviceType,
       roomCount: form.roomCount,
@@ -167,7 +181,13 @@ export function BookingForm() {
       scheduledAt,
       preferredDate: form.preferredDate,
       preferredTime: form.preferredTime,
-      address: form.address,
+      address: formatUkAddress({
+        addressLine1: form.addressLine1,
+        addressLine2: form.addressLine2,
+        townCity: form.townCity,
+        county: form.county,
+        postcode: form.postcode,
+      }),
       message,
       jobNotes: form.jobNotes || undefined,
       attachmentNames: attachmentNames.length > 0 ? attachmentNames : undefined,
@@ -295,27 +315,87 @@ export function BookingForm() {
         type="time"
         value={form.preferredTime}
         onChange={(e) => update("preferredTime", e.target.value)}
+        min={BOOKING_ARRIVAL_TIME_MIN}
+        max={BOOKING_ARRIVAL_TIME_MAX}
         className={inputClass}
       />
+      <p className={hintClass}>8am to 8pm only</p>
       {errors.preferredTime ? (
         <p className="mt-1 text-xs text-red-400">{errors.preferredTime}</p>
       ) : null}
     </label>
   );
 
-  const addressField = (
-    <label className="block sm:col-span-2">
-      <Label required>{showServicePanel ? "Property address" : "Address"}</Label>
-      <textarea
-        value={form.address}
-        onChange={(e) => update("address", e.target.value)}
-        rows={showServicePanel ? 3 : 4}
-        placeholder="Full address including postcode"
-        autoComplete="street-address"
-        className={inputClass}
-      />
-      {errors.address ? <p className="mt-1 text-xs text-red-400">{errors.address}</p> : null}
-    </label>
+  const addressFields = (
+    <fieldset className="block min-w-0 sm:col-span-2">
+      <legend className={labelClass}>
+        {showServicePanel ? "Property address" : "Address"}
+        <span className="text-red-400"> *</span>
+      </legend>
+      <div className="mt-3 grid gap-5 sm:grid-cols-2">
+        <label className="block sm:col-span-2">
+          <Label required>Address line 1</Label>
+          <input
+            value={form.addressLine1}
+            onChange={(e) => update("addressLine1", e.target.value)}
+            placeholder="House number and street name"
+            autoComplete="address-line1"
+            className={inputClass}
+          />
+          {errors.addressLine1 ? (
+            <p className="mt-1 text-xs text-red-400">{errors.addressLine1}</p>
+          ) : null}
+        </label>
+
+        <label className="block sm:col-span-2">
+          <Label>Address line 2 (optional)</Label>
+          <input
+            value={form.addressLine2}
+            onChange={(e) => update("addressLine2", e.target.value)}
+            placeholder="Flat, building, or locality"
+            autoComplete="address-line2"
+            className={inputClass}
+          />
+        </label>
+
+        <label className="block">
+          <Label required>Town / city</Label>
+          <input
+            value={form.townCity}
+            onChange={(e) => update("townCity", e.target.value)}
+            autoComplete="address-level2"
+            className={inputClass}
+          />
+          {errors.townCity ? (
+            <p className="mt-1 text-xs text-red-400">{errors.townCity}</p>
+          ) : null}
+        </label>
+
+        <label className="block">
+          <Label>County (optional)</Label>
+          <input
+            value={form.county}
+            onChange={(e) => update("county", e.target.value)}
+            autoComplete="address-level1"
+            className={inputClass}
+          />
+        </label>
+
+        <label className="block">
+          <Label required>Postcode</Label>
+          <input
+            value={form.postcode}
+            onChange={(e) => update("postcode", e.target.value)}
+            placeholder="e.g. SW1A 1AA"
+            autoComplete="postal-code"
+            className={inputClass}
+          />
+          {errors.postcode ? (
+            <p className="mt-1 text-xs text-red-400">{errors.postcode}</p>
+          ) : null}
+        </label>
+      </div>
+    </fieldset>
   );
 
   const notesAndUpload = (
@@ -388,12 +468,9 @@ export function BookingForm() {
           <input
             value={form.roomCount}
             onChange={(e) => update("roomCount", e.target.value)}
-            placeholder="e.g. 3 bedrooms"
             className={inputClass}
           />
-          <p className={hintClass}>
-            Please add total number of rooms, also include the room size/dimensions.
-          </p>
+          <p className={hintClass}>Please add total number of rooms.</p>
           {errors.roomCount ? (
             <p className="mt-1 text-xs text-red-400">{errors.roomCount}</p>
           ) : null}
@@ -412,7 +489,7 @@ export function BookingForm() {
         </label>
         {dateField}
         {timeField}
-        {addressField}
+        {addressFields}
         {notesAndUpload}
       </div>
 
@@ -462,12 +539,9 @@ export function BookingForm() {
           <input
             value={form.roomCount}
             onChange={(e) => update("roomCount", e.target.value)}
-            placeholder="e.g. 3 bedrooms, 2 bathrooms"
             className={inputClass}
           />
-          <p className={hintClass}>
-            Please add total number of rooms, also include the main size/dimensions.
-          </p>
+          <p className={hintClass}>Please add total number of rooms.</p>
           {errors.roomCount ? (
             <p className="mt-1 text-xs text-red-400">{errors.roomCount}</p>
           ) : null}
@@ -522,7 +596,7 @@ export function BookingForm() {
         {phoneField}
         {dateField}
         {timeField}
-        {addressField}
+        {addressFields}
         {notesAndUpload}
       </div>
 

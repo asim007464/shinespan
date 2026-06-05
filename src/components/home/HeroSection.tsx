@@ -7,7 +7,7 @@ import Link from "next/link";
 import { FiArrowRight, FiCheck, FiShield, FiStar } from "react-icons/fi";
 import { Container } from "@/components/ui/Container";
 
-const TRUST_POINTS = ["DBS-checked teams", "Fully insured", "Eco-smart products"] as const;
+const TRUST_POINTS = ["DBS-checked teams", "Fully insured", "Fully vetted"] as const;
 
 export function HeroSection() {
   return (
@@ -66,7 +66,7 @@ export function HeroSection() {
               <FiStar className="h-4 w-4 text-amber-500" aria-hidden />
               <span>
                 <span className="font-semibold text-slate-900">4.9</span>
-                <span className="text-slate-500"> · London clients</span>
+                <span className="text-slate-500"> · Fully professional</span>
               </span>
             </div>
             {TRUST_POINTS.map((item) => (

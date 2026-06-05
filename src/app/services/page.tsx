@@ -1,8 +1,12 @@
 import { ScrollReveal } from "@/components/animations/ScrollReveal";
 import { ServiceCard } from "@/components/services/ServiceCard";
 import { Container } from "@/components/ui/Container";
+import {
+  getServicesForCategory,
+  parseServiceCategory,
+  type ServiceCategory,
+} from "@/lib/services";
 import { buildPageMetadata } from "@/lib/seo";
-import { SERVICES_LIST } from "@/utils/constants";
 import Link from "next/link";
 
 export const metadata = buildPageMetadata({
@@ -12,27 +16,67 @@ export const metadata = buildPageMetadata({
   path: "/services",
 });
 
-export default function ServicesPage() {
+const CATEGORY_COPY: Record<
+  ServiceCategory,
+  { eyebrow: string; title: string; description: string }
+> = {
+  domestic: {
+    eyebrow: "Domestic cleaning",
+    title: "Domestic cleaning services in London",
+    description:
+      "Regular, deep, carpet, window, and end of tenancy cleaning for homes and rentals. Every visit is scoped by our professional cleaners according to your schedule.",
+  },
+  commercial: {
+    eyebrow: "Commercial cleaning",
+    title: "Commercial cleaning services in London",
+    description:
+      "GP surgery, dental practice, office, Airbnb, carpet, and window cleaning for workplaces and commercial properties. Every visit is scoped by our professional cleaners according to your schedule.",
+  },
+};
+
+export default async function ServicesPage({
+  searchParams,
+}: PageProps<"/services">) {
+  const params = await searchParams;
+  const category = parseServiceCategory(params.category);
+  const services = getServicesForCategory(category);
+  const copy = category ? CATEGORY_COPY[category] : null;
+
   return (
     <section className="page-section pb-24 pt-16 sm:pt-20">
       <Container>
         <ScrollReveal className="mx-auto mb-14 max-w-3xl text-center">
           <p className="text-xs font-semibold uppercase tracking-[0.25em] text-ss-blue-600">
-            Services
+            {copy?.eyebrow ?? "Services"}
           </p>
           <h1 className="mt-3 font-display text-4xl text-slate-900 md:text-6xl">
-            Cleaning services in London homes, offices &amp; apartments
+            {copy?.title ?? (
+              <>
+                Cleaning services in London homes, offices &amp; apartments
+              </>
+            )}
           </h1>
           <p className="mt-4 text-lg leading-relaxed text-slate-400">
-            Choose from home cleaning services, office cleaning, GP surgery, dental practices,
-            and other medical facility cleaning, deep cleaning services, and specialist turnovers.
-            Every visit is
-            scoped by our professional cleaners to your rooms, surfaces, and schedule.
+            {copy?.description ?? (
+              <>
+                Choose from home cleaning services, office cleaning, GP surgery, dental practices,
+                and other medical facility cleaning, deep cleaning services, and specialist turnovers.
+                Every visit is scoped by our professional cleaners according to your schedule.
+              </>
+            )}
           </p>
+          {category ? (
+            <Link
+              href="/services"
+              className="mt-5 inline-flex text-sm font-semibold text-ss-blue-600 hover:text-ss-blue-700"
+            >
+              View all services
+            </Link>
+          ) : null}
         </ScrollReveal>
 
         <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 sm:items-stretch lg:grid-cols-3 lg:gap-10">
-          {SERVICES_LIST.map((s, i) => (
+          {services.map((s, i) => (
             <ScrollReveal key={s.slug} delay={(i % 4) * 0.04} className="flex h-full w-full">
               <ServiceCard service={s} headingLevel="h2" priorityImage={i < 3} />
             </ScrollReveal>

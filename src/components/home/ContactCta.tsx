@@ -38,7 +38,7 @@ export function ContactCta() {
               </h2>
               <p className="mt-3 text-white/85">
                 Questions about home cleaning, office cleaning, or a one-off deep clean? Our London team
-                available 24/7, or book online anytime.
+                available 8am to 8pm, or book online anytime.
               </p>
               <div className="mt-5 flex flex-wrap gap-3">
                 <ContactWhatsAppButton />

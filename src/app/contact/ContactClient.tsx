@@ -48,12 +48,7 @@ export function ContactClient() {
     <section className="page-section pb-24 pt-16 sm:pt-20">
       <Container>
         <ScrollReveal className="mb-12 max-w-3xl">
-          <p className="text-xs font-semibold uppercase tracking-[0.25em] text-ss-blue-600">Contact</p>
-          <h1 className="mt-3 font-display text-4xl text-slate-900 md:text-6xl">Let&apos;s talk cleans</h1>
-          <p className="mt-4 text-slate-400">
-            We are available 24 hours a day, coordinators reply quickly. Reach us on WhatsApp, phone,
-            or email.
-          </p>
+          <h1 className="font-display text-4xl text-slate-900 md:text-6xl">Contact us</h1>
           <div className="mt-5 flex flex-wrap gap-3">
             <ContactWhatsAppButton />
             <ContactPhoneButton />
