@@ -18,7 +18,7 @@ export function ServicesCards() {
           </h2>
           <p className="mt-4 text-base leading-relaxed text-slate-400">
             From home cleaning services and office cleaning to deep cleaning services, book the
-            right crew in one click.
+            right cleaners in one click.
           </p>
         </ScrollReveal>
 

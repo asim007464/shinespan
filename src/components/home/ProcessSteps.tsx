@@ -5,8 +5,8 @@ import { FiCheckCircle, FiClock, FiHome, FiSend } from "react-icons/fi";
 
 const steps = [
   { icon: FiHome, title: "Tell us your space", desc: "Property type, rooms, focus areas." },
-  { icon: FiClock, title: "Pick your slot", desc: "We align with access & parking notes." },
-  { icon: FiCheckCircle, title: "Arrival & clean", desc: "Uniformed crew, checklist-led work." },
+  { icon: FiClock, title: "Pick your slot", desc: "Convenient for your schedule." },
+  { icon: FiCheckCircle, title: "Arrival & clean", desc: "Arrive on time, checklist-led work." },
   { icon: FiSend, title: "Walkthrough ready", desc: "Optional photo recap & satisfaction sign-off." },
 ];
 

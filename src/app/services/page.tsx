@@ -21,7 +21,7 @@ export default function ServicesPage() {
             Services
           </p>
           <h1 className="mt-3 font-display text-4xl text-slate-900 md:text-6xl">
-            Cleaning services in London, homes, offices &amp; apartments
+            Cleaning services in London homes, offices &amp; apartments
           </h1>
           <p className="mt-4 text-lg leading-relaxed text-slate-400">
             Choose from home cleaning services, office cleaning, GP surgery, dental practices,

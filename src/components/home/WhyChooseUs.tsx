@@ -14,7 +14,7 @@ const points = [
   {
     icon: FiClock,
     title: "Arrive on time",
-    text: "Punctual, professional crews who respect your schedule and keep you updated.",
+    text: "Punctual, professional cleaners who respect your schedule and keep you updated.",
   },
   {
     icon: FiShield,

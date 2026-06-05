@@ -20,3 +20,7 @@ export function getServiceCardHeading(service: ServiceItem): {
 
   return { title: service.title };
 }
+
+export function getServiceSelectLabel(service: ServiceItem): string {
+  return service.selectLabel ?? service.title;
+}

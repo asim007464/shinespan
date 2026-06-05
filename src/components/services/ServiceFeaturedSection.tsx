@@ -82,7 +82,9 @@ export function ServiceFeaturedSection({ service, compact = false }: Props) {
     return (
       <div className="space-y-4 text-sm">
         <p className={`font-display text-lg ${styles.tagline}`}>{featured.tagline}</p>
-        <p className="font-medium text-slate-700">{featured.subtitle}</p>
+        {featured.subtitle ? (
+          <p className="font-medium text-slate-700">{featured.subtitle}</p>
+        ) : null}
         <p className="leading-relaxed text-slate-500">{featured.intro}</p>
         <ul className="space-y-2 text-slate-500">
           {featured.focusAreas.map((area) => (
@@ -135,9 +137,11 @@ export function ServiceFeaturedSection({ service, compact = false }: Props) {
           <p className={`mt-5 font-display text-xl sm:text-2xl ${styles.tagline}`}>
             {featured.tagline}
           </p>
-          <p className="mt-2 text-sm font-medium text-slate-700 sm:text-base">
-            {featured.subtitle}
-          </p>
+          {featured.subtitle ? (
+            <p className="mt-2 text-sm font-medium text-slate-700 sm:text-base">
+              {featured.subtitle}
+            </p>
+          ) : null}
 
           <h2 className="mt-6 font-display text-2xl leading-tight text-slate-900 sm:text-3xl">
             {featured.headline}

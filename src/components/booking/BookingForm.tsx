@@ -1,6 +1,7 @@
 "use client";
 
 import { BookingServicePanel } from "@/components/booking/BookingServicePanel";
+import { getServiceSelectLabel } from "@/lib/serviceDisplay";
 import { getServiceByTitle } from "@/lib/services";
 import { Skeleton } from "@/components/ui/Skeleton";
 import { ThemeSelect } from "@/components/ui/ThemeSelect";
@@ -41,7 +42,8 @@ const initial = {
   bathroomCount: "",
   additionalServicesNotes: "",
   additionalServices: [] as string[],
-  name: "",
+  firstName: "",
+  lastName: "",
   phone: "",
   email: "",
   preferredDate: "",
@@ -82,7 +84,10 @@ export function BookingForm() {
   const serviceSelectOptions = useMemo(
     () => [
       { value: "", label: "Select a service" },
-      ...SERVICES_LIST.map((s) => ({ value: s.title, label: s.title })),
+      ...SERVICES_LIST.map((s) => ({
+        value: s.title,
+        label: getServiceSelectLabel(s),
+      })),
     ],
     []
   );
@@ -120,7 +125,8 @@ export function BookingForm() {
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     const fieldErrors = bookingFieldErrors({
-      name: form.name,
+      firstName: form.firstName,
+      lastName: form.lastName,
       email: form.email,
       phone: form.phone,
       address: form.address,
@@ -165,7 +171,7 @@ export function BookingForm() {
       message,
       jobNotes: form.jobNotes || undefined,
       attachmentNames: attachmentNames.length > 0 ? attachmentNames : undefined,
-      customerName: form.name,
+      customerName: `${form.firstName.trim()} ${form.lastName.trim()}`,
       customerEmail: form.email,
       customerPhone: form.phone.replace(/\s/g, ""),
       source: "shine-span-web",
@@ -214,16 +220,29 @@ export function BookingForm() {
     </div>
   ) : null;
 
-  const nameField = (
+  const firstNameField = (
     <label className="block">
-      <Label required>Full name</Label>
+      <Label required>First name</Label>
       <input
-        value={form.name}
-        onChange={(e) => update("name", e.target.value)}
-        autoComplete="name"
+        value={form.firstName}
+        onChange={(e) => update("firstName", e.target.value)}
+        autoComplete="given-name"
         className={inputClass}
       />
-      {errors.name ? <p className="mt-1 text-xs text-red-400">{errors.name}</p> : null}
+      {errors.firstName ? <p className="mt-1 text-xs text-red-400">{errors.firstName}</p> : null}
+    </label>
+  );
+
+  const lastNameField = (
+    <label className="block">
+      <Label required>Last name</Label>
+      <input
+        value={form.lastName}
+        onChange={(e) => update("lastName", e.target.value)}
+        autoComplete="family-name"
+        className={inputClass}
+      />
+      {errors.lastName ? <p className="mt-1 text-xs text-red-400">{errors.lastName}</p> : null}
     </label>
   );
 
@@ -248,7 +267,6 @@ export function BookingForm() {
         value={form.phone}
         onChange={(e) => update("phone", e.target.value)}
         autoComplete="tel"
-        placeholder="07384 647705"
         className={inputClass}
       />
       {errors.phone ? <p className="mt-1 text-xs text-red-400">{errors.phone}</p> : null}
@@ -272,7 +290,7 @@ export function BookingForm() {
 
   const timeField = (
     <label className="block">
-      <Label required>Preferred time</Label>
+      <Label required>Preferred arrival time</Label>
       <input
         type="time"
         value={form.preferredTime}
@@ -348,7 +366,8 @@ export function BookingForm() {
       </p>
 
       <div className={fieldGridClass}>
-        {nameField}
+        {firstNameField}
+        {lastNameField}
         {emailField}
         {phoneField}
         <label className="block">
@@ -497,7 +516,8 @@ export function BookingForm() {
       </fieldset>
 
       <div className={`mt-10 ${fieldGridClass}`}>
-        {nameField}
+        {firstNameField}
+        {lastNameField}
         {emailField}
         {phoneField}
         {dateField}

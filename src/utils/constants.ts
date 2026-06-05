@@ -59,7 +59,7 @@ export const IMAGES = {
     "https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=1200&q=85",
   trusted: "https://images.unsplash.com/photo-1628177142898-93e36e4e3a50?auto=format&fit=crop&w=1600&q=80",
   serviceHouse: "/services/housecleaning.png",
-  serviceDeep: "/deepcleaning.png",
+  serviceDeep: "/9bfc1080-0f05-4281-a9d8-483b9bafc918.png",
   serviceOffice: "/92bb565e-f3e0-42dc-9ad2-8650fec99af6.png",
   serviceAirbnb: "/services/airbnb-cleaning.jpg",
   serviceTenancy: "/moveinout.webp",
@@ -102,7 +102,7 @@ export type ServiceFeaturedContent = {
   readonly bookLabel: string;
   readonly imageAlt: string;
   readonly tagline: string;
-  readonly subtitle: string;
+  readonly subtitle?: string;
   readonly values: readonly string[];
   readonly headline: string;
   readonly intro: string;
@@ -119,6 +119,8 @@ export type ServiceItem = {
   /** Shorter label for service cards (optional) */
   readonly cardTitle?: string;
   readonly cardSubtitle?: string;
+  /** Label for booking dropdown only (optional) */
+  readonly selectLabel?: string;
   readonly description: string;
   readonly seoDescription: string;
   readonly details: readonly string[];
@@ -147,13 +149,13 @@ export const SERVICES_LIST: readonly ServiceItem[] = [
     slug: "dental-practice-cleaning",
     title: "Dental Practices",
     description:
-      "Specialist cleaning for dental practices. Reliable, discreet, hygienic, professional. Organised and run by a registered medical professional.",
+      "Specialist cleaning for dental practices. Reliable, discreet, hygienic, and professional.",
     seoDescription:
-      "High-standard cleaning tailored for dental practices across London, surgery rooms, reception, sterilisation areas, and patient facilities with fully vetted, DBS-checked crews.",
+      "High-standard cleaning tailored for dental practices across London, surgery rooms, reception, sterilisation areas, and patient facilities with fully vetted, DBS-checked cleaners.",
     details: [
       "Surgery room cleaning and disinfecting",
       "Reception and waiting area cleaning",
-      "Sterilisation and decontamination zones",
+      "Disinfection of contaminated zones",
       "Patient washrooms and staff facilities",
       "Evening and weekend visits to avoid clinic downtime",
     ],
@@ -164,7 +166,6 @@ export const SERVICES_LIST: readonly ServiceItem[] = [
       bookLabel: "Book dental practice cleaning",
       imageAlt: "Shine and Span specialist cleaning for dental practices",
       tagline: "Reliable · Discreet · Hygienic · Professional",
-      subtitle: "Organised and run by a registered medical professional",
       values: ["Reliable", "Discreet", "Hygienic", "Professional"],
       headline: "Specialist Cleaning for Dental Practices",
       intro: "High-standard cleaning tailored for dental practices you can trust.",
@@ -206,6 +207,7 @@ export const SERVICES_LIST: readonly ServiceItem[] = [
   {
     slug: "regular-cleaning",
     title: "Regular Cleaning",
+    selectLabel: "Regular Cleaning (residential / commercial)",
     description:
       "Reliable regular cleaning for kitchens, bathrooms, and living spaces, consistently fresh.",
     seoDescription:
@@ -213,13 +215,14 @@ export const SERVICES_LIST: readonly ServiceItem[] = [
     details: [
       "Kitchen and bathroom sanitisation",
       "Dusting, vacuuming, and floor care",
-      "Flexible weekly or fortnightly visits",
+      "Flexible visits",
     ],
     image: IMAGES.serviceHouse,
   },
   {
     slug: "deep-cleaning",
     title: "Deep Cleaning",
+    selectLabel: "Deep Cleaning (residential / commercial)",
     description:
       "Intensive deep cleaning services for appliances, detail areas, and a full property refresh.",
     seoDescription:
@@ -238,16 +241,13 @@ export const SERVICES_LIST: readonly ServiceItem[] = [
     cardTitle: "End of Tenancy Cleaning",
     cardSubtitle: "Move in / move out",
     description:
-      "Inventory-ready end of tenancy and move handovers, blank-slate cleans with ovens, fixtures, and landlord checklist standards.",
+      "Professional end of tenancy cleaning to leave your property spotless, fresh, and ready for inspection.",
     seoDescription:
-      "End of tenancy and move in / move out cleaning across London, deposit-friendly, inventory-ready finishes for tenants, landlords, buyers, and sellers.",
+      "Professional end of tenancy and move in / move out cleaning across London for tenants, landlords, and letting agents, deep-cleaned, sanitised, and ready for inspection.",
     details: [
-      "Oven, hob, and appliance detailing, fridge, microwave, dishwasher, and other appliances",
-      "Bathrooms and fixtures descaled",
-      "All rooms cleaned, bedrooms, living areas, halls, and stairs",
-      "Inside cupboards and wardrobes",
-      "Full property sanitisation, ready for keys or boxes",
-      "Checklist-aligned room-by-room scope",
+      "Every room deep-cleaned, sanitised, and ready for final inspection",
+      "Reliable service for tenants, landlords, and letting agents",
+      "Kitchens and bathrooms clean, fresh, and move-in ready",
     ],
     image: IMAGES.serviceTenancy,
   },
@@ -273,7 +273,7 @@ export const SERVICES_LIST: readonly ServiceItem[] = [
     description:
       "Discreet office cleaning when your workplace is quiet, desks, communal areas, and hygiene-focused washrooms.",
     seoDescription:
-      "Office cleaning for London workplaces: reliable crews, minimal disruption, and standards your team and clients will notice from day one.",
+      "Office cleaning for London workplaces: reliable cleaners, minimal disruption, and standards your team and clients will notice from day one.",
     details: [
       "Desks, meeting rooms, and reception areas",
       "Washroom restocking and sanitisation",
@@ -320,7 +320,7 @@ export const FAQ_ITEMS = [
   },
   {
     q: "Do you bring equipment and products?",
-    a: "We arrive fully equipped with professional-grade tools and eco-conscious supplies.",
+    a: "We arrive fully equipped with professional-grade tools and eco-conscious supplies. We can use yours if you prefer — if you don't have cleaning products, please let us know.",
   },
   {
     q: "Which areas do you cover?",

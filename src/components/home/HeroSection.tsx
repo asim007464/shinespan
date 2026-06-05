@@ -41,7 +41,7 @@ export function HeroSection() {
           </h1>
 
           <p className="mt-6 max-w-xl text-[15px] leading-[1.7] text-slate-600 sm:text-base">
-            Premium home and office cleaning across London, reliable crews, clear pricing, and
+            Premium home and office cleaning across London, reliable cleaners, clear pricing, and
             finishes you can see from the doorway.
           </p>
 

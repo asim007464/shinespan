@@ -19,7 +19,8 @@ export function isValidUkPhone(value: string): boolean {
 }
 
 export function bookingFieldErrors(data: {
-  name: string;
+  firstName: string;
+  lastName: string;
   email: string;
   phone: string;
   address: string;
@@ -34,9 +35,10 @@ export function bookingFieldErrors(data: {
   if (!data.serviceType?.trim()) errors.serviceType = "Choose type of service";
   if (!data.roomCount?.trim()) errors.roomCount = "Number of rooms is required";
   if (!data.preferredDate?.trim()) errors.preferredDate = "Preferred date is required";
-  if (!data.preferredTime?.trim()) errors.preferredTime = "Preferred time is required";
+  if (!data.preferredTime?.trim()) errors.preferredTime = "Preferred arrival time is required";
   if (!data.address?.trim()) errors.address = "Address is required";
-  if (!data.name?.trim()) errors.name = "Name is required";
+  if (!data.firstName?.trim()) errors.firstName = "First name is required";
+  if (!data.lastName?.trim()) errors.lastName = "Last name is required";
   if (!isValidEmail(data.email)) errors.email = "Valid email required";
   if (!isValidUkPhone(data.phone)) errors.phone = "Valid phone number required";
   return errors;

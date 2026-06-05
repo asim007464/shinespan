@@ -20,13 +20,13 @@ export const BOOKING_ADDITIONAL_SERVICES = [
   "Wet Wipe Window Blinds",
   "Inside Fridge",
   "Inside Oven",
-  "Green Cleaning",
   "Organization",
   "Laundry & Folding",
   "Dishes",
   "Dishwasher Cleaning",
   "Washing Machine Cleaning",
   "Microwave Cleaning",
+  "Carpet Cleaning",
 ] as const;
 
 export type BookingServiceType = (typeof BOOKING_SERVICE_TYPES)[number];

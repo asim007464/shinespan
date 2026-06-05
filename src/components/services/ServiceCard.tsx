@@ -82,28 +82,27 @@ export function ServiceCard({
           ) : null}
         </div>
 
-        <p className="mt-1.5 min-h-[4.5rem] line-clamp-3 font-sans text-sm leading-relaxed text-slate-500">
+        <p className="mt-1.5 min-h-[3.25rem] line-clamp-3 font-sans text-xs leading-relaxed text-slate-500 sm:text-[13px]">
           {service.description}
         </p>
 
-        <ul
-          className="mt-4 min-h-[4.75rem] space-y-2.5"
-          aria-label="What's included"
-        >
-          {highlights.map((item) => (
-            <li
-              key={item}
-              className="flex min-w-0 items-center gap-2.5 font-sans text-sm leading-none text-slate-500"
-            >
-              <span
-                className="h-1.5 w-1.5 shrink-0 rounded-full"
-                style={{ backgroundColor: cardBlue }}
-                aria-hidden
-              />
-              <span className="min-w-0 truncate whitespace-nowrap">{item}</span>
-            </li>
-          ))}
-        </ul>
+        {highlights.length > 0 ? (
+          <ul className="mt-3 space-y-2" aria-label="What's included">
+            {highlights.map((item) => (
+              <li
+                key={item}
+                className="flex min-w-0 items-start gap-2 font-sans text-xs leading-normal text-slate-500 sm:text-[13px]"
+              >
+                <span
+                  className="mt-[0.35rem] h-1.5 w-1.5 shrink-0 rounded-full"
+                  style={{ backgroundColor: cardBlue }}
+                  aria-hidden
+                />
+                <span className="min-w-0">{item}</span>
+              </li>
+            ))}
+          </ul>
+        ) : null}
 
         <div className="mt-auto shrink-0 pt-6">
           <Link
