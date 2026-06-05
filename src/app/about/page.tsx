@@ -51,22 +51,11 @@ export default function AboutPage() {
   return (
     <>
       {/* Hero */}
-      <section className="page-section relative overflow-hidden pt-16 sm:pt-20">
-        <div className="pointer-events-none absolute inset-0 opacity-30" aria-hidden>
-          <Image
-            src={IMAGES.aboutHero}
-            alt=""
-            fill
-            className="object-cover"
-            priority
-            sizes="100vw"
-          />
-          <div className="absolute inset-0 bg-gradient-to-b from-ss-blue-950/90 via-ss-blue-950/70 to-[#070d18]" />
-        </div>
-        <Container className="relative pb-12 text-center sm:pb-16">
-          <ScrollReveal>
-            <h1 className="font-display text-4xl text-white md:text-6xl">About Us</h1>
-            <p className="mx-auto mt-4 max-w-2xl text-lg text-slate-200">
+      <section className="page-section pb-12 pt-16 text-center sm:pb-16 sm:pt-20">
+        <Container>
+          <ScrollReveal className="mx-auto max-w-3xl">
+            <h1 className="font-display text-4xl text-slate-900 md:text-6xl">About Us</h1>
+            <p className="mx-auto mt-4 max-w-2xl text-lg leading-relaxed text-slate-400">
               Trusted cleaning services across London
             </p>
           </ScrollReveal>
@@ -104,8 +93,8 @@ export default function AboutPage() {
                 <p>
                   At <strong className="text-slate-900">{COMPANY.name}</strong>, we&apos;re on a mission to
                   make homes, apartments, and workspaces across London shine. Whether you&apos;re a
-                  homeowner, landlord, tenant, or business owner, we offer flexible, high-quality
-                  cleaning tailored to your schedule and space.
+                  homeowner, landlord, tenant, or business owner, we offer cleaning tailored to your
+                  schedule and space.
                 </p>
                 <p>
                   We believe a clean environment leads to better living and working. That&apos;s why
@@ -126,8 +115,7 @@ export default function AboutPage() {
           <ScrollReveal className="max-w-3xl">
             <p className="text-sm font-semibold text-ss-blue-600">Get a quote fast</p>
             <p className="mt-4 text-base leading-relaxed text-slate-400">
-              We provide flexible, high-quality cleaning services across homes, offices, rentals, and
-              apartments. From one-time deep cleans to ongoing service plans, our team handles it all,
+              We provide cleaning services across homes, offices, rentals, and apartments. From one-time deep cleans to ongoing service plans, our team handles it all,
               so you can focus on what matters.
             </p>
           </ScrollReveal>
@@ -135,7 +123,7 @@ export default function AboutPage() {
           <div className="mt-12 flex flex-col gap-6">
             <ScrollReveal>
               <article className={`${stepCardClass} lg:p-10 lg:pt-12`}>
-                <div className="absolute -top-5 left-8 flex h-12 w-12 items-center justify-center rounded-full bg-ss-blue-600 text-slate-900 shadow-lg shadow-ss-blue-600/30">
+                <div className="absolute -top-5 left-8 flex h-12 w-12 items-center justify-center rounded-full bg-ss-blue-600 text-white shadow-lg shadow-ss-blue-600/30">
                   <FiClipboard className="h-6 w-6" aria-hidden />
                 </div>
                 <div className="flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">
@@ -169,7 +157,7 @@ export default function AboutPage() {
               {stepCards.map((card, i) => (
                 <ScrollReveal key={card.title} delay={0.06 * (i + 1)}>
                   <article className={stepCardClass}>
-                    <div className="absolute -top-5 left-8 flex h-12 w-12 items-center justify-center rounded-full bg-ss-blue-600 text-slate-900 shadow-lg shadow-ss-blue-600/30">
+                    <div className="absolute -top-5 left-8 flex h-12 w-12 items-center justify-center rounded-full bg-ss-blue-600 text-white shadow-lg shadow-ss-blue-600/30">
                       <card.icon className="h-6 w-6" aria-hidden />
                     </div>
                     <h3 className="mt-2 font-display text-xl text-slate-900">{card.title}</h3>

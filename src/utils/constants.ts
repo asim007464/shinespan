@@ -54,9 +54,7 @@ export const SOCIAL_LINKS = [
 export const IMAGES = {
   logo: "/unnamed-removebg-preview.png",
   hero: "https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&w=2400&q=85",
-  /** Hero background video (Mixkit, free to use). Swap for /hero.mp4 in public/ if you prefer your own file */
-  heroVideo: "https://assets.mixkit.co/videos/21380/21380-720.mp4",
-  heroVideoFallback: "https://assets.mixkit.co/videos/8722/8722-720.mp4",
+  heroBackground: "/04530c7a-df8c-4c31-85ae-3f96a006c696.png",
   heroSecondary:
     "https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=1200&q=85",
   trusted: "https://images.unsplash.com/photo-1628177142898-93e36e4e3a50?auto=format&fit=crop&w=1600&q=80",

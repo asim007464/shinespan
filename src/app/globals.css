@@ -51,8 +51,14 @@ body {
   letter-spacing: -0.01em;
 }
 
-.hero-video-bg video {
-  filter: brightness(1.08) contrast(1.03) saturate(1.08);
+.hero-image-overlay {
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0.88) 0%,
+    rgba(255, 255, 255, 0.55) 38%,
+    rgba(255, 255, 255, 0.15) 55%,
+    transparent 68%
+  );
 }
 
 /* Fixed behind all content — soft white + two drifting light-blue orbs */

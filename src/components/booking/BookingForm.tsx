@@ -320,7 +320,7 @@ export function BookingForm() {
           accept="image/*"
           multiple
           onChange={handleFilesChange}
-          className="mt-2 block w-full cursor-pointer rounded-2xl border border-dashed border-slate-300 bg-slate-50 px-4 py-4 text-sm text-slate-400 file:mr-4 file:rounded-xl file:border-0 file:bg-ss-blue-600 file:px-4 file:py-2 file:text-sm file:font-semibold file:text-slate-900 hover:file:bg-ss-blue-500"
+          className="mt-2 block w-full cursor-pointer rounded-2xl border border-dashed border-slate-300 bg-slate-50 px-4 py-4 text-sm text-slate-400 file:mr-4 file:rounded-xl file:border-0 file:bg-ss-blue-600 file:px-4 file:py-2 file:text-sm file:font-semibold file:text-white hover:file:bg-ss-blue-500"
         />
         <p className={hintClass}>
           Share photos to help us understand your cleaning service needs.
