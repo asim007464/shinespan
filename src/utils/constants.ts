@@ -1,16 +1,16 @@
 export const COMPANY = {
   name: "Shine & Span Cleaning Services Ltd",
   shortName: "Shine & Span",
-  email: "cleaning@shinespan.co.uk",
+  email: "cleaning@opalshine.co.uk",
   /** @deprecated Prefer getStandardMailtoHref() or EmailContactLink, kept for metadata */
   emailHref:
-    "mailto:cleaning@shinespan.co.uk?subject=Cleaning%20service%20enquiry&body=Hello%0A%0A",
-  phone: "07384 647705",
-  phoneHref: "tel:+447384647705",
-  whatsapp: "447384647705",
+    "mailto:cleaning@opalshine.co.uk?subject=Cleaning%20service%20enquiry&body=Hello%0A%0A",
+  phone: "07722 127681",
+  phoneHref: "tel:+447722127681",
+  whatsapp: "447722127681",
   whatsappMessage: "Hi, I want to book a cleaning service. Please assist me.",
   whatsappHref:
-    "https://wa.me/447384647705?text=" +
+    "https://wa.me/447722127681?text=" +
     encodeURIComponent("Hi, I want to book a cleaning service. Please assist me."),
   region: "London",
   addressLine: "Serving homes & businesses across London",
@@ -52,7 +52,7 @@ export const SOCIAL_LINKS = [
 
 /** Curated Unsplash images, cleaning / interiors */
 export const IMAGES = {
-  logo: "/unnamed-removebg-preview.png",
+  logo: "/opal-shine-logo.png",
   hero: "https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&w=2400&q=85",
   heroBackground: "/04530c7a-df8c-4c31-85ae-3f96a006c696.png",
   heroSecondary:
@@ -66,8 +66,8 @@ export const IMAGES = {
   serviceCarpet: "/carpetcleaning.png",
   serviceWindow: "/windowcleaning.png",
   serviceMedical: "/services/gp-surgery-medical.png",
-  serviceDental: "/services/dental-practice.png",
-  dentalPracticePromo: "/services/dental-practice.png",
+  serviceDental: "/044136e1-d1df-4180-a74b-71ad19838484.png",
+  dentalPracticePromo: "/044136e1-d1df-4180-a74b-71ad19838484.png",
   /** Couple carrying moving boxes into a home */
   whyChoose: "/911b1872-f2c9-4d2b-a12f-06ed5946d368.png",
   beforeAfterBefore: "/dirtyroom.png",

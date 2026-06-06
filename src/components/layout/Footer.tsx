@@ -33,9 +33,9 @@ export function Footer() {
               <Image
                 src={IMAGES.logo}
                 alt={`${COMPANY.shortName}, cleaning services London`}
-                width={220}
-                height={68}
-                className="h-12 w-auto"
+                width={560}
+                height={172}
+                className="h-28 w-auto sm:h-32"
               />
             </Link>
             <p className="mt-4 max-w-sm text-sm leading-relaxed text-slate-600">

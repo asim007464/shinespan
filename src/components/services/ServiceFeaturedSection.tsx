@@ -239,7 +239,7 @@ export function ServiceFeaturedSection({ service, compact = false }: Props) {
           </div>
 
           <p className="mt-6 text-xs text-slate-500">
-            {COMPANY.email} · {COMPANY.phone} · shinespan.co.uk
+            {COMPANY.email} · {COMPANY.phone} · opalshine.co.uk
           </p>
         </div>
 
