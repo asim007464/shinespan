@@ -53,7 +53,7 @@ export const SOCIAL_LINKS = [
 
 /** Curated Unsplash images, cleaning / interiors */
 export const IMAGES = {
-  logo: "/unnamed-removebg-preview.png",
+  logo: "/044136e1-d1df-4180-a74b-71ad19838484.png",
   hero: "https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&w=2400&q=85",
   heroBackground: "/04530c7a-df8c-4c31-85ae-3f96a006c696.png",
   heroSecondary:

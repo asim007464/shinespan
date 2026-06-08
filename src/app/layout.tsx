@@ -45,7 +45,12 @@ export const metadata: Metadata = {
   },
   robots: { index: true, follow: true },
   icons: {
-    icon: [{ url: IMAGES.logo, type: "image/png" }],
+    icon: [
+      { url: IMAGES.logo, type: "image/png" },
+      { url: IMAGES.logo, sizes: "32x32", type: "image/png" },
+      { url: IMAGES.logo, sizes: "192x192", type: "image/png" },
+    ],
+    shortcut: IMAGES.logo,
     apple: IMAGES.logo,
   },
 };
