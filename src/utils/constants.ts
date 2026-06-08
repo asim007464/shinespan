@@ -1,6 +1,6 @@
 export const COMPANY = {
-  name: "Shine & Span Cleaning Services Ltd",
-  shortName: "Shine & Span",
+  name: "Opal Shine Cleaning Services Ltd",
+  shortName: "Opal Shine Cleaning Services Ltd",
   email: "cleaning@opalshine.co.uk",
   /** @deprecated Prefer getStandardMailtoHref() or EmailContactLink, kept for metadata */
   emailHref:
@@ -16,6 +16,7 @@ export const COMPANY = {
   addressLine: "Serving homes & businesses across London",
   hours: "8am to 8pm · 7 days a week",
   tagline: "Premium cleaning tailored for London homes, offices & apartments.",
+  icoRegistrationNumber: "ZC088627",
 } as const;
 
 export const NAV_LINKS = [
@@ -52,7 +53,7 @@ export const SOCIAL_LINKS = [
 
 /** Curated Unsplash images, cleaning / interiors */
 export const IMAGES = {
-  logo: "/opal-shine-logo.png",
+  logo: "/unnamed-removebg-preview.png",
   hero: "https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&w=2400&q=85",
   heroBackground: "/04530c7a-df8c-4c31-85ae-3f96a006c696.png",
   heroSecondary:
@@ -163,7 +164,7 @@ export const SERVICES_LIST: readonly ServiceItem[] = [
       theme: "dental",
       badgeLabel: "Dental cleaning",
       bookLabel: "Book dental practice cleaning",
-      imageAlt: "Shine and Span specialist cleaning for dental practices",
+      imageAlt: "Opal Shine Cleaning Services Ltd specialist cleaning for dental practices",
       tagline: "Reliable · Discreet · Hygienic · Professional",
       values: ["Reliable", "Discreet", "Hygienic", "Professional"],
       headline: "Specialist Cleaning for Dental Practices",

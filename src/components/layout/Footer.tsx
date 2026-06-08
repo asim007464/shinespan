@@ -33,9 +33,9 @@ export function Footer() {
               <Image
                 src={IMAGES.logo}
                 alt={`${COMPANY.shortName}, cleaning services London`}
-                width={560}
-                height={172}
-                className="h-28 w-auto sm:h-32"
+                width={400}
+                height={123}
+                className="h-24 w-auto sm:h-28"
               />
             </Link>
             <p className="mt-4 max-w-sm text-sm leading-relaxed text-slate-600">
@@ -128,18 +128,25 @@ export function Footer() {
           </div>
         </div>
 
-        <div className="mt-14 flex flex-col items-center justify-between gap-4 border-t border-slate-200 pt-8 text-center text-xs text-slate-500 sm:flex-row sm:text-left">
-          <p suppressHydrationWarning>
-            © {new Date().getFullYear()} {COMPANY.name}. All rights reserved. {COMPANY.region}.
-          </p>
-          <p className="flex flex-wrap justify-center gap-4">
-            <Link href="/contact" className="hover:text-ss-blue-700">
-              Privacy
-            </Link>
-            <Link href="/contact" className="hover:text-ss-blue-700">
-              Terms
-            </Link>
-          </p>
+        <div className="mt-14 border-t border-slate-200 pt-8">
+          <div className="flex flex-col items-center justify-between gap-4 text-center text-xs text-slate-500 sm:flex-row sm:text-left">
+            <div>
+              <p suppressHydrationWarning>
+                © {new Date().getFullYear()} {COMPANY.name}. All rights reserved. {COMPANY.region}.
+              </p>
+              <p className="mt-1">
+                ICO Registration Number: {COMPANY.icoRegistrationNumber}
+              </p>
+            </div>
+            <p className="flex flex-wrap justify-center gap-4">
+              <Link href="/contact" className="hover:text-ss-blue-700">
+                Privacy
+              </Link>
+              <Link href="/contact" className="hover:text-ss-blue-700">
+                Terms
+              </Link>
+            </p>
+          </div>
         </div>
       </div>
     </footer>

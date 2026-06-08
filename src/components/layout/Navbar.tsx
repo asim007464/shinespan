@@ -15,14 +15,14 @@ export function Navbar() {
 
   return (
     <header className="sticky top-0 z-50 border-b border-slate-200/80 bg-white/80 shadow-sm shadow-slate-200/30 backdrop-blur-xl">
-      <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-4 sm:px-6 lg:px-8">
+      <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-0 sm:px-6 lg:px-8">
         <Link href="/" className="group flex items-center">
           <Image
             src={IMAGES.logo}
             alt={`${COMPANY.shortName}, cleaning services London`}
-            width={560}
-            height={172}
-            className="h-28 w-auto sm:h-32"
+            width={360}
+            height={110}
+            className="h-20 w-auto sm:h-24"
             priority
           />
         </Link>

@@ -1,7 +1,7 @@
 import { COMPANY } from "@/utils/constants";
 import type { Metadata } from "next";
 
-const SITE_URL = "https://shinespan.co.uk";
+const SITE_URL = "https://opalshine.co.uk";
 
 export function buildPageMetadata({
   title,

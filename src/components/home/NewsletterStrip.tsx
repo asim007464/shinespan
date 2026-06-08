@@ -1,5 +1,6 @@
 "use client";
 
+import { COMPANY } from "@/utils/constants";
 import { ScrollReveal } from "@/components/animations/ScrollReveal";
 import { useState } from "react";
 
@@ -24,7 +25,7 @@ export function NewsletterStrip() {
                 <p className="text-xs font-semibold uppercase tracking-[0.25em] text-ss-blue-600">
                   Stay polished
                 </p>
-                <h3 className="mt-2 font-display text-2xl text-slate-900 sm:text-3xl">Join the Shine &amp; Span list</h3>
+                <h3 className="mt-2 font-display text-2xl text-slate-900 sm:text-3xl">Join the {COMPANY.shortName} list</h3>
                 <p className="mt-2 max-w-xl text-sm text-slate-600">
                   Seasonal deep-clean reminders and limited slots, unsubscribe anytime.
                 </p>

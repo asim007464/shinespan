@@ -1,7 +1,7 @@
 "use client";
 
 import { ScrollReveal } from "@/components/animations/ScrollReveal";
-import { IMAGES } from "@/utils/constants";
+import { COMPANY, IMAGES } from "@/utils/constants";
 import Image from "next/image";
 import { FiCalendar, FiClock, FiShield } from "react-icons/fi";
 
@@ -41,7 +41,7 @@ export function WhyChooseUs() {
         <div>
           <ScrollReveal>
             <p className="text-xs font-semibold uppercase tracking-[0.25em] text-ss-blue-600">
-              Why Shine &amp; Span
+              Why {COMPANY.shortName}
             </p>
             <h2 className="mt-3 font-display text-3xl text-slate-900 md:text-5xl">
               Cleaning you can count on

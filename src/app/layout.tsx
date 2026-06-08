@@ -18,7 +18,7 @@ const dmSerif = DM_Serif_Display({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://shinespan.co.uk"),
+  metadataBase: new URL("https://opalshine.co.uk"),
   title: {
     default: `${COMPANY.shortName} | Cleaning Services London, Professional Cleaners`,
     template: `%s | ${COMPANY.shortName}`,

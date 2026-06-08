@@ -165,7 +165,7 @@ export function ContactClient() {
 
         <ScrollReveal className="mt-14 overflow-hidden rounded-[2rem] border border-slate-200/80 shadow-lg">
           <iframe
-            title="London map, Shine & Span service coverage"
+            title={`London map, ${COMPANY.shortName} service coverage`}
             src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d158857.839!2d-0.1276!3d51.5074!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47d8a00baf21de75%3A0x52962966d4962492!2sLondon!5e0!3m2!1sen!2suk!4v1715000000000!5m2!1sen!2suk"
             className="h-[320px] w-full border-0 sm:h-[420px]"
             loading="lazy"

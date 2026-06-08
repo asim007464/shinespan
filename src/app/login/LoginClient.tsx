@@ -117,7 +117,7 @@ export function LoginClient() {
           </div>
 
           <p className="mt-10 text-center text-sm text-slate-400">
-            New to Shine &amp; Span?{" "}
+            New to {COMPANY.shortName}?{" "}
             <Link href="/signup" className="font-semibold text-ss-blue-600 hover:text-ss-blue-700">
               Create an account
             </Link>

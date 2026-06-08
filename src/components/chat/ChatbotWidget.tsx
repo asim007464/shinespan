@@ -24,7 +24,7 @@ export function ChatbotWidget() {
   const [messages, setMessages] = useState<{ role: "user" | "assistant"; text: string }[]>([
     {
       role: "assistant",
-      text: "Hi, I'm your Shine Assistant. I can search our cleaning services, explain what's included, and help you pick the right bookable service.",
+      text: "Hi, I'm your Opal Shine Assistant. I can search our cleaning services, explain what's included, and help you pick the right bookable service.",
     },
   ]);
   const { value: inquiries, setValue: setInquiries, hydrated } = useLocalStorage<
@@ -122,7 +122,7 @@ export function ChatbotWidget() {
           >
             <div className="flex items-center justify-between border-b border-slate-200/80 px-4 py-3">
               <div>
-                <p className="text-sm font-semibold text-slate-900">Shine Assistant</p>
+                <p className="text-sm font-semibold text-slate-900">Opal Shine Assistant</p>
                 <p className="text-[11px] text-slate-400">
                   {hydrated && (inquiries?.length ?? 0) > 0
                     ? `${inquiries?.length ?? 0} saved inquiries`
