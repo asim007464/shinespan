@@ -42,19 +42,24 @@ export function getStandardMailtoHref(): string {
 }
 
 export function getContactFormMailto(
-  name: string,
+  firstName: string,
+  lastName: string,
   fromEmail: string,
+  phone: string,
   message: string,
 ): string {
+  const fullName = `${firstName.trim()} ${lastName.trim()}`.trim();
   const body = [
-    `Name: ${name.trim()}`,
+    `First name: ${firstName.trim()}`,
+    `Last name: ${lastName.trim()}`,
     `Email: ${fromEmail.trim()}`,
+    `Phone: ${phone.trim()}`,
     "",
     message.trim(),
   ].join("\n");
 
   return getGmailComposeHref({
-    subject: `Website enquiry from ${name.trim()}`,
+    subject: `Website enquiry from ${fullName}`,
     body,
   });
 }

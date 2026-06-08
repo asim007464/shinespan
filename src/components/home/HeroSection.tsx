@@ -4,7 +4,7 @@ import { IMAGES } from "@/utils/constants";
 import { motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
-import { FiArrowRight, FiCheck, FiShield, FiStar } from "react-icons/fi";
+import { FiArrowRight, FiCheck, FiShield } from "react-icons/fi";
 import { Container } from "@/components/ui/Container";
 
 const TRUST_POINTS = ["DBS-checked teams", "Fully insured", "Fully vetted"] as const;
@@ -62,12 +62,8 @@ export function HeroSection() {
           </div>
 
           <div className="mt-10 flex flex-wrap items-center justify-start gap-3">
-            <div className="inline-flex items-center gap-1.5 rounded-lg border border-slate-200/90 bg-white/90 px-3 py-2 text-sm text-slate-600 shadow-sm backdrop-blur-sm">
-              <FiStar className="h-4 w-4 text-amber-500" aria-hidden />
-              <span>
-                <span className="font-semibold text-slate-900">4.9</span>
-                <span className="text-slate-500"> · Fully professional</span>
-              </span>
+            <div className="inline-flex items-center gap-1.5 rounded-lg border border-slate-200/90 bg-white/90 px-3 py-2 text-sm font-medium text-slate-600 shadow-sm backdrop-blur-sm">
+              Fully professional
             </div>
             {TRUST_POINTS.map((item) => (
               <span

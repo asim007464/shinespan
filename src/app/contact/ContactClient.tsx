@@ -10,7 +10,7 @@ import { EmailContactLink } from "@/components/common/EmailContactLink";
 import { Container } from "@/components/ui/Container";
 import { COMPANY, SOCIAL_LINKS } from "@/utils/constants";
 import { getContactFormMailto } from "@/utils/mailto";
-import { isValidEmail } from "@/utils/validation";
+import { isValidEmail, isValidUkPhone } from "@/utils/validation";
 import { useState } from "react";
 import { FaFacebookF, FaInstagram, FaWhatsapp } from "react-icons/fa";
 import { FiClock, FiMapPin } from "react-icons/fi";
@@ -25,21 +25,35 @@ const inputClass = "ss-input";
 const panelClass = "ss-card rounded-3xl p-8";
 
 export function ContactClient() {
-  const [name, setName] = useState("");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
   const [message, setMessage] = useState("");
   const [status, setStatus] = useState<"idle" | "sent" | "error">("idle");
 
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
-    if (!name.trim() || !isValidEmail(email) || !message.trim()) {
+    if (
+      !firstName.trim() ||
+      !lastName.trim() ||
+      !isValidEmail(email) ||
+      !isValidUkPhone(phone) ||
+      !message.trim()
+    ) {
       setStatus("error");
       return;
     }
-    window.open(getContactFormMailto(name, email, message), "_blank", "noopener,noreferrer");
+    window.open(
+      getContactFormMailto(firstName, lastName, email, phone, message),
+      "_blank",
+      "noopener,noreferrer",
+    );
     setStatus("sent");
-    setName("");
+    setFirstName("");
+    setLastName("");
     setEmail("");
+    setPhone("");
     setMessage("");
     setTimeout(() => setStatus("idle"), 4000);
   }
@@ -108,11 +122,27 @@ export function ContactClient() {
               className={panelClass}
             >
               <div className="grid gap-5 sm:grid-cols-2">
-                <label className="block sm:col-span-2">
+                <label className="block">
                   <span className="text-xs font-semibold uppercase tracking-wider text-slate-400">
-                    Name
+                    First name
                   </span>
-                  <input value={name} onChange={(e) => setName(e.target.value)} className={inputClass} />
+                  <input
+                    value={firstName}
+                    onChange={(e) => setFirstName(e.target.value)}
+                    autoComplete="given-name"
+                    className={inputClass}
+                  />
+                </label>
+                <label className="block">
+                  <span className="text-xs font-semibold uppercase tracking-wider text-slate-400">
+                    Last name
+                  </span>
+                  <input
+                    value={lastName}
+                    onChange={(e) => setLastName(e.target.value)}
+                    autoComplete="family-name"
+                    className={inputClass}
+                  />
                 </label>
                 <label className="block sm:col-span-2">
                   <span className="text-xs font-semibold uppercase tracking-wider text-slate-400">
@@ -122,6 +152,19 @@ export function ContactClient() {
                     type="email"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
+                    autoComplete="email"
+                    className={inputClass}
+                  />
+                </label>
+                <label className="block sm:col-span-2">
+                  <span className="text-xs font-semibold uppercase tracking-wider text-slate-400">
+                    Phone number
+                  </span>
+                  <input
+                    type="tel"
+                    value={phone}
+                    onChange={(e) => setPhone(e.target.value)}
+                    autoComplete="tel"
                     className={inputClass}
                   />
                 </label>
@@ -139,7 +182,7 @@ export function ContactClient() {
               </div>
               {status === "error" ? (
                 <p className="mt-4 text-sm text-red-400">
-                  Please complete all fields with a valid email.
+                  Please complete all fields with a valid email and UK phone number.
                 </p>
               ) : null}
               {status === "sent" ? (

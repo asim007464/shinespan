@@ -67,8 +67,8 @@ export const IMAGES = {
   serviceCarpet: "/carpetcleaning.png",
   serviceWindow: "/windowcleaning.png",
   serviceMedical: "/services/gp-surgery-medical.png",
-  serviceDental: "/044136e1-d1df-4180-a74b-71ad19838484.png",
-  dentalPracticePromo: "/044136e1-d1df-4180-a74b-71ad19838484.png",
+  serviceDental: "/gpcleaning.png",
+  dentalPracticePromo: "/gpcleaning.png",
   /** Couple carrying moving boxes into a home */
   whyChoose: "/911b1872-f2c9-4d2b-a12f-06ed5946d368.png",
   beforeAfterBefore: "/dirtyroom.png",
