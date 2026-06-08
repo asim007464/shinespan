@@ -66,7 +66,7 @@ export const IMAGES = {
   serviceTenancy: "/moveinout.webp",
   serviceCarpet: "/carpetcleaning.png",
   serviceWindow: "/windowcleaning.png",
-  serviceMedical: "/services/gp-surgery-medical.png",
+  serviceMedical: "/gpimageremovecloth.png",
   serviceDental: "/gpcleaning.png",
   dentalPracticePromo: "/gpcleaning.png",
   /** Couple carrying moving boxes into a home */
