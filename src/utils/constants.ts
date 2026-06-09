@@ -342,7 +342,7 @@ export const FAQ_ITEMS = [
   },
   {
     q: "Do you bring equipment and products?",
-    a: "We arrive fully equipped with professional-grade tools and eco-conscious supplies. We can use yours if you prefer — if you don't have cleaning products, please let us know.",
+    a: "Unless you have your own cleaning liquids, hoover, mop and bucket, we can provide them for an additional cost.",
   },
   {
     q: "Which areas do you cover?",
